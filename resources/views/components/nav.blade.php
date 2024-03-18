@@ -6,6 +6,22 @@
 
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
+
+    <style>
+
+        header .user-icons {
+            background: transparent !important;
+        }
+
+        .nav-item .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            left: auto;
+            transform: translateX(-100%);
+            z-index: 1000;
+        }
+    </style>
 </head>
 
 <header class="header-center-home header-default header-sticky">
@@ -281,10 +297,11 @@
                                         <span class="font-size-14 fw-500 text-capitalize text-white">{{Str::ucfirst(Auth::user()->name)}}</span>
                                     </li>
                                     <a class="dropdown-item" href="{{ route('profile.show', ['id' => Auth::id()]) }}"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">@lang('translation.View_Profile')</span></a>
-                                    <a class="dropdown-item" href="#"><i class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">@lang('translation.My_Wallet')</span></a>
-                                    <a class="dropdown-item d-block" href="#"><i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">@lang('translation.Settings')</span> <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a>
-                                    <a class="dropdown-item" href="#"><i class="uil uil-lock-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">@lang('translation.Lock_screen')</span></a>
+                                    @if(auth()->user()->can('admin'))
+                                    <a class="dropdown-item" href="{{ route('manage.index') }}"><i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Gerenciar</span></a>
+                                    @endif
                                     <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">@lang('translation.Sign_out')</span></a>
+
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
@@ -298,3 +315,34 @@
     </nav>
     @include('layouts.vendor-scripts')
 </header> 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var dropdownToggle = document.getElementById('navbarDropdown');
+
+        dropdownToggle.addEventListener('click', function (event) {
+            event.stopPropagation();
+            var dropdownMenu = this.nextElementSibling;
+
+            if (dropdownMenu.classList.contains('show')) {
+                dropdownMenu.classList.remove('show');
+            } else {
+
+                document.querySelectorAll('.dropdown-menu.show').forEach(function (openMenu) {
+                    openMenu.classList.remove('show');
+                });
+
+                dropdownMenu.classList.add('show');
+            }
+        });
+    });
+
+    window.addEventListener('click', function (event) {
+        if (!event.target.matches('#navbarDropdown')) {
+            var dropdowns = document.querySelectorAll('.dropdown-menu.show');
+            dropdowns.forEach(function (openDropdown) {
+                openDropdown.classList.remove('show');
+            });
+        }
+    });
+</script>

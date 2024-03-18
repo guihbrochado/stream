@@ -42,6 +42,7 @@ use App\Http\Controllers\apps\LinkController;
 use App\Http\Controllers\apps\QuoteController;
 use App\Http\Controllers\apps\ShopController;
 use App\Http\Controllers\apps\MyAccountController;
+use App\Http\Controllers\apps\ManageController;
 
 /*
   |--------------------------------------------------------------------------
@@ -102,6 +103,7 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/whishlist', [ShopController::class, 'whishlist'])->name('shop.wishlist');
         Route::get('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
         Route::get('/detail', [ShopController::class, 'detail'])->name('shop.detail');
+       
 
 
         Route::get('/loja', function () {
@@ -164,6 +166,8 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
 
 Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified'], 'middleware' => ['permission:admin']], function () {
 
+    Route::get('/manage', [ManageController::class, 'index'])->name('manage.index');
+    
     Route::get('/clientes', function () {
         return view('pages-under_development');
     })->name('clientes.index');
