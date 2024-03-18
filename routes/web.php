@@ -75,7 +75,9 @@ Route::post('/terms', [TermsController::class, 'acceptTerms'])->name('terms.acce
 
 Route::middleware(['checkTermsAccepted'])->group(function () {
 // rotas do template:
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+    Route::get('/ajaxCoursesModules/{idcourse}', [App\Http\Controllers\HomeController::class, 'ajaxCoursesModules'])->name('ajaxCoursesModules');
+    Route::get('/ajaxCoursesLessons/{idcourse}/{idmodules}', [App\Http\Controllers\HomeController::class, 'ajaxCoursesLessons'])->name('ajaxCoursesLessons');
     Route::get('/traders_courses', [TradersCoursesController::class, 'index'])->name('traders_courses.index');
     
 //Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
