@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 class VideoController extends Controller
 {
     public function index() {
-
-        echo 'asdansdoad';
-        // return view('apps.video.index');
+        return view('apps.blog-video.index');
     }
 }

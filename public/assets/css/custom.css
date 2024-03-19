@@ -1,4 +1,4 @@
-/* Este será o círculo externo */
+/* Este será o círculo externo 
 .cursor-follower-outer {
   width: 35px;
   height: 35px;
@@ -8,10 +8,10 @@
   pointer-events: none;
   transform: translate(-50%, -50%);
   transition: transform 0.3s;
-  z-index: 999; /* Um nível abaixo do ponto interno para garantir que ele apareça por cima */
-}
+  z-index: 999; /* Um nível abaixo do ponto interno para garantir que ele apareça por cima 
+}*/
 
-/* Este será o ponto central */
+/* Este será o ponto central
 .cursor-follower-inner {
   width: 9px;
   height: 9px;
@@ -21,10 +21,10 @@
   background-color: #e50914;
   transform: translate(-50%, -50%);
   transition: transform 0.1s;
-  z-index: 1000; /* Garanta que o ponto está acima do círculo externo */
-}
+  z-index: 1000; /* Garanta que o ponto está acima do círculo externo 
+}*/
 
-/* Efeito ativo para o círculo externo */
+/* Efeito ativo para o círculo externo 
 .cursor-follower-outer.active {
   transform: translate(-50%, -50%) scale(1.5);
-}
+}*/

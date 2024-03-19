@@ -298,7 +298,7 @@
                                     <div class="iq-watching-block">
                                         <div class="block-images position-relative">
                                             <div class="iq-image-box overly-images">
-                                                <a href="./movie-detail.html" class="d-block">
+                                                <a href="./course-detail" class="d-block">
                                                     <img src="./assets/images/continue-watch/01.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </a>
                                             </div>
@@ -314,7 +314,7 @@
                                     <div class="iq-watching-block">
                                         <div class="block-images position-relative">
                                             <div class="iq-image-box overly-images">
-                                                <a href="./movie-detail.html" class="d-block">
+                                                <a href="./course-detail" class="d-block">
                                                     <img src="./assets/images/continue-watch/02.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </a>
                                             </div>
@@ -330,7 +330,7 @@
                                     <div class="iq-watching-block">
                                         <div class="block-images position-relative">
                                             <div class="iq-image-box overly-images">
-                                                <a href="./movie-detail.html" class="d-block">
+                                                <a href="./course-detail" class="d-block">
                                                     <img src="./assets/images/continue-watch/03.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </a>
                                             </div>
@@ -346,7 +346,7 @@
                                     <div class="iq-watching-block">
                                         <div class="block-images position-relative">
                                             <div class="iq-image-box overly-images">
-                                                <a href="./movie-detail.html" class="d-block">
+                                                <a href="./course-detail" class="d-block">
                                                     <img src="./assets/images/continue-watch/04.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </a>
                                             </div>
@@ -362,7 +362,7 @@
                                     <div class="iq-watching-block">
                                         <div class="block-images position-relative">
                                             <div class="iq-image-box overly-images">
-                                                <a href="./movie-detail.html" class="d-block">
+                                                <a href="./course-detail" class="d-block">
                                                     <img src="./assets/images/continue-watch/05.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </a>
                                             </div>
@@ -378,7 +378,7 @@
                                     <div class="iq-watching-block">
                                         <div class="block-images position-relative">
                                             <div class="iq-image-box overly-images">
-                                                <a href="./movie-detail.html" class="d-block">
+                                                <a href="./course-detail" class="d-block">
                                                     <img src="./assets/images/continue-watch/06.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </a>
                                             </div>

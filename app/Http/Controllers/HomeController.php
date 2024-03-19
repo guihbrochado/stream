@@ -37,7 +37,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-
+ 
         $message = session('message');
 
         $data = Courses::orderBy('created_at', 'desc')->take(3)->get();

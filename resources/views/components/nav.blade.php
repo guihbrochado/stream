@@ -158,7 +158,7 @@
                                                 <a class="nav-link " href="{{ route('audio.index') }}"> Audio </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link " href="{{ route('video.index') }}"> Video </a>
+                                                <a class="nav-link " href="{{ route('blogvideo.index') }}"> Video </a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link " href="{{ route('link.index') }}"> Link </a>

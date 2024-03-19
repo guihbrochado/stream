@@ -37,12 +37,13 @@ use App\Http\Controllers\apps\ContactController;
 use App\Http\Controllers\apps\PlanController;
 use App\Http\Controllers\apps\BlogController;
 use App\Http\Controllers\apps\AudioController;
-use App\Http\Controllers\apps\VideoController;
+use App\Http\Controllers\apps\BlogVideoController;
 use App\Http\Controllers\apps\LinkController;
 use App\Http\Controllers\apps\QuoteController;
 use App\Http\Controllers\apps\ShopController;
 use App\Http\Controllers\apps\MyAccountController;
 use App\Http\Controllers\apps\ManageController;
+use App\Http\Controllers\apps\CourseController;
 
 /*
   |--------------------------------------------------------------------------
@@ -95,11 +96,15 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/about', [AboutController::class, 'index'])->name('about.index');
         Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
         Route::get('/plans', [PlanController::class, 'index'])->name('plan.index');
+        //ROTAS BLOG
         Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
         Route::get('/audio', [AudioController::class, 'index'])->name('audio.index');
-        Route::get('/video', [VideoController::class, 'index'])->name('video.index');
+        Route::get('/blog-video', [BlogVideoController::class, 'index'])->name('blogvideo.index');
         Route::get('/link', [LinkController::class, 'index'])->name('link.index');
         Route::get('/quote', [QuoteController::class, 'index'])->name('quote.index');
+        
+        Route::get('/course-detail', [CourseController::class, 'detail'])->name('course.detail');
+        Route::get('/course-lesson', [CourseController::class, 'lesson'])->name('course.lesson');
         Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
         Route::get('/my-account', [MyAccountController::class, 'index'])->name('myaccount.index');
         Route::get('/whishlist', [ShopController::class, 'whishlist'])->name('shop.wishlist');
