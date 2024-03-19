@@ -8,6 +8,6 @@ use Illuminate\Http\Request;
 class VideoController extends Controller
 {
     public function index() {
-        return view('apps.video.index');
+        return view('apps.blog-video.index');
     }
 }

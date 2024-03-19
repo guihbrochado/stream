@@ -130,7 +130,7 @@
                                                     </div>
                                                     <div class="RightAnimate-four">
                                                         <div class="iq-button">
-                                                            <a href="movie-detail.html" class="btn text-uppercase position-relative">
+                                                            <a href="course-detail" class="btn text-uppercase position-relative">
                                                                 <span class="button-text">stream now</span>
                                                                 <i class="fa-solid fa-play"></i>
                                                             </a>
@@ -183,7 +183,7 @@
                                                     </div>
                                                     <div class="RightAnimate-four">
                                                         <div class="iq-button">
-                                                            <a href="movie-detail.html" class="btn text-uppercase position-relative">
+                                                            <a href="course-detail" class="btn text-uppercase position-relative">
                                                                 <span class="button-text">stream now</span>
                                                                 <i class="fa-solid fa-play"></i>
                                                             </a>
@@ -233,7 +233,7 @@
                                                     </div>
                                                     <div class="RightAnimate-four">
                                                         <div class="iq-button">
-                                                            <a href="movie-detail.html" class="btn text-uppercase position-relative">
+                                                            <a href="course-detail" class="btn text-uppercase position-relative">
                                                                 <span class="button-text">stream now</span>
                                                                 <i class="fa-solid fa-play"></i>
                                                             </a>
@@ -262,7 +262,7 @@
                                     <div class="iq-watching-block">
                                         <div class="block-images position-relative">
                                             <div class="iq-image-box overly-images">
-                                                <a href="./movie-detail.html" class="d-block">
+                                                <a href="./course-detail" class="d-block">
                                                     <img src="./assets/images/continue-watch/01.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </a>
                                             </div>
@@ -278,7 +278,7 @@
                                     <div class="iq-watching-block">
                                         <div class="block-images position-relative">
                                             <div class="iq-image-box overly-images">
-                                                <a href="./movie-detail.html" class="d-block">
+                                                <a href="./course-detail" class="d-block">
                                                     <img src="./assets/images/continue-watch/02.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </a>
                                             </div>
@@ -294,7 +294,7 @@
                                     <div class="iq-watching-block">
                                         <div class="block-images position-relative">
                                             <div class="iq-image-box overly-images">
-                                                <a href="./movie-detail.html" class="d-block">
+                                                <a href="./course-detail" class="d-block">
                                                     <img src="./assets/images/continue-watch/03.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </a>
                                             </div>
@@ -310,7 +310,7 @@
                                     <div class="iq-watching-block">
                                         <div class="block-images position-relative">
                                             <div class="iq-image-box overly-images">
-                                                <a href="./movie-detail.html" class="d-block">
+                                                <a href="./course-detail" class="d-block">
                                                     <img src="./assets/images/continue-watch/04.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </a>
                                             </div>
@@ -326,7 +326,7 @@
                                     <div class="iq-watching-block">
                                         <div class="block-images position-relative">
                                             <div class="iq-image-box overly-images">
-                                                <a href="./movie-detail.html" class="d-block">
+                                                <a href="./course-detail" class="d-block">
                                                     <img src="./assets/images/continue-watch/05.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </a>
                                             </div>
@@ -342,7 +342,7 @@
                                     <div class="iq-watching-block">
                                         <div class="block-images position-relative">
                                             <div class="iq-image-box overly-images">
-                                                <a href="./movie-detail.html" class="d-block">
+                                                <a href="./course-detail" class="d-block">
                                                     <img src="./assets/images/continue-watch/06.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </a>
                                             </div>
@@ -375,7 +375,7 @@
                                     <div class="iq-top-ten-block">
                                         <div class="block-image position-relative">
                                             <div class="img-box">
-                                                <a class="overly-images" href="./movie-detail.html">
+                                                <a class="overly-images" href="./course-detail">
                                                     <img src="./assets/images/top-ten-number/01.webp" alt="movie-card" class="img-fluid object-cover">
                                                 </a>
                                                 <span class="top-ten-numbers texture-text">1</span>
@@ -386,7 +386,7 @@
                                     <div class="iq-top-ten-block">
                                         <div class="block-image position-relative">
                                             <div class="img-box">
-                                                <a class="overly-images" href="./movie-detail.html">
+                                                <a class="overly-images" href="./course-detail">
                                                     <img src="./assets/images/top-ten-number/02.webp" alt="movie-card" class="img-fluid object-cover">
                                                 </a>
                                                 <span class="top-ten-numbers texture-text">2</span>
@@ -397,7 +397,7 @@
                                     <div class="iq-top-ten-block">
                                         <div class="block-image position-relative">
                                             <div class="img-box">
-                                                <a class="overly-images" href="./movie-detail.html">
+                                                <a class="overly-images" href="./course-detail">
                                                     <img src="./assets/images/top-ten-number/03.webp" alt="movie-card" class="img-fluid object-cover">
                                                 </a>
                                                 <span class="top-ten-numbers texture-text">3</span>
@@ -408,7 +408,7 @@
                                     <div class="iq-top-ten-block">
                                         <div class="block-image position-relative">
                                             <div class="img-box">
-                                                <a class="overly-images" href="./movie-detail.html">
+                                                <a class="overly-images" href="./course-detail">
                                                     <img src="./assets/images/top-ten-number/04.webp" alt="movie-card" class="img-fluid object-cover">
                                                 </a>
                                                 <span class="top-ten-numbers texture-text">4</span>
@@ -419,7 +419,7 @@
                                     <div class="iq-top-ten-block">
                                         <div class="block-image position-relative">
                                             <div class="img-box">
-                                                <a class="overly-images" href="./movie-detail.html">
+                                                <a class="overly-images" href="./course-detail">
                                                     <img src="./assets/images/top-ten-number/05.webp" alt="movie-card" class="img-fluid object-cover">
                                                 </a>
                                                 <span class="top-ten-numbers texture-text">5</span>
@@ -430,7 +430,7 @@
                                     <div class="iq-top-ten-block">
                                         <div class="block-image position-relative">
                                             <div class="img-box">
-                                                <a class="overly-images" href="./movie-detail.html">
+                                                <a class="overly-images" href="./course-detail">
                                                     <img src="./assets/images/top-ten-number/06.webp" alt="movie-card" class="img-fluid object-cover">
                                                 </a>
                                                 <span class="top-ten-numbers texture-text">6</span>
@@ -441,7 +441,7 @@
                                     <div class="iq-top-ten-block">
                                         <div class="block-image position-relative">
                                             <div class="img-box">
-                                                <a class="overly-images" href="./movie-detail.html">
+                                                <a class="overly-images" href="./course-detail">
                                                     <img src="./assets/images/top-ten-number/07.webp" alt="movie-card" class="img-fluid object-cover">
                                                 </a>
                                                 <span class="top-ten-numbers texture-text">7</span>
@@ -452,7 +452,7 @@
                                     <div class="iq-top-ten-block">
                                         <div class="block-image position-relative">
                                             <div class="img-box">
-                                                <a class="overly-images" href="./movie-detail.html">
+                                                <a class="overly-images" href="./course-detail">
                                                     <img src="./assets/images/top-ten-number/08.webp" alt="movie-card" class="img-fluid object-cover">
                                                 </a>
                                                 <span class="top-ten-numbers texture-text">8</span>
@@ -463,7 +463,7 @@
                                     <div class="iq-top-ten-block">
                                         <div class="block-image position-relative">
                                             <div class="img-box">
-                                                <a class="overly-images" href="./movie-detail.html">
+                                                <a class="overly-images" href="./course-detail">
                                                     <img src="./assets/images/top-ten-number/09.webp" alt="movie-card" class="img-fluid object-cover">
                                                 </a>
                                                 <span class="top-ten-numbers texture-text">9</span>
@@ -474,7 +474,7 @@
                                     <div class="iq-top-ten-block">
                                         <div class="block-image position-relative">
                                             <div class="img-box">
-                                                <a class="overly-images" href="./movie-detail.html">
+                                                <a class="overly-images" href="./course-detail">
                                                     <img src="./assets/images/top-ten-number/10.webp" alt="movie-card" class="img-fluid object-cover">
                                                 </a>
                                                 <span class="top-ten-numbers texture-text">10</span>
@@ -503,14 +503,14 @@
                                         <div class="iq-card card-hover">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/01.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">giikre</a>
+                                                                <a href="./course-detail">giikre</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">2hr : 12mins</span>
@@ -568,7 +568,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
@@ -582,14 +582,14 @@
                                         <div class="iq-card card-hover">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/02.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">YoShi</a>
+                                                                <a href="./course-detail">YoShi</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">1hr : 22mins</span>
@@ -647,7 +647,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
@@ -661,14 +661,14 @@
                                         <div class="iq-card card-hover">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/03.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">We Gare</a>
+                                                                <a href="./course-detail">We Gare</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">1hr : 30mins</span>
@@ -726,7 +726,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
@@ -740,14 +740,14 @@
                                         <div class="iq-card card-hover">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/04.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">Avengers</a>
+                                                                <a href="./course-detail">Avengers</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">1hr : 45mins</span>
@@ -805,7 +805,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
@@ -819,14 +819,14 @@
                                         <div class="iq-card card-hover">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/05.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">Chosfies</a>
+                                                                <a href="./course-detail">Chosfies</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">1hr : 30mins</span>
@@ -884,7 +884,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
@@ -898,14 +898,14 @@
                                         <div class="iq-card card-hover">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/06.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">Tf Oaler</a>
+                                                                <a href="./course-detail">Tf Oaler</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">1hr : 30mins</span>
@@ -963,7 +963,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
@@ -977,14 +977,14 @@
                                         <div class="iq-card card-hover">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/07.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">Another Danger</a>
+                                                                <a href="./course-detail">Another Danger</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">1hr : 30mins</span>
@@ -1042,7 +1042,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
@@ -1075,14 +1075,14 @@
                                         <div class="iq-card card-hover iq-card-style-2">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/01.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">giikre</a>
+                                                                <a href="./course-detail">giikre</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">2hr : 12mins</span>
@@ -1140,7 +1140,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
@@ -1154,14 +1154,14 @@
                                         <div class="iq-card card-hover iq-card-style-2">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/02.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">YoShi</a>
+                                                                <a href="./course-detail">YoShi</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">1hr : 22mins</span>
@@ -1219,7 +1219,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
@@ -1233,14 +1233,14 @@
                                         <div class="iq-card card-hover iq-card-style-2">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/03.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">We Gare</a>
+                                                                <a href="./course-detail">We Gare</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">1hr : 30mins</span>
@@ -1298,7 +1298,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
@@ -1312,14 +1312,14 @@
                                         <div class="iq-card card-hover iq-card-style-2">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/04.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">Avengers</a>
+                                                                <a href="./course-detail">Avengers</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">2hr : 38mins</span>
@@ -1377,7 +1377,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
@@ -1391,14 +1391,14 @@
                                         <div class="iq-card card-hover iq-card-style-2">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/05.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">Chosfies</a>
+                                                                <a href="./course-detail">Chosfies</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">2hr : 10mins</span>
@@ -1456,7 +1456,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
@@ -1470,14 +1470,14 @@
                                         <div class="iq-card card-hover iq-card-style-2">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/06.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">Tf Oaler</a>
+                                                                <a href="./course-detail">Tf Oaler</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">1hr : 40mins</span>
@@ -1535,7 +1535,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
@@ -1549,14 +1549,14 @@
                                         <div class="iq-card card-hover iq-card-style-2">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="./course-detail" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="./assets/images/movies/related/07.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">Another Danger</a>
+                                                                <a href="./course-detail">Another Danger</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">1hr : 40mins</span>
@@ -1614,7 +1614,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="iq-button">
-                                                        <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
+                                                        <a href="course-detail" class="btn text-uppercase position-relative rounded-circle">
                                                             <i class="fa-solid fa-play ms-0"></i>
                                                         </a>
                                                     </div>
