@@ -42,72 +42,17 @@ class HomeController extends Controller
 
         $data = Courses::orderBy('created_at', 'desc')->take(3)->get();
 
-        //
-        // $data = DB::table('coursesmodules as cm')
-        //     ->where('cp.id_course', $idcourse)
-        //     ->orderBy('c.id', 'desc');
+        $Top6 = Courses::orderBy('created_at', 'desc')->take(6)->get();
+        // $LikeOrder = Courses::orderBy('created_at', 'desc')->take(3)->get();
+        $dateOrder = Courses::orderBy('created_at', 'desc')->take(6)->get();
 
-        // $data = DB::table('courses as c')
-        //     ->where('cp.id_user', $iduser)
-        //     ->where('cp.id_course', $idcourse)
-        //     ->orderBy('c.id', 'desc')
-        //     ->first();
-
-        // $modules = DB::table('coursesmodules as cm')
-        //     ->select('cm.*')
-        //     ->where('cm.id_course', $idcourse)
-        //     ->orderBy('cm.id', 'asc')
-        //     ->get();
-
-        // foreach ($modules as $row) {
-        //     $row->lessons = array();
-
-        //     $courseslessons = DB::table('courseslessons as cl')
-        //         ->select('cl.*')
-        //         ->where('cl.id_module', $row->id)
-        //         ->orderBy('cl.lessonnumber', 'asc')
-        //         ->get();
-
-        //     foreach ($courseslessons as $aula) {
-        //         array_push($row->lessons, $aula);
-        //     }
-        // }
-
-        // dump($data);
-        //
-
-        return view('apps.course.index', ['data' => $data]);
+        return view('apps.course.index', ['data' => $data, 'dateOrder' => $dateOrder]);
     }
 
     function ajaxCoursesModules($idcourse)
     {
         $data = DB::select("select * from coursesmodules c where id_course = $idcourse;");
         $count = count($data);
-
-        $options = '<select id="selectmodules' . $idcourse . '" class="form-control season-select select2-basic-single js-states">';
-
-
-        for ($i = 0; $i < $count; $i++) {
-            $selected = ($i == 0) ? 'selected' : '';
-            $options .= "<option value='{$data[$i]->id}' $selected>{$data[$i]->module}</option>";
-        }
-
-        $options .= '</select>';
-
-        return $options;
-    }
-
-    function ajaxCoursesLessons($idcourse, $idmodule)
-    {
-        $data = DB::select("select cl.* from courseslessons cl 
-        inner join coursesmodules cm on cl.id_module = cm.id  
-        inner join courses c on cm.id_course = c.id
-        where c.id = $idcourse and cm.id = $idmodule;");
-        
-        // dump($data);
-        return $data;
-
-        
 
         // $options = '<select id="selectmodules' . $idcourse . '" class="form-control season-select select2-basic-single js-states">';
 
@@ -119,5 +64,22 @@ class HomeController extends Controller
         // $options .= '</select>';
 
         // return $options;
+
+        return view('apps.course.divmodules', ['data' => $data, 'count' => $count, 'idcourse' => $idcourse]);
+
+    }
+
+    function ajaxCoursesLessons($idcourse, $idmodule)
+    {
+        $data = DB::select("select cl.*, cm.*, cl.updated_at as clupdated_at from courseslessons cl 
+        inner join coursesmodules cm on cl.id_module = cm.id  
+        inner join courses c on cm.id_course = c.id
+        where c.id = $idcourse and cm.id = $idmodule;");
+        
+        // dump($data);
+
+        return view('apps.course.divlessons', ['data' => $data]);
+        
+
     }
 }
