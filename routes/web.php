@@ -44,6 +44,7 @@ use App\Http\Controllers\apps\ShopController;
 use App\Http\Controllers\apps\MyAccountController;
 use App\Http\Controllers\apps\ManageController;
 use App\Http\Controllers\apps\CourseController;
+use App\Http\Controllers\apps\CoursesController;
 
 /*
   |--------------------------------------------------------------------------
@@ -66,7 +67,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    
 });
 
 Route::get('/index', function () {
@@ -76,14 +76,14 @@ Route::get('/terms', [TermsController::class, 'index'])->name('terms.index');
 Route::post('/terms', [TermsController::class, 'acceptTerms'])->name('terms.acceptTerms');
 
 Route::middleware(['checkTermsAccepted'])->group(function () {
-// rotas do template:
+    // rotas do template:
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
     Route::get('/ajaxCoursesModules/{idcourse}', [App\Http\Controllers\HomeController::class, 'ajaxCoursesModules'])->name('ajaxCoursesModules');
     Route::get('/ajaxCoursesLessons/{idcourse}/{idmodules}', [App\Http\Controllers\HomeController::class, 'ajaxCoursesLessons'])->name('ajaxCoursesLessons');
     Route::get('/traders_courses', [TradersCoursesController::class, 'index'])->name('traders_courses.index');
-    
-//Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
-//Language Translation
+
+    //Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
+    //Language Translation
     Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
     Route::post('/formsubmit', [App\Http\Controllers\HomeController::class, 'FormSubmit'])->name('FormSubmit');
 
@@ -92,7 +92,7 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         /* Route::get('/cockpit', function () {
           return view('pages-under_development');
           })->name('cockpit.index'); */
-        
+
         Route::get('/about', [AboutController::class, 'index'])->name('about.index');
         Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
         Route::get('/plans', [PlanController::class, 'index'])->name('plan.index');
@@ -102,15 +102,11 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/blog-video', [BlogVideoController::class, 'index'])->name('blogvideo.index');
         Route::get('/link', [LinkController::class, 'index'])->name('link.index');
         Route::get('/quote', [QuoteController::class, 'index'])->name('quote.index');
-        
-        Route::get('/course-detail', [CourseController::class, 'detail'])->name('course.detail');
-        Route::get('/course-lesson', [CourseController::class, 'lesson'])->name('course.lesson');
-        Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-        Route::get('/my-account', [MyAccountController::class, 'index'])->name('myaccount.index');
-        Route::get('/whishlist', [ShopController::class, 'whishlist'])->name('shop.wishlist');
-        Route::get('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
-        Route::get('/detail', [ShopController::class, 'detail'])->name('shop.detail');
-       
+
+
+
+
+        Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 
 
         Route::get('/loja', function () {
@@ -151,13 +147,13 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/store/payment', [StoreController::class, 'payment'])->name('store.payment');
         Route::post('/charge', [ChargesController::class, 'create'])->name('charge.create');
         Route::get('/charge/list', [ChargesController::class, 'getCharges'])->name('charge.getcharge');
-        
-        
+
+
         Route::get('/cart', [CartController::class, 'viewCart'])->name('view.cart');
         Route::get('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.to.cart');
         Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
         Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
-        
+
         Route::post('/storeOrder', [OrderController::class, 'store'])->name('order.store');
     });
 
@@ -174,7 +170,10 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
 Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified'], 'middleware' => ['permission:admin']], function () {
 
     Route::get('/manage', [ManageController::class, 'index'])->name('manage.index');
-    
+
+    Route::get('/courses', [CoursesController::class, 'index'])->name('courses.index');
+
+
     Route::get('/clientes', function () {
         return view('pages-under_development');
     })->name('clientes.index');
