@@ -44,6 +44,7 @@ use App\Http\Controllers\apps\ShopController;
 use App\Http\Controllers\apps\MyAccountController;
 use App\Http\Controllers\apps\ManageController;
 use App\Http\Controllers\apps\CourseController;
+use App\Http\Controllers\apps\LiveRoomController;
 
 /*
   |--------------------------------------------------------------------------
@@ -103,6 +104,11 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         
         Route::get('/course-detail', [CourseController::class, 'detail'])->name('course.detail');
         Route::get('/course-lesson', [CourseController::class, 'lesson'])->name('course.lesson');
+        
+        //LIVE ROOM
+        Route::get('/rooms', [LiveRoomController::class, 'index'])->name('rooms.index');
+        Route::get('/rooms/{room}', [LiveRoomController::class, 'show'])->name('rooms.show');
+        
         Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
         Route::get('/my-account', [MyAccountController::class, 'index'])->name('myaccount.index');
         Route::get('/whishlist', [ShopController::class, 'whishlist'])->name('shop.wishlist');

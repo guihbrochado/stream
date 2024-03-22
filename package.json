@@ -18,6 +18,8 @@
         "vite-plugin-static-copy": "^0.13.1"
     },
     "dependencies": {
-        "moment": "^2.29.4"
+        "laravel-echo": "^1.16.0",
+        "moment": "^2.29.4",
+        "pusher-js": "^8.4.0-rc2"
     }
 }
