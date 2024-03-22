@@ -2,21 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use DateTime;
-use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
-use Exception;
-
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Courses;
-
-use PgSql\Lob;
-use Whoops\Run;
 
 class HomeController extends Controller
 {
@@ -37,14 +25,11 @@ class HomeController extends Controller
      */
     public function index()
     {
- 
-        $message = session('message');
+        $data = Courses::orderBy('created_at', 'desc')->get();
 
-        $data = Courses::orderBy('created_at', 'desc')->take(3)->get();
-
-        $Top6 = Courses::orderBy('created_at', 'desc')->take(6)->get();
+        //$top = Courses::orderBy('created_at', 'desc')->take(6)->get();
         // $LikeOrder = Courses::orderBy('created_at', 'desc')->take(3)->get();
-        $dateOrder = Courses::orderBy('created_at', 'desc')->take(6)->get();
+        $dateOrder = Courses::orderBy('created_at', 'desc')->get();
 
         return view('apps.course.index', ['data' => $data, 'dateOrder' => $dateOrder]);
     }

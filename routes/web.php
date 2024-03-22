@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\apps\AccountController;
 use App\Http\Controllers\apps\BrokerController;
 use App\Http\Controllers\apps\CockpitController;
@@ -78,7 +79,7 @@ Route::post('/terms', [TermsController::class, 'acceptTerms'])->name('terms.acce
 
 Route::middleware(['checkTermsAccepted'])->group(function () {
     // rotas do template:
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+    Route::get('/', [HomeController::class, 'index'])->name('index');
     Route::get('/ajaxCoursesModules/{idcourse}', [App\Http\Controllers\HomeController::class, 'ajaxCoursesModules'])->name('ajaxCoursesModules');
     Route::get('/ajaxCoursesLessons/{idcourse}/{idmodules}', [App\Http\Controllers\HomeController::class, 'ajaxCoursesLessons'])->name('ajaxCoursesLessons');
     Route::get('/traders_courses', [TradersCoursesController::class, 'index'])->name('traders_courses.index');
@@ -89,10 +90,6 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
     Route::post('/formsubmit', [App\Http\Controllers\HomeController::class, 'FormSubmit'])->name('FormSubmit');
 
     Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified', 'permission:user|client']], function () {
-
-        /* Route::get('/cockpit', function () {
-          return view('pages-under_development');
-          })->name('cockpit.index'); */
 
         Route::get('/about', [AboutController::class, 'index'])->name('about.index');
         Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
