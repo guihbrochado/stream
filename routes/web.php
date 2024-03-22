@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\apps\AccountController;
 use App\Http\Controllers\apps\BrokerController;
 use App\Http\Controllers\apps\CockpitController;
@@ -44,6 +45,7 @@ use App\Http\Controllers\apps\ShopController;
 use App\Http\Controllers\apps\MyAccountController;
 use App\Http\Controllers\apps\ManageController;
 use App\Http\Controllers\apps\CourseController;
+use App\Http\Controllers\apps\LiveRoomController;
 use App\Http\Controllers\apps\CoursesController;
 use App\Http\Controllers\apps\CoursesModulesController;
 use App\Http\Controllers\apps\CoursesLessonsController;
@@ -79,7 +81,7 @@ Route::post('/terms', [TermsController::class, 'acceptTerms'])->name('terms.acce
 
 Route::middleware(['checkTermsAccepted'])->group(function () {
     // rotas do template:
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+    Route::get('/', [HomeController::class, 'index'])->name('index');
     Route::get('/ajaxCoursesModules/{idcourse}', [App\Http\Controllers\HomeController::class, 'ajaxCoursesModules'])->name('ajaxCoursesModules');
     Route::get('/ajaxCoursesLessons/{idcourse}/{idmodules}', [App\Http\Controllers\HomeController::class, 'ajaxCoursesLessons'])->name('ajaxCoursesLessons');
     Route::get('/traders_courses', [TradersCoursesController::class, 'index'])->name('traders_courses.index');
@@ -91,10 +93,6 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
 
     Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified', 'permission:user|client']], function () {
 
-        /* Route::get('/cockpit', function () {
-          return view('pages-under_development');
-          })->name('cockpit.index'); */
-
         Route::get('/about', [AboutController::class, 'index'])->name('about.index');
         Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
         Route::get('/plans', [PlanController::class, 'index'])->name('plan.index');
@@ -104,10 +102,20 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/blog-video', [BlogVideoController::class, 'index'])->name('blogvideo.index');
         Route::get('/link', [LinkController::class, 'index'])->name('link.index');
         Route::get('/quote', [QuoteController::class, 'index'])->name('quote.index');
-
-
-
-
+       
+        Route::get('/course-detail', [CourseController::class, 'detail'])->name('course.detail');
+        Route::get('/course-lesson', [CourseController::class, 'lesson'])->name('course.lesson');
+        
+        //LIVE ROOM
+        Route::get('/rooms', [LiveRoomController::class, 'index'])->name('rooms.index');
+        Route::get('/rooms/{room}', [LiveRoomController::class, 'show'])->name('rooms.show');
+        
+        Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+        Route::get('/my-account', [MyAccountController::class, 'index'])->name('myaccount.index');
+        Route::get('/whishlist', [ShopController::class, 'whishlist'])->name('shop.wishlist');
+        Route::get('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
+        Route::get('/detail', [ShopController::class, 'detail'])->name('shop.detail');
+       
         Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 
 
