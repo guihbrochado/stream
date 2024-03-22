@@ -19,6 +19,8 @@ class CoursesController extends Controller
         $data = Courses::all();
         $message = session('message');
         
+        // dd($data);
+
         return view('apps.courses.index')->with('data', $data)->with('message', $message);
     }
 
@@ -28,8 +30,8 @@ class CoursesController extends Controller
     public function create()
     {
         $courses = new Courses;
-
-        return view('apps.courses.form')->with(['courses' => $courses, 'action' => 'create']);
+        
+        return view('apps.courses.create')->with(['courses' => $courses]);
     }
 
     /**
@@ -94,7 +96,7 @@ class CoursesController extends Controller
             //return response()->json(['erro' => 'Impossível realizar a atualização, registro pesquisado não existe'], Response::HTTP_NOT_FOUND);
         }
 
-        return view('apps.courses.form')->with(['courses' => $courses, 'action' => 'edit']);
+        return view('apps.courses.edit')->with(['courses' => $courses, 'action' => 'edit']);
     }
 
     /**

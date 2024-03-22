@@ -25,12 +25,12 @@ class CoursesModulesController extends Controller
         $data = DB::table('coursesmodules as cm')
         ->join('courses as c', 'c.id', '=', 'cm.id_course')
         ->select('cm.*', 'c.course as coursename' )
-        ->orderBy('c.id', 'desc')
+        ->orderBy('cm.modulenumber', 'desc')
         ->get();
 
         // dd($data);
 
-        return view('apps.courses_modules.index')->with('data', $data)->with('message', $message);
+        return view('apps.coursesmodules.index')->with('data', $data)->with('message', $message);
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Http\Requests\CoursesLessonsFormRequest;
 use App\Models\CoursesLessons;
 use App\Models\CoursesModules;
 use App\Models\Courses;
+
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -28,7 +29,9 @@ class CoursesLessonsController extends Controller
             ->orderBy('cl.id', 'desc')
             ->get();
 
-        return view('apps.courses_lessons.index')->with('data', $data)->with('message', $message);
+            // dd($data);
+
+        return view('apps.courseslessons.index')->with('data', $data)->with('message', $message);
     }
 
     /**
@@ -45,7 +48,7 @@ class CoursesLessonsController extends Controller
             ->orderBy('c.id', 'desc')
             ->get();
 
-        return view('apps.courses_lessons.form')->with(['coursesLessons' => $coursesLessons, 'modulesandcourses' => $modulesandcourses, 'action' => 'create']);
+        return view('apps.courseslessons.create')->with(['coursesLessons' => $coursesLessons, 'modulesandcourses' => $modulesandcourses, 'action' => 'create']);
     }
 
     /**
@@ -113,7 +116,7 @@ class CoursesLessonsController extends Controller
             //return response()->json(['erro' => 'Impossível realizar a atualização, registro pesquisado não existe'], Response::HTTP_NOT_FOUND);
         }
 
-        return view('apps.courses_lessons.form')->with(['coursesLessons' => $coursesLessons,  'modulesandcourses' => $modulesandcourses,  'action' => 'show']);
+        return view('apps.courseslessons.form')->with(['coursesLessons' => $coursesLessons,  'modulesandcourses' => $modulesandcourses,  'action' => 'show']);
     }
 
     /**
@@ -127,7 +130,7 @@ class CoursesLessonsController extends Controller
             ->select('cm.*', 'c.course as coursename')
             ->orderBy('c.id', 'desc')
             ->get();
-        return view('apps.courses_lessons.form')->with(['coursesLessons' => $coursesLessons,  'modulesandcourses' => $modulesandcourses,  'action' => 'edit']);
+        return view('apps.courseslessons.form')->with(['coursesLessons' => $coursesLessons,  'modulesandcourses' => $modulesandcourses,  'action' => 'edit']);
     }
 
     /**
