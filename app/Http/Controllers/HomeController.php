@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Models\Courses;
+use App\Models\LiveRoom;
 
 class HomeController extends Controller
 {
@@ -26,12 +27,14 @@ class HomeController extends Controller
     public function index()
     {
         $data = Courses::orderBy('created_at', 'desc')->get();
+        
+        $live = LiveRoom::orderBy('created_at', 'desc')->get();
 
         //$top = Courses::orderBy('created_at', 'desc')->take(6)->get();
         // $LikeOrder = Courses::orderBy('created_at', 'desc')->take(3)->get();
         $dateOrder = Courses::orderBy('created_at', 'desc')->get();
 
-        return view('apps.course.index', ['data' => $data, 'dateOrder' => $dateOrder]);
+        return view('apps.course.index', ['data' => $data, 'live' => $live,'dateOrder' => $dateOrder]);
     }
 
     function ajaxCoursesModules($idcourse)
