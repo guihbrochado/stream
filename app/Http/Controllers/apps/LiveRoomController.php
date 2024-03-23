@@ -4,14 +4,13 @@ namespace App\Http\Controllers\apps;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\LiveRoom;
 use Exception;
 
 class LiveRoomController extends Controller {
 
     public function index() {
-        $rooms = LiveRoom::orderBy('created_at', 'desc');
+        $rooms = LiveRoom::all();
         return view('apps.rooms.index', compact('rooms'));
     }
 
@@ -44,7 +43,7 @@ class LiveRoomController extends Controller {
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
-        return redirect()->route('rooms.index')->with('message', "Sala '{$room->title}' criada com sucesso.");
+        return redirect()->route('apps.rooms.index')->with('message', "Sala '{$room->title}' criada com sucesso.");
     }
 
     public function show(LiveRoom $room) {
