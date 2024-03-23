@@ -1198,83 +1198,41 @@
                      </div>
                   </div>
                   <div class="card-body">
-                     <div class="new-user-info">
-                        <form>
-                           <div class="row">
-                              <div class="form-group col-md-6">
-                                 <label class="form-label" for="fname">First Name:</label>
-                                 <input type="text" class="form-control" id="fname" placeholder="First Name">
-                              </div>
-                              <div class="form-group col-md-6">
-                                 <label class="form-label" for="lname">Last Name:</label>
-                                 <input type="text" class="form-control" id="lname" placeholder="Last Name">
-                              </div>
-                              <div class="form-group col-md-6">
-                                 <label class="form-label" for="add1">Street Address 1:</label>
-                                 <input type="text" class="form-control" id="add1" placeholder="Street Address 1">
-                              </div>
-                              <div class="form-group col-md-6">
-                                 <label class="form-label" for="add2">Street Address 2:</label>
-                                 <input type="text" class="form-control" id="add2" placeholder="Street Address 2">
-                              </div>
-                              <div class="form-group col-md-12">
-                                 <label class="form-label" for="cname">Company Name:</label>
-                                 <input type="text" class="form-control" id="cname" placeholder="Company Name">
-                              </div>
-                              <div class="form-group col-sm-12">
-                                 <label class="form-label">Country:</label>
-                                 <select name="type" class="selectpicker form-control" data-style="py-0">
-                                    <option>Select Country</option>
-                                    <option>Caneda</option>
-                                    <option>Noida</option>
-                                    <option >USA</option>
-                                    <option>India</option>
-                                    <option>Africa</option>
-                                 </select>
-                              </div>
-                              <div class="form-group col-md-6">
-                                 <label class="form-label" for="mobno">Mobile Number:</label>
-                                 <input type="text" class="form-control" id="mobno" placeholder="Mobile Number">
-                              </div>
-                              <div class="form-group col-md-6">
-                                 <label class="form-label" for="altconno">Alternate Contact:</label>
-                                 <input type="text" class="form-control" id="altconno" placeholder="Alternate Contact">
-                              </div>
-                              <div class="form-group col-md-6">
-                                 <label class="form-label" for="email">Email:</label>
-                                 <input type="email" class="form-control" id="email" placeholder="Email">
-                              </div>
-                              <div class="form-group col-md-6">
-                                 <label class="form-label" for="pno">Pin Code:</label>
-                                 <input type="text" class="form-control" id="pno" placeholder="Pin Code">
-                              </div>
-                              <div class="form-group col-md-12">
-                                 <label class="form-label" for="city">Town/City:</label>
-                                 <input type="text" class="form-control" id="city" placeholder="Town/City">
-                              </div>
-                           </div>
-                           <hr>
-                           <h5 class="mb-3">Security</h5>
-                           <div class="row">
-                              <div class="form-group col-md-12">
-                                 <label class="form-label" for="uname">User Name:</label>
-                                 <input type="text" class="form-control" id="uname" placeholder="User Name">
-                              </div>
-                              <div class="form-group col-md-6">
-                                 <label class="form-label" for="pass">Password:</label>
-                                 <input type="password" class="form-control" id="pass" placeholder="Password">
-                              </div>
-                              <div class="form-group col-md-6">
-                                 <label class="form-label" for="rpass">Repeat Password:</label>
-                                 <input type="password" class="form-control" id="rpass" placeholder="Repeat Password ">
-                              </div>
-                           </div>
-                           <div class="checkbox">
-                              <label class="form-label"><input class="form-check-input me-2" type="checkbox" value="" id="flexchexked">Enable Two-Factor-Authentication</label>
-                           </div>
-                           <button type="submit" class="btn btn-primary">Add New User</button>
-                        </form>
-                     </div>
+                     @if(session('message'))
+                        <div class="alert alert-success">{{ session('message') }}</div>
+                    @endif
+                    @if(session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
+                    <form action="{{ route('rooms.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="title">Room Title:</label>
+                                <input type="text" class="form-control" id="title" name="title" placeholder="Room Title" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="cover">Cover Image:</label>
+                                <input type="file" class="form-control" id="cover" name="cover">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="form-label" for="description">Room Description:</label>
+                                <textarea class="form-control" id="description" name="description" required></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="is_free">Is the room free?:</label>
+                                <select name="is_free" class="form-control">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="price">Price:</label>
+                                <input type="text" class="form-control" id="price" name="price" placeholder="Price">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Create Room</button>
+                    </form>
                   </div>
                </div>
             </div>

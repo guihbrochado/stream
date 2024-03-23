@@ -43,7 +43,7 @@ class LiveRoomController extends Controller {
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
-        return redirect()->route('apps.rooms.index')->with('message', "Sala '{$room->title}' criada com sucesso.");
+        return redirect()->route('rooms.index')->with('message', "Sala '{$room->title}' criada com sucesso.");
     }
 
     public function show(LiveRoom $room) {
