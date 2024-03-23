@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="">
 
 @include('components.headdash')
 <body class="  ">
@@ -7,7 +7,7 @@
     <div id="loading">
         <div class="loader simple-loader">
             <div class="loader-body ">
-                <img src="assets/dashboard/images/loader.gif" alt="loader" class="image-loader img-fluid ">
+                <img src="{{ asset('assets/dashboard/images/loader.gif')}}" alt="loader" class="image-loader img-fluid ">
             </div>
         </div>
     </div>

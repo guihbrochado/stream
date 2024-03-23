@@ -11,6 +11,7 @@ class LiveRoom extends Model {
 
     protected $fillable = [
         'title',
+        'cover',
         'description',
         'is_free',
         'price'
