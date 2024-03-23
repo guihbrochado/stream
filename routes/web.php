@@ -102,20 +102,20 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/blog-video', [BlogVideoController::class, 'index'])->name('blogvideo.index');
         Route::get('/link', [LinkController::class, 'index'])->name('link.index');
         Route::get('/quote', [QuoteController::class, 'index'])->name('quote.index');
-       
-        Route::get('/course-detail', [CourseController::class, 'detail'])->name('course.detail');
+
+        Route::get('/course-detail/{id}', [CourseController::class, 'detail'])->name('course.detail');
         Route::get('/course-lesson', [CourseController::class, 'lesson'])->name('course.lesson');
-        
+
         //LIVE ROOM
         Route::get('/rooms', [LiveRoomController::class, 'index'])->name('rooms.index');
         Route::get('/rooms/{room}', [LiveRoomController::class, 'show'])->name('rooms.show');
-        
+
         Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
         Route::get('/my-account', [MyAccountController::class, 'index'])->name('myaccount.index');
         Route::get('/whishlist', [ShopController::class, 'whishlist'])->name('shop.wishlist');
         Route::get('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
         Route::get('/detail', [ShopController::class, 'detail'])->name('shop.detail');
-       
+
         Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 
 
@@ -183,6 +183,8 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
 
     Route::get('/courses', [CoursesController::class, 'index'])->name('courses.index');
     Route::get('/courses/create', [CoursesController::class, 'create'])->name('courses.create');
+    Route::post('/courses/store', [CoursesController::class, 'store'])->name('courses.store');
+    Route::patch('/courses/{id}', [CoursesController::class, 'update'])->name('courses.update');
     Route::get('/courses/show/{id}', [CoursesController::class, 'show'])->name('courses.show');
     Route::get('/courses/edit/{id}', [CoursesController::class, 'edit'])->name('courses.edit');
     Route::get('/courses/destroy/{id}', [CoursesController::class, 'destroy'])->name('courses.destroy');
@@ -198,7 +200,7 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/courseslessons/show/{id}', [CoursesLessonsController::class, 'show'])->name('courseslessons.show');
     Route::get('/courseslessons/edit/{id}', [CoursesLessonsController::class, 'edit'])->name('courseslessons.edit');
     Route::get('/courseslessons/destroy/{id}', [CoursesLessonsController::class, 'destroy'])->name('courseslessons.destroy');
-    
+
     Route::get('/clientes', function () {
         return view('pages-under_development');
     })->name('clientes.index');

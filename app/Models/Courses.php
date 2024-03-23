@@ -21,5 +21,6 @@ class Courses extends Model
         'expiration',
         'price',
         'certification',
+        'isfree',
     ];
 }

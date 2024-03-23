@@ -19,13 +19,14 @@
                 </i>
             </div>
         </div>
+
         <div class="sidebar-body pt-0 data-scrollbar">
             <div class="sidebar-list">
                 <!-- Sidebar Menu Start -->
                 <ul class="navbar-nav iq-main-menu" id="sidebar-menu">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page"
-                            href="dashboard/index.html">
+                            href="{{ route('manage.index')}}">
                             <i class="icon" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Dashboard" data-bs-original-title="Dashboard">
                                 <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path opacity="0.4" d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z" fill="currentColor"></path>
@@ -562,7 +563,7 @@
                         </a>
                         <ul class="sub-nav collapse" id="sidebar-courses" data-bs-parent="#sidebar-courses">
                             <li class="nav-item">
-                                <a class="nav-link " href="dashboard/widget/widgetbasic.html">
+                                <a class="nav-link " href="{{route('courses.index')}}">
                                     <i class="icon" data-bs-toggle="tooltip" title="Cursos" data-bs-placement="right" aria-label="Cursos" data-bs-original-title="Cursos">
                                         <i class="fa-regular fa-square-full"></i>
                                     </i>
@@ -570,7 +571,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link " href="dashboard/widget/widgetchart.html">
+                                <a class="nav-link " href="{{route('coursesmodules.index')}}">
                                     <i class="icon" data-bs-toggle="tooltip" title="Modulos" data-bs-placement="right" aria-label="Modulos" data-bs-original-title="Modulos">
                                         <i class="fa-regular fa-square-full"></i>
                                     </i>
@@ -578,7 +579,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link " href="/courses">
+                                <a class="nav-link " href="{{route('courseslessons.index')}}">
                                     <i class="icon" data-bs-toggle="tooltip" title="Aulas" data-bs-placement="right" aria-label="Aulas" data-bs-original-title="Aulas">
                                         <i class="fa-regular fa-square-full"></i>
                                     </i>

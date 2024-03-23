@@ -30,11 +30,17 @@ class HomeController extends Controller
         
         $live = LiveRoom::orderBy('created_at', 'desc')->get();
 
-        //$top = Courses::orderBy('created_at', 'desc')->take(6)->get();
-        // $LikeOrder = Courses::orderBy('created_at', 'desc')->take(3)->get();
+        $coursesTop10 = DB::Select("
+        SELECT c.id, c.course, c.cover, SUM(ce.rate) AS total_rate
+        FROM coursesevaluation ce
+        inner join courses c on ce.idcourse = c.id
+        GROUP BY (ce.idcourse)
+        order by total_rate DESC
+        limit 10;");
+        
         $dateOrder = Courses::orderBy('created_at', 'desc')->get();
 
-        return view('apps.course.index', ['data' => $data, 'live' => $live,'dateOrder' => $dateOrder]);
+        return view('apps.course.index', ['data' => $data, 'coursesTop10' => $coursesTop10, 'live' => $live,'dateOrder' => $dateOrder]);
     }
 
     function ajaxCoursesModules($idcourse)
