@@ -4,14 +4,13 @@ namespace App\Http\Controllers\apps;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\LiveRoom;
 use Exception;
 
 class LiveRoomController extends Controller {
 
     public function index() {
-        $rooms = LiveRoom::orderBy('created_at', 'desc');
+        $rooms = LiveRoom::all();
         return view('apps.rooms.index', compact('rooms'));
     }
 

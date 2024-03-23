@@ -180,6 +180,9 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
 Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified'], 'middleware' => ['permission:admin']], function () {
 
     Route::get('/manage', [ManageController::class, 'index'])->name('manage.index');
+    
+    Route::get('/add-rooms', [LiveRoomController::class, 'create'])->name('live.index');
+    Route::post('/add-rooms/store', [LiveRoomController::class, 'store'])->name('rooms.store');
 
     Route::get('/courses', [CoursesController::class, 'index'])->name('courses.index');
     Route::get('/courses/create', [CoursesController::class, 'create'])->name('courses.create');
