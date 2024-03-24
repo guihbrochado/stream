@@ -16,17 +16,22 @@ class CoursesModulesController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        // Assigning a value to $controller in the constructor
+        $this->controller = "coursesmodules.index";
+    }
     public function index()
     {
         // $data = CoursesModules::all();
         $message = session('message');
 
-        
+
         $data = DB::table('coursesmodules as cm')
-        ->join('courses as c', 'c.id', '=', 'cm.id_course')
-        ->select('cm.*', 'c.course as coursename' )
-        ->orderBy('cm.modulenumber', 'desc')
-        ->get();
+            ->join('courses as c', 'c.id', '=', 'cm.id_course')
+            ->select('cm.*', 'c.course as coursename')
+            ->orderBy('cm.modulenumber', 'desc')
+            ->get();
 
         // dd($data);
 
@@ -41,8 +46,8 @@ class CoursesModulesController extends Controller
         $coursesModules = new CoursesModules;
         $courses = Courses::all();
 
-
-        return view('apps.courses_modules.form')->with(['coursesModules' => $coursesModules, 'courses' => $courses, 'action' => 'create']);
+        return view('apps.coursesmodules.create')->with(['coursesModules' => $coursesModules, 'controller' => $this->controller,
+         'courses' => $courses, 'action' => 'create']);
     }
 
     /**
@@ -58,14 +63,13 @@ class CoursesModulesController extends Controller
                     'modulenumber' => $request->modulenumber,
                 ]
             );
-
         } catch (Exception $e) {
             // You can check get the details of the error using `errorInfo`:
             $errorInfo = $e->getMessage();
-            return to_route('courses_modules.index')->with('message', $errorInfo);
+            return to_route($this->controller)->with('message', $errorInfo);
         }
 
-        return to_route('courses_modules.index')->with('message', "Registered '{$coursesModules->name}' coursesModules");
+        return to_route($this->controller)->with('message', "Dados registrados com sucesso!");
     }
 
     /**
@@ -73,14 +77,10 @@ class CoursesModulesController extends Controller
      */
     public function show($id)
     {
-        $coursesModules = CoursesModules::find($id);
+        $data = CoursesModules::find($id);
         $courses = Courses::all();
-
-        if ($coursesModules === null) {
-            //return response()->json(['erro' => 'Impossível realizar a atualização, registro pesquisado não existe'], Response::HTTP_NOT_FOUND);
-        }
-
-        return view('apps.courses_modules.form')->with(['coursesModules' => $coursesModules, 'courses' => $courses, 'action' => 'show']);
+      
+        return view('apps.coursesmodules.show')->with(['data' => $data, 'controller' => $this->controller, 'courses' => $courses]);
     }
 
     /**
@@ -88,10 +88,10 @@ class CoursesModulesController extends Controller
      */
     public function edit($id)
     {
-        $coursesModules = CoursesModules::find($id);
+        $data = CoursesModules::find($id);
         $courses = Courses::all();
-     
-        return view('apps.courses_modules.form')->with(['coursesModules' => $coursesModules, 'courses' => $courses, 'action' => 'edit']);
+
+        return view('apps.coursesmodules.edit')->with(['data' => $data, 'controller' => $this->controller, 'courses' => $courses]);
     }
 
     /**
@@ -101,7 +101,7 @@ class CoursesModulesController extends Controller
     {
         $coursesModules = CoursesModules::find($id);
         if ($coursesModules === null) {
-            return to_route('coursesModules.index')
+            return to_route($this->controller)
                 ->with('message', "Dados inválidos");
         }
         $coursesModules->fill($request->all());
@@ -111,11 +111,11 @@ class CoursesModulesController extends Controller
         } catch (Exception $e) {
             // You can check get the details of the error using `errorInfo`:
             $errorInfo = $e->getMessage();
-            return to_route('courses_modules.index')->with('message', $errorInfo);
+            return to_route($this->controller)->with('message', $errorInfo);
         }
+        
+        return to_route($this->controller)->with('message', "Dados registrados com sucesso!");
 
-        return to_route('courses_modules.index')
-            ->with('message', "'{$coursesModules->title}' updated");
     }
 
     /**
@@ -125,7 +125,7 @@ class CoursesModulesController extends Controller
     {
         $coursesModules = CoursesModules::find($id);
         if ($coursesModules === null) {
-            return to_route('courses_modules.index')
+            return to_route($this->controller)
                 ->with('message', "Dados inválidos");
         }
         try {
@@ -133,10 +133,10 @@ class CoursesModulesController extends Controller
         } catch (Exception $e) {
             // You can check get the details of the error using `errorInfo`:
             $errorInfo = $e->getMessage();
-            return to_route('courses_modules.index')->with('message', $errorInfo);
+            return to_route($this->controller)->with('message', $errorInfo);
         }
 
-        return to_route('courses_modules.index')
+        return to_route($this->controller)
             ->with('message', "'{$coursesModules->name}' deleted");
     }
 }

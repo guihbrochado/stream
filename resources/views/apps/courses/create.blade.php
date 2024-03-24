@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label for="expiration" class="form-label">Expira em</label>
-                                        <input type="date" class="form-control" id="expiration" name="expiration" required />
+                                        <input type="date" class="form-control" id="expiration" name="expiration" />
                                         <div class="invalid-feedback">
                                             Este campo é obrigatório
                                         </div>
@@ -84,7 +84,7 @@
                                     <div class="col-12">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="" name="certification" id="certification" />
-                                            <label class="form-check-label" for="invalidCheck">
+                                            <label class="form-check-label" for="certification">
                                                 Possui certificado?
                                             </label>
                                         </div>

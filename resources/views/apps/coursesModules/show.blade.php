@@ -26,77 +26,34 @@
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
-                                    <h4 class="card-title">Editar Curso</h4>
+                                    <h4 class="card-title">Ver Módulo</h4>
                                 </div>
                             </div>
-
                             <div class="card-body">
-                                <form class="row g-3 needs-validation" action="{{ route('courses.update', ['id' => $data->id] ) }}" method="post" enctype="multipart/form-data" novalidate>
+                                <form class="row g-3 needs-validation" action="{{ route('coursesmodules.store') }}" method="post" enctype="multipart/form-data" novalidate>
                                     @csrf
                                     <div class="col-md-6">
-                                        <label for="course" class="form-label">Nome do Curso</label>
-                                        <input type="text" class="form-control" id="course" name="course" value="{{$data->course}}" required />
+                                        <label for="module" class="form-label">Nome do Módulo</label>
+                                        <input type="text" class="form-control" id="module" name="module" value="{{$data->module}}" disabled />
                                         <div class="invalid-feedback">
                                             Este campo é obrigatório
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="cover" class="form-label">Capa</label>
-                                        <div class="input-group has-validation">
-                                            <input id="cover" name="cover" type="file" class="form-control" aria-describedby="inputGroupPrepend" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="duration" class="form-label">Duração</label>
-                                        <input type="text" class="form-control" id="duration" name="duration" value="{{$data->duration}}" required />
+                                    <div class="col-md-2">
+                                        <label for="modulenumber" class="form-label">Número do Módulo</label>
+                                        <input type="text" class="form-control" id="modulenumber" name="modulenumber" value="{{$data->modulenumber}}" disabled />
                                         <div class="invalid-feedback">
                                             Este campo é obrigatório
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label for="courselevel" class="form-label">Nível do Curso</label>
-                                        <select class="form-select" id="courselevel" name="courselevel" value="{{$data->courselevel}}" required>
-                                            <option value="">Selecione...</option>
-                                            <option value="1" <?= '1' == $data->courselevel ? 'selected' : '' ?>> Iniciante </option>
-                                            <option value="2" <?= '2' == $data->courselevel ? 'selected' : '' ?>> Médio </option>
-                                            <option value="3" <?= '3' == $data->courselevel ? 'selected' : '' ?>> Avançado </option>
+                                    <div class="col-md-4">
+                                        <label for="id_course" class="form-label">Nível do Curso</label>
+                                        <select class="form-select" id="id_course" name="id_course" disabled>
+                                            @foreach ($courses as $row)
+                                            <option value="<?= $row->id; ?>" <?php echo $row->id == $data->id_course ? 'selected' : ''; 
+                                                                                ?>><?= $row->course ?></option>
+                                            @endforeach
                                         </select>
-                                        <div class="invalid-feedback">
-                                            Este campo é obrigatório
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="expiration" class="form-label">Expira em</label>
-                                        <input type="date" class="form-control" id="expiration" name="expiration" value="{{$data->expiration}}" />
-                                        <div class="invalid-feedback">
-                                            Este campo é obrigatório
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="duration" class="form-label">Preço</label>
-                                        <input id="price" name="price" value="{{$data->price}}" type="text" class="form-control maskmoney3" id="duration" required />
-                                        <div class="invalid-feedback">
-                                            Este campo é obrigatório
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="certification" id="certification" {{$data->isfree === 1 ? 'checked' : ''}} />
-                                            <label class="form-check-label" for="certification">
-                                                Possui certificado?
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="isfree" name="isfree" {{$data->isfree === 1 ? 'checked' : ''}} />
-                                            <label class="form-check-label" for="isfree">
-                                                É gratuito?
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="description" class="form-label">Descrição</label>
-                                        <textarea class="form-control" id="description" name="description" placeholder="Descrição" required>{{$data->description}}</textarea>
                                         <div class="invalid-feedback">
                                             Este campo é obrigatório
                                         </div>
@@ -443,6 +400,7 @@
 
     @include('layouts.vendor-script-dash')
 
+   
 </body>
 
 </html>

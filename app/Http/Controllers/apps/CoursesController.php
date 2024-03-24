@@ -94,11 +94,8 @@ class CoursesController extends Controller
     public function show($id)
     {
         $data = Courses::find($id);
-        if ($data === null) {
-            //return response()->json(['erro' => 'Impossível realizar a atualização, registro pesquisado não existe'], Response::HTTP_NOT_FOUND);
-        }
-
-        return view('apps.courses.form')->with(['data' => $data, 'controller' => $this->controller, 'action' => 'show']);
+      
+        return view('apps.courses.show')->with(['data' => $data, 'controller' => $this->controller, 'action' => 'show']);
     }
 
     /**
@@ -118,11 +115,9 @@ class CoursesController extends Controller
     {
         $courses = Courses::find($id);
         if ($courses === null) {
-            return to_route('courses.index')
-                ->with('message', "Dados inválidos");
+            return to_route('courses.index')->with('message', "Dados inválidos");
         }
-        // $courses->fill($request->all());
-        // dd($courses);
+        $courses->fill($request->all());
 
         $fileName = '';
         $folder = public_path('images/courses');
@@ -136,20 +131,22 @@ class CoursesController extends Controller
             $extension = $file->extension();
             $fileName = md5($file->getClientOriginalName() . strtotime("now")) . "." . $extension;
             $file->move($folder, $fileName);
-
             $courses->cover = $fileName;
             $courses->price = $price;
+
         }
-        // var_dump($courses);
+
+        dump($courses);
         try {
             $courses->save();
         } catch (Exception $e) {
             // You can check get the details of the error using `errorInfo`:
             $errorInfo = $e->getMessage();
-            // return to_route('courses.index')->with('message', $errorInfo);
+            echo $errorInfo;
+            // return to_route($this->controller)->with('message', $errorInfo);
         }
 
-        // return to_route('courses.index')->with('message', "Registro Atualizado");
+        // return to_route($this->controller)->with('message', "Registro Atualizado");
     }
 
     /**
@@ -159,7 +156,7 @@ class CoursesController extends Controller
     {
         $courses = Courses::find($id);
         if ($courses === null) {
-            return to_route('courses.index')
+            return to_route($this->controller)
                 ->with('message', "Dados inválidos");
         }
         try {

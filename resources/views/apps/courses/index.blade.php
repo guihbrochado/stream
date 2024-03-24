@@ -60,12 +60,12 @@
                                                 <td class="text-center">{{$row->certification === 1 ? 'Sim' : 'Não'}}</td>
                                                 <td class="text-center">{{date("d/m/Y", strtotime($row->created_at))}}</td>
                                                 <td class="text-center">
+                                                    <a href="{{ route('courses.show', ['id' => $row->id]) }}"> <i class="fa-solid fa-eye  me-2 lh-lg"></i> </a>
                                                     <a href="{{ route('courses.edit', ['id' => $row->id]) }}"> <i class="fa-solid fa-user-edit  me-2 lh-lg"></i> </a>
                                                     <a href="{{ route('courses.destroy', ['id' => $row->id]) }}"> <i class="fa-solid fa-trash  me-2 lh-lg"></i> </a>
                                                 </td>
                                             </tr>
                                             @endforeach
-
                                         </tbody>                                    
                                     </table>
                                 </div>

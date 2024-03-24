@@ -26,16 +26,16 @@
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
-                                    <h4 class="card-title">Editar Curso</h4>
+                                    <h4 class="card-title">Ver Curso</h4>
                                 </div>
                             </div>
 
                             <div class="card-body">
-                                <form class="row g-3 needs-validation" action="{{ route('courses.update', ['id' => $data->id] ) }}" method="post" enctype="multipart/form-data" novalidate>
+                                <form class="row g-3 needs-validation" method="post" enctype="multipart/form-data" novalidate>
                                     @csrf
                                     <div class="col-md-6">
                                         <label for="course" class="form-label">Nome do Curso</label>
-                                        <input type="text" class="form-control" id="course" name="course" value="{{$data->course}}" required />
+                                        <input type="text" class="form-control" id="course" name="course" value="{{$data->course}}" disabled />
                                         <div class="invalid-feedback">
                                             Este campo é obrigatório
                                         </div>
@@ -43,19 +43,39 @@
                                     <div class="col-md-6">
                                         <label for="cover" class="form-label">Capa</label>
                                         <div class="input-group has-validation">
-                                            <input id="cover" name="cover" type="file" class="form-control" aria-describedby="inputGroupPrepend" />
+                                            <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                Ver Capa
+                                            </button>
                                         </div>
+
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Ver Capa</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <img src="{{asset('images/courses/' . $data->cover)}}" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="col-md-3">
                                         <label for="duration" class="form-label">Duração</label>
-                                        <input type="text" class="form-control" id="duration" name="duration" value="{{$data->duration}}" required />
+                                        <input type="text" class="form-control" id="duration" name="duration" value="{{$data->duration}}" disabled />
                                         <div class="invalid-feedback">
                                             Este campo é obrigatório
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="courselevel" class="form-label">Nível do Curso</label>
-                                        <select class="form-select" id="courselevel" name="courselevel" value="{{$data->courselevel}}" required>
+                                        <select class="form-select" id="courselevel" name="courselevel" value="{{$data->courselevel}}" disabled>
                                             <option value="">Selecione...</option>
                                             <option value="1" <?= '1' == $data->courselevel ? 'selected' : '' ?>> Iniciante </option>
                                             <option value="2" <?= '2' == $data->courselevel ? 'selected' : '' ?>> Médio </option>
@@ -67,27 +87,27 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label for="expiration" class="form-label">Expira em</label>
-                                        <input type="date" class="form-control" id="expiration" name="expiration" value="{{$data->expiration}}" />
+                                        <input type="date" class="form-control" id="expiration" name="expiration" value="{{$data->expiration}}" disabled />
                                         <div class="invalid-feedback">
                                             Este campo é obrigatório
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="duration" class="form-label">Preço</label>
-                                        <input id="price" name="price" value="{{$data->price}}" type="text" class="form-control maskmoney3" id="duration" required />
+                                        <input id="price" name="price" value="{{$data->price}}" type="text" class="form-control" id="duration" disabled />
                                         <div class="invalid-feedback">
                                             Este campo é obrigatório
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="certification" id="certification" {{$data->isfree === 1 ? 'checked' : ''}} />
+                                            <input disabled class="form-check-input" type="checkbox" name="certification" id="certification" {{$data->isfree === 1 ? 'checked' : ''}} />
                                             <label class="form-check-label" for="certification">
                                                 Possui certificado?
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="isfree" name="isfree" {{$data->isfree === 1 ? 'checked' : ''}} />
+                                            <input disabled class="form-check-input" type="checkbox" id="isfree" name="isfree" {{$data->isfree === 1 ? 'checked' : ''}} />
                                             <label class="form-check-label" for="isfree">
                                                 É gratuito?
                                             </label>
@@ -96,18 +116,18 @@
 
                                     <div class="form-group">
                                         <label for="description" class="form-label">Descrição</label>
-                                        <textarea class="form-control" id="description" name="description" placeholder="Descrição" required>{{$data->description}}</textarea>
+                                        <textarea class="form-control" id="description" name="description" placeholder="Descrição" disabled>{{$data->description}}</textarea>
                                         <div class="invalid-feedback">
                                             Este campo é obrigatório
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex ">
                                         <a href="{{ route( $controller ) }}" class="btn btn-secondary">
                                             Voltar
                                         </a>
-                                        <button class="btn btn-primary" type="submit">
+                                        <!-- <button class="btn btn-primary" type="submit">
                                             Enviar
-                                        </button>
+                                        </button> -->
                                     </div>
                                 </form>
                             </div>
