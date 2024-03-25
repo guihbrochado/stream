@@ -14,14 +14,20 @@ class CoursesController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct()
+    {
+        // Assigning a value to $controller in the constructor
+        $this->controller = "courses.index";
+    }
+
     public function index()
     {
         $data = Courses::all();
         $message = session('message');
-        
-        // dd($data);
 
-        return view('apps.courses.index')->with('data', $data)->with('message', $message);
+
+        return view('apps.courses.index', ['data' => $data, 'controller' => $this->controller, 'message' => $message]);
     }
 
     /**
@@ -30,8 +36,8 @@ class CoursesController extends Controller
     public function create()
     {
         $courses = new Courses;
-        
-        return view('apps.courses.create')->with(['courses' => $courses]);
+
+        return view('apps.courses.create')->with(['courses' => $courses, 'controller' => $this->controller,]);
     }
 
     /**
@@ -39,6 +45,8 @@ class CoursesController extends Controller
      */
     public function store(CoursesFormRequest  $request)
     {
+        // dd($request);
+
         $fileName = '';
         $folder = public_path('images/courses');
 
@@ -49,8 +57,11 @@ class CoursesController extends Controller
             $file->move($folder, $fileName);
         }
 
-        $price = str_replace(',', '.', $request->price);
+        $price = str_replace(',', '.', $request->price);    
 
+        $request->certification === null ? $request->certification = 0 : '';
+        $request->isfree === null ? $request->isfree = 0 : '';
+       
         try {
             $courses = Courses::create(
                 [
@@ -60,17 +71,21 @@ class CoursesController extends Controller
                     'courselevel' => $request->courselevel,
                     'duration' => $request->duration,
                     'expiration' => $request->expiration,
+                    'isfree' => $request->isfree,
                     'price' => $price,
                     'certification' => $request->certification,
                 ]
             );
+
         } catch (Exception $e) {
             // You can check get the details of the error using `errorInfo`:
             $errorInfo = $e->getMessage();
-            return to_route('courses.index')->with('message', $errorInfo);
+            echo $errorInfo;
+            
+            return to_route($this->controller)->with('message', $errorInfo);
         }
 
-        return to_route('courses.index')->with('message', "Registered '{$courses->name}' courses");
+        return to_route($this->controller)->with('message', "Dados registrados com sucesso!");
     }
 
     /**
@@ -78,12 +93,9 @@ class CoursesController extends Controller
      */
     public function show($id)
     {
-        $courses = Courses::find($id);
-        if ($courses === null) {
-            //return response()->json(['erro' => 'Impossível realizar a atualização, registro pesquisado não existe'], Response::HTTP_NOT_FOUND);
-        }
-
-        return view('apps.courses.form')->with(['courses' => $courses, 'action' => 'show']);
+        $data = Courses::find($id);
+      
+        return view('apps.courses.show')->with(['data' => $data, 'controller' => $this->controller, 'action' => 'show']);
     }
 
     /**
@@ -91,12 +103,9 @@ class CoursesController extends Controller
      */
     public function edit($id)
     {
-        $courses = Courses::find($id);
-        if ($courses === null) {
-            //return response()->json(['erro' => 'Impossível realizar a atualização, registro pesquisado não existe'], Response::HTTP_NOT_FOUND);
-        }
-
-        return view('apps.courses.edit')->with(['courses' => $courses, 'action' => 'edit']);
+        $data = Courses::find($id);
+     
+        return view('apps.courses.edit')->with(['data' => $data, 'controller' => $this->controller, 'action' => 'edit']);
     }
 
     /**
@@ -106,38 +115,38 @@ class CoursesController extends Controller
     {
         $courses = Courses::find($id);
         if ($courses === null) {
-            return to_route('courses.index')
-                ->with('message', "Dados inválidos");
+            return to_route('courses.index')->with('message', "Dados inválidos");
         }
-        // $courses->fill($request->all());
-        // dd($courses);
+        $courses->fill($request->all());
 
         $fileName = '';
-        // $folder = env('APP_PUBLIC_DIR') . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'products';
         $folder = public_path('images/courses');
 
         $price = str_replace(',', '.', $request->price);
-
+        $request->certification === null ? $request->certification = 0 : '';
+        $request->isfree === null ? $request->isfree = 0 : '';
 
         if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
             $file = $request->file('cover');
             $extension = $file->extension();
             $fileName = md5($file->getClientOriginalName() . strtotime("now")) . "." . $extension;
             $file->move($folder, $fileName);
-
             $courses->cover = $fileName;
             $courses->price = $price;
+
         }
-        // var_dump($courses);
+
+        dump($courses);
         try {
             $courses->save();
         } catch (Exception $e) {
             // You can check get the details of the error using `errorInfo`:
             $errorInfo = $e->getMessage();
-            // return to_route('courses.index')->with('message', $errorInfo);
+            echo $errorInfo;
+            // return to_route($this->controller)->with('message', $errorInfo);
         }
 
-        // return to_route('courses.index')->with('message', "Registro Atualizado");
+        // return to_route($this->controller)->with('message', "Registro Atualizado");
     }
 
     /**
@@ -147,7 +156,7 @@ class CoursesController extends Controller
     {
         $courses = Courses::find($id);
         if ($courses === null) {
-            return to_route('courses.index')
+            return to_route($this->controller)
                 ->with('message', "Dados inválidos");
         }
         try {

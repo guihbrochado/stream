@@ -102,20 +102,20 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/blog-video', [BlogVideoController::class, 'index'])->name('blogvideo.index');
         Route::get('/link', [LinkController::class, 'index'])->name('link.index');
         Route::get('/quote', [QuoteController::class, 'index'])->name('quote.index');
-       
-        Route::get('/course-detail', [CourseController::class, 'detail'])->name('course.detail');
+
+        Route::get('/course-detail/{id}', [CourseController::class, 'detail'])->name('course.detail');
         Route::get('/course-lesson', [CourseController::class, 'lesson'])->name('course.lesson');
-        
+
         //LIVE ROOM
         Route::get('/rooms', [LiveRoomController::class, 'index'])->name('rooms.index');
         Route::get('/rooms/{room}', [LiveRoomController::class, 'show'])->name('rooms.show');
-        
+
         Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
         Route::get('/my-account', [MyAccountController::class, 'index'])->name('myaccount.index');
         Route::get('/whishlist', [ShopController::class, 'whishlist'])->name('shop.wishlist');
         Route::get('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
         Route::get('/detail', [ShopController::class, 'detail'])->name('shop.detail');
-       
+
         Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 
 
@@ -180,28 +180,34 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
 Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified'], 'middleware' => ['permission:admin']], function () {
 
     Route::get('/manage', [ManageController::class, 'index'])->name('manage.index');
-    
+
     Route::get('/add-rooms', [LiveRoomController::class, 'create'])->name('live.index');
     Route::post('/add-rooms/store', [LiveRoomController::class, 'store'])->name('rooms.store');
 
     Route::get('/courses', [CoursesController::class, 'index'])->name('courses.index');
+    Route::post('/courses/store', [CoursesController::class, 'store'])->name('courses.store');
+    Route::post('/courses/update/{id}', [CoursesController::class, 'update'])->name('courses.update');
     Route::get('/courses/create', [CoursesController::class, 'create'])->name('courses.create');
     Route::get('/courses/show/{id}', [CoursesController::class, 'show'])->name('courses.show');
     Route::get('/courses/edit/{id}', [CoursesController::class, 'edit'])->name('courses.edit');
     Route::get('/courses/destroy/{id}', [CoursesController::class, 'destroy'])->name('courses.destroy');
 
     Route::get('/coursesmodules', [CoursesModulesController::class, 'index'])->name('coursesmodules.index');
+    Route::post('/coursesmodules/store', [CoursesModulesController::class, 'store'])->name('coursesmodules.store');
+    Route::post('/coursesmodules/update/{id}', [CoursesModulesController::class, 'update'])->name('coursesmodules.update');
     Route::get('/coursesmodules/create', [CoursesModulesController::class, 'create'])->name('coursesmodules.create');
     Route::get('/coursesmodules/show/{id}', [CoursesModulesController::class, 'show'])->name('coursesmodules.show');
     Route::get('/coursesmodules/edit/{id}', [CoursesModulesController::class, 'edit'])->name('coursesmodules.edit');
     Route::get('/coursesmodules/destroy/{id}', [CoursesModulesController::class, 'destroy'])->name('coursesmodules.destroy');
 
     Route::get('/courseslessons', [CoursesLessonsController::class, 'index'])->name('courseslessons.index');
+    Route::post('/courseslessons/store', [CoursesLessonsController::class, 'store'])->name('courseslessons.store');
+    Route::post('/courseslessons/update/{id}', [CoursesLessonsController::class, 'update'])->name('courseslessons.update');
     Route::get('/courseslessons/create', [CoursesLessonsController::class, 'create'])->name('courseslessons.create');
     Route::get('/courseslessons/show/{id}', [CoursesLessonsController::class, 'show'])->name('courseslessons.show');
     Route::get('/courseslessons/edit/{id}', [CoursesLessonsController::class, 'edit'])->name('courseslessons.edit');
     Route::get('/courseslessons/destroy/{id}', [CoursesLessonsController::class, 'destroy'])->name('courseslessons.destroy');
-    
+
     Route::get('/clientes', function () {
         return view('pages-under_development');
     })->name('clientes.index');

@@ -26,88 +26,91 @@
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
-                                    <h4 class="card-title">Editar Curso</h4>
+                                    <h4 class="card-title">Ver Aula</h4>
                                 </div>
                             </div>
 
                             <div class="card-body">
-                                <form class="row g-3 needs-validation" action="{{ route('courses.update', ['id' => $data->id] ) }}" method="post" enctype="multipart/form-data" novalidate>
+                                <form class="row g-3 needs-validation" method="post" enctype="multipart/form-data" novalidate>
                                     @csrf
-                                    <div class="col-md-6">
-                                        <label for="course" class="form-label">Nome do Curso</label>
-                                        <input type="text" class="form-control" id="course" name="course" value="{{$data->course}}" required />
-                                        <div class="invalid-feedback">
-                                            Este campo é obrigatório
+                                    <div class="row g-3">
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="lesson">Aula</label>
+                                            <input id="lesson" disabled name="lesson" type="text" class="form-control @error('lesson') is-invalid @enderror" placeholder="Aula" maxlength="100"  value="{{$data->lesson}}" />
+                                            @error('coursesModules')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="cover" class="form-label">Capa</label>
-                                        <div class="input-group has-validation">
-                                            <input id="cover" name="cover" type="file" class="form-control" aria-describedby="inputGroupPrepend" />
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="lessonnumber">Número da Aula</label>
+                                            <input disabled id="lessonnumber" name="lessonnumber" type="number" class="form-control @error('lessonnumber') is-invalid @enderror" placeholder="Número da Aula" min="1" value="{{$data->lessonnumber}}" />
+                                            @error('coursesModules')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="duration" class="form-label">Duração</label>
-                                        <input type="text" class="form-control" id="duration" name="duration" value="{{$data->duration}}" required />
-                                        <div class="invalid-feedback">
-                                            Este campo é obrigatório
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="author">Autor</label>
+                                            <input disabled id="author" name="author" type="text" class="form-control @error('author') is-invalid @enderror" placeholder="Autor" min="1" value="{{$data->author}}" />
+                                            @error('coursesModules')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="courselevel" class="form-label">Nível do Curso</label>
-                                        <select class="form-select" id="courselevel" name="courselevel" value="{{$data->courselevel}}" required>
-                                            <option value="">Selecione...</option>
-                                            <option value="1" <?= '1' == $data->courselevel ? 'selected' : '' ?>> Iniciante </option>
-                                            <option value="2" <?= '2' == $data->courselevel ? 'selected' : '' ?>> Médio </option>
-                                            <option value="3" <?= '3' == $data->courselevel ? 'selected' : '' ?>> Avançado </option>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Este campo é obrigatório
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="expiration" class="form-label">Expira em</label>
-                                        <input type="date" class="form-control" id="expiration" name="expiration" value="{{$data->expiration}}" />
-                                        <div class="invalid-feedback">
-                                            Este campo é obrigatório
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="duration" class="form-label">Preço</label>
-                                        <input id="price" name="price" value="{{$data->price}}" type="text" class="form-control maskmoney3" id="duration" required />
-                                        <div class="invalid-feedback">
-                                            Este campo é obrigatório
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="certification" id="certification" {{$data->isfree === 1 ? 'checked' : ''}} />
-                                            <label class="form-check-label" for="certification">
-                                                Possui certificado?
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="isfree" name="isfree" {{$data->isfree === 1 ? 'checked' : ''}} />
-                                            <label class="form-check-label" for="isfree">
-                                                É gratuito?
-                                            </label>
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="id_module">Curso - Módulo</label>
+                                            <select disabled class="form-control" name="id_module" id="id_module">
+                                                <option value="">Selecione...</option>
+                                                @foreach ($modulesandcourses as $row)
+                                                <option value="<?= $row->id; ?>" <?=  $row->id == $data->id_module ? 'selected' : '' ?>> {{ $row->coursename . ' - ' . $row->module }} </option>
+                                                @endforeach
+                                            </select>
+
+                                            @error('coursesModules')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="description" class="form-label">Descrição</label>
-                                        <textarea class="form-control" id="description" name="description" placeholder="Descrição" required>{{$data->description}}</textarea>
-                                        <div class="invalid-feedback">
-                                            Este campo é obrigatório
+                                    <div class="row g-3 mt-1">
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="link">Link da Aula</label>
+                                            <input disabled id="link" name="link" type="text" class="form-control @error('link') is-invalid @enderror" placeholder="Link" value="{{$data->link}}"  />
+                                            @error('coursesModules')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="duration">Duração do vídeo</label>
+                                            <input disabled id="duration" name="duration" step="1" type="time" class="form-control @error('duration') is-invalid @enderror" placeholder="duration" value="{{$data->duration}}"  />
+                                            @error('coursesModules')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between">
+                                    <div class="row g-3 mt-1">
+                                        <div class="col-md-12">
+                                            <label class="form-label" for="description">Descrição</label>
+                                            <textarea disabled id="description" name="description" type="text" class="form-control @error('description') is-invalid @enderror" placeholder="Descrição">{{$data->description}}</textarea>
+                                            @error('coursesModules')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="row g-3 mt-1">
+                                        <div class="col-md-12">
+                                            <label class="form-label" for="materials">Materiais</label>
+                                            <textarea disabled id="materials" name="materials" type="text" class="form-control @error('materials') is-invalid @enderror" placeholder="Materiais">{{$data->materials}}</textarea>
+                                            @error('coursesModules')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="d-flex ">
                                         <a href="{{ route( $controller ) }}" class="btn btn-secondary">
                                             Voltar
                                         </a>
-                                        <button class="btn btn-primary" type="submit">
+                                        <!-- <button class="btn btn-primary" type="submit">
                                             Enviar
-                                        </button>
+                                        </button> -->
                                     </div>
                                 </form>
                             </div>

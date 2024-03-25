@@ -18,18 +18,21 @@ class CoursesLessonsController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        // Assigning a value to $controller in the constructor
+        $this->controller = "courseslessons.index";
+    }
+
     public function index()
     {
         $message = session('message');
-        // $data = CoursesLessons::all();
 
         $data = DB::table('courseslessons as cl')
             ->join('coursesmodules as m', 'm.id', '=', 'cl.id_module')
             ->select('cl.*', 'm.module as module')
             ->orderBy('cl.id', 'desc')
             ->get();
-
-            // dd($data);
 
         return view('apps.courseslessons.index')->with('data', $data)->with('message', $message);
     }
@@ -40,7 +43,6 @@ class CoursesLessonsController extends Controller
     public function create()
     {
         $coursesLessons = new CoursesLessons;
-        // $courses = Courses::all();
 
         $modulesandcourses = DB::table('coursesmodules as cm')
             ->join('courses as c', 'c.id', '=', 'cm.id_course')
@@ -48,7 +50,10 @@ class CoursesLessonsController extends Controller
             ->orderBy('c.id', 'desc')
             ->get();
 
-        return view('apps.courseslessons.create')->with(['coursesLessons' => $coursesLessons, 'modulesandcourses' => $modulesandcourses, 'action' => 'create']);
+        return view('apps.courseslessons.create')->with([
+            'coursesLessons' => $coursesLessons, 'controller' => $this->controller,
+            'modulesandcourses' => $modulesandcourses, 'action' => 'create'
+        ]);
     }
 
     /**
@@ -57,27 +62,27 @@ class CoursesLessonsController extends Controller
     public function store(CoursesLessonsFormRequest  $request)
     {
 
-        function getYouTubeEmbedCode($url)
-        {
-            $video_id = '';
-            $parsed_url = parse_url($url);
+        // function getYouTubeEmbedCode($url)
+        // {
+        //     $video_id = '';
+        //     $parsed_url = parse_url($url);
 
-            if (isset($parsed_url['query'])) {
-                parse_str($parsed_url['query'], $query_params);
+        //     if (isset($parsed_url['query'])) {
+        //         parse_str($parsed_url['query'], $query_params);
 
-                if (isset($query_params['v'])) {
-                    $video_id = $query_params['v'];
-                }
-            }
+        //         if (isset($query_params['v'])) {
+        //             $video_id = $query_params['v'];
+        //         }
+        //     }
 
-            if ($video_id) {
-                return "$video_id";
-            } else {
-                return "O URL do vídeo do YouTube é inválido.";
-            }
-        }
+        //     if ($video_id) {
+        //         return "$video_id";
+        //     } else {
+        //         return "O URL do vídeo do YouTube é inválido.";
+        //     }
+        // }
 
-        $embed = getYouTubeEmbedCode($request->link);
+        $embed = $this->getYouTubeEmbedCode($request->link);
 
         try {
             $coursesLessons = CoursesLessons::create(
@@ -93,12 +98,11 @@ class CoursesLessonsController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            // You can check get the details of the error using `errorInfo`:
             $errorInfo = $e->getMessage();
-            return to_route('courses_lessons.index')->with('message', $errorInfo);
+            return to_route($this->controller)->with('message', $errorInfo);
         }
 
-        return to_route('courses_lessons.index')->with('message', "Registrado com sucesso!");
+        return to_route($this->controller)->with('message', "Dados registrados com sucesso!");
     }
 
     /**
@@ -112,11 +116,11 @@ class CoursesLessonsController extends Controller
             ->select('cm.*', 'c.course as coursename')
             ->orderBy('c.id', 'desc')
             ->get();
-        if ($coursesLessons === null) {
-            //return response()->json(['erro' => 'Impossível realizar a atualização, registro pesquisado não existe'], Response::HTTP_NOT_FOUND);
-        }
-
-        return view('apps.courseslessons.form')->with(['coursesLessons' => $coursesLessons,  'modulesandcourses' => $modulesandcourses,  'action' => 'show']);
+// dd($coursesLessons);
+        return view('apps.courseslessons.show')->with([
+            'data' => $coursesLessons, 'controller' => $this->controller,
+            'modulesandcourses' => $modulesandcourses,  'action' => 'show'
+        ]);
     }
 
     /**
@@ -130,7 +134,11 @@ class CoursesLessonsController extends Controller
             ->select('cm.*', 'c.course as coursename')
             ->orderBy('c.id', 'desc')
             ->get();
-        return view('apps.courseslessons.form')->with(['coursesLessons' => $coursesLessons,  'modulesandcourses' => $modulesandcourses,  'action' => 'edit']);
+
+        return view('apps.courseslessons.edit')->with([
+            'data' => $coursesLessons, 'controller' => $this->controller,
+            'modulesandcourses' => $modulesandcourses,  'action' => 'edit'
+        ]);
     }
 
     /**
@@ -146,38 +154,36 @@ class CoursesLessonsController extends Controller
 
         $coursesLessons->fill($request->all());
 
-        function getYouTubeEmbedCode($url)
-        {
-            $video_id = '';
-            $parsed_url = parse_url($url);
+        // function getYouTubeEmbedCode($url)
+        // {
+        //     $video_id = '';
+        //     $parsed_url = parse_url($url);
 
-            if (isset($parsed_url['query'])) {
-                parse_str($parsed_url['query'], $query_params);
+        //     if (isset($parsed_url['query'])) {
+        //         parse_str($parsed_url['query'], $query_params);
 
-                if (isset($query_params['v'])) {
-                    $video_id = $query_params['v'];
-                }
-            }
+        //         if (isset($query_params['v'])) {
+        //             $video_id = $query_params['v'];
+        //         }
+        //     }
 
-            if ($video_id) {
-                return "$video_id";
-            } else {
-                return "O URL do vídeo do YouTube é inválido.";
-            }
-        }
+        //     if ($video_id) {
+        //         return "$video_id";
+        //     } else {
+        //         return "O URL do vídeo do YouTube é inválido.";
+        //     }
+        // }
 
-        // Apply the getYouTubeEmbedCode function to the link attribute
-        $coursesLessons->link = getYouTubeEmbedCode($request->link);
+        $coursesLessons->link = $this->getYouTubeEmbedCode($request->link);
 
         try {
             $coursesLessons->save();
         } catch (Exception $e) {
-            // You can check the details of the error using `errorInfo`:
             $errorInfo = $e->getMessage();
-            return to_route('courses_lessons.index')->with('message', $errorInfo);
+            return to_route($this->controller)->with('message', $errorInfo);
         }
 
-        return to_route('courses_lessons.index')->with('message', "'{$coursesLessons->title}' updated");
+        return to_route($this->controller)->with('message', "Dados registrados com sucesso!");
     }
 
     /**
@@ -187,7 +193,7 @@ class CoursesLessonsController extends Controller
     {
         $coursesLessons = CoursesLessons::find($id);
         if ($coursesLessons === null) {
-            return to_route('courses_lessons.index')
+            return to_route($this->controller)
                 ->with('message', "Dados inválidos");
         }
         try {
@@ -195,14 +201,13 @@ class CoursesLessonsController extends Controller
         } catch (Exception $e) {
             // You can check get the details of the error using `errorInfo`:
             $errorInfo = $e->getMessage();
-            return to_route('courses_lessons.index')->with('message', $errorInfo);
+            return to_route($this->controller)->with('message', $errorInfo);
         }
 
-        return to_route('courses_lessons.index')
-            ->with('message', "'{$coursesLessons->name}' deleted");
+        return to_route($this->controller)->with('message', "'{$coursesLessons->name}' deleted");
     }
 
-    function getYouTubeEmbedCode($url)
+     function getYouTubeEmbedCode($url)
     {
         $video_id = '';
         $parsed_url = parse_url($url);
