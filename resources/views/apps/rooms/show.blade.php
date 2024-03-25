@@ -100,6 +100,7 @@
                                     <polygon points="5 3 19 12 5 21 5 3"></polygon>
                                     </svg>
                                 </button>
+<button id="shareScreenButton">Compartilhar Tela</button>
                             </div>
                         </div>
                     </div>
