@@ -2,20 +2,20 @@ document.getElementById('startButton').addEventListener('click', start);
 
 let peerConnection;
 const config = {
-    iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+    iceServers: [{urls: 'stun:stun.l.google.com:19302'}]
 };
 
 
 const socket = new WebSocket('ws://localhost:6001/app/0?protocol=7&client=js&version=7.0&flash=false');
 
-socket.onmessage = function(event) {
+socket.onmessage = function (event) {
     const message = JSON.parse(event.data);
     onSignalingMessageReceived(message);
 };
 
 async function start() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        const stream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
         document.getElementById('localVideo').srcObject = stream;
 
         peerConnection = new RTCPeerConnection(config);
@@ -28,7 +28,7 @@ async function start() {
 
         peerConnection.onicecandidate = (event) => {
             if (event.candidate) {
-                sendSignalingMessage({ type: 'new-ice-candidate', candidate: event.candidate });
+                sendSignalingMessage({type: 'new-ice-candidate', candidate: event.candidate});
             }
         };
 
@@ -39,11 +39,48 @@ async function start() {
     }
 }
 
+async function startScreenShare() {
+    try {
+        const screenStream = await navigator.mediaDevices.getDisplayMedia({
+            video: true
+        });
+
+        const videoElement = document.getElementById('localVideo');
+        videoElement.srcObject = screenStream;
+
+        screenStream.getVideoTracks()[0].onended = () => {
+            stopScreenShare();
+        };
+    } catch (error) {
+        console.error('Erro ao compartilhar a tela:', error);
+    }
+}
+
+async function stopScreenShare() {
+    try {
+        // Obter a stream da webcam novamente
+        const cameraStream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
+
+        // Definir a stream da webcam como a fonte do vídeo local
+        const videoElement = document.getElementById('localVideo');
+        videoElement.srcObject = cameraStream;
+
+        // Agora você pode enviar esta stream para o par remoto novamente, se necessário
+        // ... (código para enviar a stream para o par remoto)
+
+    } catch (error) {
+        console.error('Erro ao retornar para a câmera:', error);
+    }
+}
+
+const shareButton = document.getElementById('shareScreenButton');
+shareButton.addEventListener('click', startScreenShare);
+
 function call() {
     peerConnection.createOffer().then(offer => {
         return peerConnection.setLocalDescription(offer);
     }).then(() => {
-        sendSignalingMessage({ type: 'offer', offer: peerConnection.localDescription });
+        sendSignalingMessage({type: 'offer', offer: peerConnection.localDescription});
     }).catch(handleError);
 }
 
@@ -54,7 +91,7 @@ function handleOffer(offer) {
     }).then(answer => {
         return peerConnection.setLocalDescription(answer);
     }).then(() => {
-        sendSignalingMessage({ type: 'answer', answer: peerConnection.localDescription });
+        sendSignalingMessage({type: 'answer', answer: peerConnection.localDescription});
     }).catch(handleError);
 }
 

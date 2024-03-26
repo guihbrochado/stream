@@ -9,9 +9,16 @@ use Exception;
 
 class LiveRoomController extends Controller {
 
+    //Método para retornar todas as salas disponíveis para o usuário.
     public function index() {
         $rooms = LiveRoom::all();
         return view('apps.rooms.index', compact('rooms'));
+    }
+    
+    //Método para o manager ver todos os usuários no dashboard
+    public function all() {
+        $rooms = LiveRoom::all();
+        return view('apps.rooms.all', compact('rooms'));
     }
 
     Public function create() {
@@ -43,7 +50,7 @@ class LiveRoomController extends Controller {
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
-        return redirect()->route('rooms.index')->with('message', "Sala '{$room->title}' criada com sucesso.");
+        return redirect()->route('rooms.all')->with('message', "Sala '{$room->title}' criada com sucesso.");
     }
 
     public function show(LiveRoom $room) {
