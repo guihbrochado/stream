@@ -116,8 +116,8 @@ class CoursesLessonsController extends Controller
             ->select('cm.*', 'c.course as coursename')
             ->orderBy('c.id', 'desc')
             ->get();
-// dd($coursesLessons);
-        return view('apps.courseslessons.show')->with([
+
+            return view('apps.courseslessons.show')->with([
             'data' => $coursesLessons, 'controller' => $this->controller,
             'modulesandcourses' => $modulesandcourses,  'action' => 'show'
         ]);

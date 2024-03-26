@@ -104,7 +104,9 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/quote', [QuoteController::class, 'index'])->name('quote.index');
 
         Route::get('/course-detail/{id}', [CourseController::class, 'detail'])->name('course.detail');
-        Route::get('/course-lesson', [CourseController::class, 'lesson'])->name('course.lesson');
+        Route::get('/course-detail-ajax/{idcourse}/{idmodules}', [CourseController::class, 'ajaxCoursesLessons'])->name('ajaxCoursesLessons');
+
+        Route::get('/course-lesson/{id}', [CourseController::class, 'lesson'])->name('course.lesson');
 
         //LIVE ROOM
         Route::get('/rooms', [LiveRoomController::class, 'index'])->name('rooms.index');
