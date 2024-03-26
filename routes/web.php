@@ -181,7 +181,8 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
 
     Route::get('/manage', [ManageController::class, 'index'])->name('manage.index');
 
-    Route::get('/add-rooms', [LiveRoomController::class, 'create'])->name('live.index');
+    Route::get('/all-rooms', [LiveRoomController::class, 'all'])->name('rooms.all');
+    Route::get('add-rooms', [LiveRoomController::class, 'create'])->name('rooms.create');
     Route::post('/add-rooms/store', [LiveRoomController::class, 'store'])->name('rooms.store');
 
     Route::get('/courses', [CoursesController::class, 'index'])->name('courses.index');
