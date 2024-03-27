@@ -5,6 +5,8 @@ namespace App\Http\Controllers\apps;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\LiveRoom;
+use App\Models\LiveRoomTag;
+use App\Models\LiveRoomRating;
 use Exception;
 
 class LiveRoomController extends Controller {
@@ -47,6 +49,22 @@ class LiveRoomController extends Controller {
                         'is_free' => $request->is_free,
                         'price' => $price,
             ]);
+            
+            $tagNames = $request->input('tags');
+            
+            if($tagNames) {
+                if(is_string($tagNames)) {
+                    $tagNames = explode(',', $tagNames);
+                }
+                
+                $tagIds = [];
+                foreach ($tagNames as $tagName) {
+                    $tagName = trim($tagName);
+                    $tag = LiveRoomTag::firstOrCreate(['tag_name' => $tagName]);
+                    $tagIds[] = $tag->id;
+                }
+                $room->tags()->sync($tagIds);
+            }
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

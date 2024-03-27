@@ -33,6 +33,16 @@
                 overflow: hidden; /* Para garantir que nada saia fora do contêiner */
             }
 
+            .video-cover {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Isso garante que a imagem cubra o espaço sem perder as proporções */
+                z-index: 2; /* Garante que a imagem fique sobre o vídeo */
+            }
+
             #localVideo {
                 width: 100%;
                 height: auto;
@@ -89,7 +99,8 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="video-container pt-0">
+                            <div class="video-container pt-0" style="height: 700px;">
+                                <img id="videoCover" src="{{ $room->cover ? asset('assets/images/rooms/' . $room->cover) : asset('assets/images/movies/related/01.webp') }}" alt="video cover" class="video-cover">
                                 <video id="localVideo" class="video-js vjs-big-play-centered" controls preload="auto" autoplay muted>
                                     <source src="./assets/images/video/sample-video.mp4" type="video/mp4" />
                                     <source src="MY_VIDEO.webm" type="video/webm" />
@@ -100,7 +111,7 @@
                                     <polygon points="5 3 19 12 5 21 5 3"></polygon>
                                     </svg>
                                 </button>
-<button id="shareScreenButton">Compartilhar Tela</button>
+                                <button id="shareScreenButton">Compartilhar Tela</button>
                             </div>
                         </div>
                     </div>
@@ -2924,6 +2935,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 localVideo.pause();
             }
         });
+    }
+});
+
+document.getElementById('startButton').addEventListener('click', function () {
+    var videoElement = document.getElementById('localVideo');
+    var coverElement = document.getElementById('videoCover');
+
+    // Verifica se o vídeo está pausado antes de tentar reproduzir
+    if (videoElement.paused) {
+        videoElement.play();
+        coverElement.style.display = 'none'; // Oculta a imagem de capa
+    } else {
+        videoElement.pause();
     }
 });
         </script>
