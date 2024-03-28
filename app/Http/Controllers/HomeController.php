@@ -28,7 +28,7 @@ class HomeController extends Controller
     {
         $data = Courses::orderBy('created_at', 'desc')->get();
         
-        $live = LiveRoom::orderBy('created_at', 'desc')->get();
+        $rooms = LiveRoom::orderBy('created_at', 'desc')->get();
 
         $coursesTop10 = DB::Select("
         SELECT c.id, c.course, c.cover, SUM(ce.rate) AS total_rate
@@ -40,7 +40,7 @@ class HomeController extends Controller
         
         $dateOrder = Courses::orderBy('created_at', 'desc')->get();
 
-        return view('apps.course.index', ['data' => $data, 'coursesTop10' => $coursesTop10, 'live' => $live,'dateOrder' => $dateOrder]);
+        return view('apps.course.index', ['data' => $data, 'coursesTop10' => $coursesTop10, 'rooms' => $rooms,'dateOrder' => $dateOrder]);
     }
 
     function ajaxCoursesModules($idcourse)

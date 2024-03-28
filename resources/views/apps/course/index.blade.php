@@ -128,123 +128,123 @@
                 </div>
             </div>
 
-        <section class="continue-watching-block section-padding-top">
-            <div class="container-fluid">
-                <div class="overflow-hidden">
-                    <div class="d-flex align-items-center justify-content-between px-md-3 px-1 mb-4">
-                        <h5 class="main-title text-capitalize mb-0">continue watching</h5>
-                    </div>
-                    <div class="position-relative swiper swiper-card" data-slide="5" data-laptop="5" data-tab="3" data-mobile="2" data-mobile-sm="2" data-autoplay="false" data-loop="false" data-navigation="true" data-pagination="true">
-                        <ul class="p-0 swiper-wrapper m-0  list-inline">
-                            <li class="swiper-slide">
-                                <div class="iq-watching-block">
-                                    <div class="block-images position-relative">
-                                        <div class="iq-image-box overly-images">
-                                            <a href="./course-detail" class="d-block">
-                                                <img src="./assets/images/continue-watch/01.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
-                                            </a>
-                                        </div>
-                                        <div class="iq-preogress">
-                                            <span class="data-left-timing font-size-14 fw-500 text-lowercase">70 of 230 m</span>
-                                            <div class="progress" role="progressbar" aria-label="Example 2px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px">
-                                                <div class="progress-bar" style="width: 50%"></div>
+            <section class="continue-watching-block section-padding-top">
+                <div class="container-fluid">
+                    <div class="overflow-hidden">
+                        <div class="d-flex align-items-center justify-content-between px-md-3 px-1 mb-4">
+                            <h5 class="main-title text-capitalize mb-0">continue watching</h5>
+                        </div>
+                        <div class="position-relative swiper swiper-card" data-slide="5" data-laptop="5" data-tab="3" data-mobile="2" data-mobile-sm="2" data-autoplay="false" data-loop="false" data-navigation="true" data-pagination="true">
+                            <ul class="p-0 swiper-wrapper m-0  list-inline">
+                                <li class="swiper-slide">
+                                    <div class="iq-watching-block">
+                                        <div class="block-images position-relative">
+                                            <div class="iq-image-box overly-images">
+                                                <a href="./course-detail" class="d-block">
+                                                    <img src="./assets/images/continue-watch/01.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
+                                                </a>
+                                            </div>
+                                            <div class="iq-preogress">
+                                                <span class="data-left-timing font-size-14 fw-500 text-lowercase">70 of 230 m</span>
+                                                <div class="progress" role="progressbar" aria-label="Example 2px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px">
+                                                    <div class="progress-bar" style="width: 50%"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="swiper-slide">
-                                <div class="iq-watching-block">
-                                    <div class="block-images position-relative">
-                                        <div class="iq-image-box overly-images">
-                                            <a href="./course-detail" class="d-block">
-                                                <img src="./assets/images/continue-watch/02.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
-                                            </a>
-                                        </div>
-                                        <div class="iq-preogress">
-                                            <span class="data-left-timing font-size-14 fw-500 text-lowercase">120 of 130 m</span>
-                                            <div class="progress" role="progressbar" aria-label="Example 2px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px">
-                                                <div class="progress-bar" style="width: 30%"></div>
+                                </li>
+                                <li class="swiper-slide">
+                                    <div class="iq-watching-block">
+                                        <div class="block-images position-relative">
+                                            <div class="iq-image-box overly-images">
+                                                <a href="./course-detail" class="d-block">
+                                                    <img src="./assets/images/continue-watch/02.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
+                                                </a>
+                                            </div>
+                                            <div class="iq-preogress">
+                                                <span class="data-left-timing font-size-14 fw-500 text-lowercase">120 of 130 m</span>
+                                                <div class="progress" role="progressbar" aria-label="Example 2px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px">
+                                                    <div class="progress-bar" style="width: 30%"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="swiper-slide">
-                                <div class="iq-watching-block">
-                                    <div class="block-images position-relative">
-                                        <div class="iq-image-box overly-images">
-                                            <a href="./course-detail" class="d-block">
-                                                <img src="./assets/images/continue-watch/03.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
-                                            </a>
-                                        </div>
-                                        <div class="iq-preogress">
-                                            <span class="data-left-timing font-size-14 fw-500 text-lowercase">60 of 134 m</span>
-                                            <div class="progress" role="progressbar" aria-label="Example 2px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px">
-                                                <div class="progress-bar" style="width: 90%"></div>
+                                </li>
+                                <li class="swiper-slide">
+                                    <div class="iq-watching-block">
+                                        <div class="block-images position-relative">
+                                            <div class="iq-image-box overly-images">
+                                                <a href="./course-detail" class="d-block">
+                                                    <img src="./assets/images/continue-watch/03.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
+                                                </a>
+                                            </div>
+                                            <div class="iq-preogress">
+                                                <span class="data-left-timing font-size-14 fw-500 text-lowercase">60 of 134 m</span>
+                                                <div class="progress" role="progressbar" aria-label="Example 2px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px">
+                                                    <div class="progress-bar" style="width: 90%"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="swiper-slide">
-                                <div class="iq-watching-block">
-                                    <div class="block-images position-relative">
-                                        <div class="iq-image-box overly-images">
-                                            <a href="./course-detail" class="d-block">
-                                                <img src="./assets/images/continue-watch/04.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
-                                            </a>
-                                        </div>
-                                        <div class="iq-preogress">
-                                            <span class="data-left-timing font-size-14 fw-500 text-lowercase">60 of 134 m</span>
-                                            <div class="progress" role="progressbar" aria-label="Example 2px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px">
-                                                <div class="progress-bar" style="width: 20%"></div>
+                                </li>
+                                <li class="swiper-slide">
+                                    <div class="iq-watching-block">
+                                        <div class="block-images position-relative">
+                                            <div class="iq-image-box overly-images">
+                                                <a href="./course-detail" class="d-block">
+                                                    <img src="./assets/images/continue-watch/04.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
+                                                </a>
+                                            </div>
+                                            <div class="iq-preogress">
+                                                <span class="data-left-timing font-size-14 fw-500 text-lowercase">60 of 134 m</span>
+                                                <div class="progress" role="progressbar" aria-label="Example 2px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px">
+                                                    <div class="progress-bar" style="width: 20%"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="swiper-slide">
-                                <div class="iq-watching-block">
-                                    <div class="block-images position-relative">
-                                        <div class="iq-image-box overly-images">
-                                            <a href="./course-detail" class="d-block">
-                                                <img src="./assets/images/continue-watch/05.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
-                                            </a>
-                                        </div>
-                                        <div class="iq-preogress">
-                                            <span class="data-left-timing font-size-14 fw-500 text-lowercase">45 of 157 m</span>
-                                            <div class="progress" role="progressbar" aria-label="Example 2px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px">
-                                                <div class="progress-bar" style="width: 100%"></div>
+                                </li>
+                                <li class="swiper-slide">
+                                    <div class="iq-watching-block">
+                                        <div class="block-images position-relative">
+                                            <div class="iq-image-box overly-images">
+                                                <a href="./course-detail" class="d-block">
+                                                    <img src="./assets/images/continue-watch/05.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
+                                                </a>
+                                            </div>
+                                            <div class="iq-preogress">
+                                                <span class="data-left-timing font-size-14 fw-500 text-lowercase">45 of 157 m</span>
+                                                <div class="progress" role="progressbar" aria-label="Example 2px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px">
+                                                    <div class="progress-bar" style="width: 100%"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="swiper-slide">
-                                <div class="iq-watching-block">
-                                    <div class="block-images position-relative">
-                                        <div class="iq-image-box overly-images">
-                                            <a href="./course-detail" class="d-block">
-                                                <img src="./assets/images/continue-watch/06.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
-                                            </a>
-                                        </div>
-                                        <div class="iq-preogress">
-                                            <span class="data-left-timing font-size-14 fw-500 text-lowercase">70 of 230 m</span>
-                                            <div class="progress" role="progressbar" aria-label="Example 2px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px">
-                                                <div class="progress-bar" style="width: 100%"></div>
+                                </li>
+                                <li class="swiper-slide">
+                                    <div class="iq-watching-block">
+                                        <div class="block-images position-relative">
+                                            <div class="iq-image-box overly-images">
+                                                <a href="./course-detail" class="d-block">
+                                                    <img src="./assets/images/continue-watch/06.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
+                                                </a>
+                                            </div>
+                                            <div class="iq-preogress">
+                                                <span class="data-left-timing font-size-14 fw-500 text-lowercase">70 of 230 m</span>
+                                                <div class="progress" role="progressbar" aria-label="Example 2px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px">
+                                                    <div class="progress-bar" style="width: 100%"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="swiper-button swiper-button-next"></div>
-                        <div class="swiper-button swiper-button-prev"></div>
+                                </li>
+                            </ul>
+                            <div class="swiper-button swiper-button-next"></div>
+                            <div class="swiper-button swiper-button-prev"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
             @if(count($coursesTop10) > 0)
             <div class="top-ten-block">
                 <div class="container-fluid">
@@ -392,24 +392,28 @@
                         <div class="card-style-slider">
                             <div class="position-relative swiper swiper-card" data-slide="6" data-laptop="6" data-tab="3" data-mobile="2" data-mobile-sm="2" data-autoplay="false" data-loop="true" data-navigation="true" data-pagination="true">
                                 <ul class="p-0 swiper-wrapper m-0  list-inline">
-                                    @foreach ($dateOrder as $row)
+                                    @foreach ($rooms as $room)
 
                                     <li class="swiper-slide">
                                         <div class="iq-card card-hover">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="{{ route('course.detail', ['id' => $row->id]) }}" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
-                                                    <img src="{{asset('images/courses/' . $row->cover)}}" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
+                                                    <a href="{{ route('rooms.detail', ['id' => $room->id]) }}" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <img src="{{ $room->cover ? asset('assets/images/rooms/' . $room->cover) : asset('assets/images/movies/related/01.webp') }}" alt="room-cover" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="{{ route('course.detail', ['id' => $row->id]) }}">{{$row->course}}</a>
+                                                                <a href="{{ route('rooms.show', ['room' => $room->id]) }}">{{$room->title}}</a>
                                                             </h5>
+                                                            @if ($room->tags->isNotEmpty())
                                                             <div class="movie-time d-flex align-items-center my-2">
-                                                                <span class="movie-time-text font-normal">{{$row->duration}} minutes</span>
+                                                                @foreach ($room->tags as $tag)
+                                                                <span class="movie-time-text font-normal"> {{ $tag->tag_name }} </span>
+                                                                @endforeach
                                                             </div>
+                                                            @endif
                                                         </div>
                                                         <div class="watchlist">
                                                             <a class="watch-list-not" href="playlist.html">

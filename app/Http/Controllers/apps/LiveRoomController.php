@@ -70,8 +70,19 @@ class LiveRoomController extends Controller {
         }
         return redirect()->route('rooms.all')->with('message', "Sala '{$room->title}' criada com sucesso.");
     }
+    
+    public function detail($id) {
+        $data = LiveRoom::with('tags')->find($id);
+        
+        $otherRooms = LiveRoom::where('id', '!=', $id)->get();
+        
+        return view('apps.rooms.detail', compact('data', 'otherRooms'));        
+    }
 
     public function show(LiveRoom $room) {
+        
+        $room->load('tags');
+        
         return view('apps.rooms.show', compact('room'));
     }
 }

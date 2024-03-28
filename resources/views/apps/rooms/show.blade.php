@@ -105,13 +105,15 @@
                                     <source src="./assets/images/video/sample-video.mp4" type="video/mp4" />
                                     <source src="MY_VIDEO.webm" type="video/webm" />
                                 </video>
-                                <!-- O vídeo remoto foi removido pois pode não ser necessário -->
+                                <!-- Botões exibidos apenas para administradores -->
+                                @if(auth()->user() && auth()->user()->isAdmin())
                                 <button id="startButton" class="start-button btn-play">
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
                                     <polygon points="5 3 19 12 5 21 5 3"></polygon>
                                     </svg>
                                 </button>
                                 <button id="shareScreenButton">Compartilhar Tela</button>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -140,14 +142,16 @@
                                                     <li><i class="fa fa-star" aria-hidden="true"></i></li>
                                                     <li><i class="fa fa-star-half" aria-hidden="true"></i></li>
                                                 </ul>
-                                                <span class="text-white ms-2">4.8 (imdb)</span>
                                             </div>
                                         </div>
+
+                                        @if ($room->tags->isNotEmpty())
                                         <ul class="p-0 mt-2 list-inline d-flex flex-wrap movie-tag">
-                                            <li class="trending-list"><a class="text-primary" href="./view-all-movie.html">Action</a></li>
-                                            <li class="trending-list"><a class="text-primary" href="./view-all-movie.html">Adventure</a></li>
-                                            <li class="trending-list"><a class="text-primary" href="./view-all-movie.html">Drama</a></li>
+                                            @foreach ($room->tags as $tag)
+                                            <li class="tag trending-list"><span class="text-primary">{{ $tag->tag_name }}</span></li>
+                                            @endforeach
                                         </ul>
+                                        @endif
                                         <div class="d-flex flex-wrap align-items-center text-white text-detail flex-wrap mb-4">
                                             <span class="badge bg-secondary">Horror</span>
                                             <span class="ms-3 font-Weight-500 genres-info">1hr : 48mins</span>
@@ -186,17 +190,20 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        @if ($room->tags->isNotEmpty())
                                         <ul class="iq-blogtag list-unstyled d-flex flex-wrap align-items-center gap-3 p-0">
                                             <li class="iq-tag-title text-primary mb-0">
                                                 <i class="fa fa-tags" aria-hidden="true"></i>
                                                 Tags:
                                             </li>
-                                            <li><a class="title" href="./view-all-movie.html">Action</a><span
-                                                    class="text-secondary">,</span></li>
-                                            <li><a class="title" href="./view-all-movie.html">Adventure</a><span
-                                                    class="text-secondary">,</span></li>
-                                            <li><a class="title" href="./view-all-movie.html">Drama</a></li>
+                                            @foreach ($room->tags as $tag)
+                                            <li>
+                                                <span class="tag title">{{ $tag->tag_name }}</span>
+                                            </li>
+                                            @endforeach
+
                                         </ul>
+                                        @endif
                                     </div>
                                     <div class="trailor-video col-md-3 col-12 mt-lg-0 mt-4 mb-md-0 mb-1 text-lg-right">
                                         <a data-fslightbox="html5-video" href="https://www.youtube.com/watch?v=QCGq1epI9pQ"
@@ -234,13 +241,7 @@
                                 <div class="tab-content">
                                     <div id="description-01" class="tab-pane animated fadeInUp active show" role="tabpanel">
                                         <div class="description-content">
-                                            <p>
-                                                Zombie Island is a 1998 direct-to-video animated comedy horror film
-                                                based on Hanna-Barbera's Scooby-Doo Saturday-morning cartoons. In the
-                                                film, Shaggy, Scooby, Fred, Velma, and Daphne reunite after a
-                                                year-long hiatus from Mystery, Inc. to investigate a bayou island said
-                                                to be haunted by the ghost of the pirate Morgan Moonscar. The film was
-                                                directed by Jim Stenstrum, from a screenplay by Glenn Leopold.
+                                            <p>{{ $room->description }}
                                             </p>
                                         </div>
                                     </div>
