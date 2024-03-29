@@ -93,7 +93,7 @@
                                 <span class="text-white fw-500">56 WINS & 83 NOMINATIONS</span>
                             </div> -->
                         <div class="pb-md-5">
-                            <h5 class="main-title text-capitalize mb-4">Cursos com melhor nota</h5>
+                            <h5 class="main-title mb-4">Cursos com melhor nota</h5>
                             <div class="card-style-grid mb-5">
                                 <div class="row row-cols-xl-5 row-cols-sm-2 row-cols-1">
                                     @foreach ($coursesTop10 as $row)
@@ -101,14 +101,14 @@
                                         <div class="iq-card card-hover">
                                             <div class="block-images position-relative w-100">
                                                 <div class="img-box w-100">
-                                                    <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                                                    <a href="{{ route('course.detail', ['id' => $row->id]) }}" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="{{asset('images/courses/' . $row->cover)}}" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
                                                 <div class="card-description with-transition">
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="./movie-detail.html">CRW</a>
+                                                                <a href="{{ route('course.detail', ['id' => $row->id]) }}">CRW</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">2hr

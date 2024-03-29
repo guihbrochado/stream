@@ -41,8 +41,15 @@ class CourseController extends Controller
     {
         $data = CoursesLessons::find($id);
 
-        $searchIdCourse = DB::Select(
-            "        
+        $coursesTop10 = DB::Select("
+        SELECT c.id, c.duration, c.course, c.cover, SUM(ce.rate) AS total_rate
+        FROM coursesevaluation ce
+        inner join courses c on ce.idcourse = c.id
+        GROUP BY (ce.idcourse)
+        order by total_rate DESC
+        limit 10;");
+
+        $searchIdCourse = DB::Select("        
         select distinct cm.id_course
         from courseslessons cl
         inner join coursesmodules cm on cl.id_module = cl.id
@@ -52,13 +59,13 @@ class CourseController extends Controller
 
         $modules = CoursesModules::where('id_course', '=', $idcourse)->get();
 
-        for ($i = 0; $i < count($modules); $i++) {            
+        for ($i = 0; $i < count($modules); $i++) {
             $moduleId = $modules[$i]->id;
             $lessons = DB::Select("select distinct * from courseslessons where id_module = $moduleId");
             $modules[$i]['lessons'] = $lessons;
         }
-        
-        return view('apps.course.lesson')->with(['data' => $data, 'modules' => $modules ]);
+
+        return view('apps.course.lesson')->with(['data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10]);
     }
 
     function ajaxCoursesLessons($idcourse, $idmodule)

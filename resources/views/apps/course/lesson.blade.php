@@ -43,19 +43,43 @@
 
           </div>
           <div class="col-lg-3">
+
             <div class="widget widget_categories">
               @foreach ($modules as $row)
-
-              <h5 class="widget-title position-relative">Módulo: {{ $row->module }}</h5>
-              <ul class="p-0 m-0 list-unstyled">
+              <div class="d-flex justify-content-between" id="module{{ $row->id }}">
+                <h5 class="widget-title position-relative" >Módulo: {{ $row->module }}</h5>
+                <i id="icon{{ $row->id }}" class="fa-solid fa-chevron-down"></i>
+              </div>
+              <ul class="p-0 m-0 list-unstyled " id="ul{{ $row->id }}">
                 @foreach ($row['lessons'] as $rowlesson)
                 <li>
-                  <a href="../blog/blog-category.html" class="position-relative">{{ $rowlesson->lesson }}</a>
-                  <span class="post_count"></span>
+                  <div class="d-flex justify-content-between">
+                    <span class="post_count"><i class="fas fa-play"></i></span>
+                    <a href="{{ route('course.lesson', ['id' => $rowlesson->id ]) }}" class="position-relative">{{ $rowlesson->lesson }}</a>
+
+                  </div>
                 </li>
                 @endforeach
               </ul>
 
+              <script>
+                $("#module{{ $row->id }}").click(function(e) {
+                  const isHidden = $("#ul{{ $row->id }}").hasClass('hide');
+                  if (isHidden) {
+                    $("#ul{{ $row->id }}").removeClass('hide');
+                    $("#ul{{ $row->id }}").show();
+                    $("#icon{{ $row->id }}").removeClass('fa-solid fa-chevron-down');
+                    $("#icon{{ $row->id }}").addClass('fa-solid fa-chevron-up');
+                  } else {
+                    $("#ul{{ $row->id }}").addClass('hide');
+                    $("#ul{{ $row->id }}").hide();
+                
+
+                    $("#icon{{ $row->id }}").removeClass('fa-solid fa-chevron-up');
+                    $("#icon{{ $row->id }}").addClass('fa-solid fa-chevron-down');
+                  }
+                });
+              </script>
               @endforeach
             </div>
 
@@ -452,21 +476,23 @@
           <div class="card-style-slider">
             <div class="position-relative swiper swiper-card" data-slide="5" data-laptop="5" data-tab="2" data-mobile="2" data-mobile-sm="2" data-autoplay="false" data-loop="true" data-navigation="true" data-pagination="true">
               <ul class="p-0 swiper-wrapper m-0  list-inline">
+                @foreach ($coursesTop10 as $row)
+
                 <li class="swiper-slide">
                   <div class="iq-card card-hover">
                     <div class="block-images position-relative w-100">
                       <div class="img-box w-100">
-                        <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
-                        <img src="./assets/images/movies/recommended/01.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
+                        <a href="{{ route('course.detail', ['id' => $row->id]) }}" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
+                        <img src="{{asset('images/courses/' . $row->cover)}}" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                       </div>
                       <div class="card-description with-transition">
                         <div class="cart-content">
                           <div class="content-left">
                             <h5 class="iq-title text-capitalize">
-                              <a href="./movie-detail.html">Giikre</a>
+                              <a href="./movie-detail.html">{{$row->course}}</a>
                             </h5>
                             <div class="movie-time d-flex align-items-center my-2">
-                              <span class="movie-time-text font-normal">2hr : 12mins</span>
+                              <span class="movie-time-text font-normal">{{$row->duration}}</span>
                             </div>
                           </div>
                           <div class="watchlist">
@@ -531,480 +557,8 @@
 
 
                 </li>
-                <li class="swiper-slide">
-                  <div class="iq-card card-hover">
-                    <div class="block-images position-relative w-100">
-                      <div class="img-box w-100">
-                        <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
-                        <img src="./assets/images/movies/recommended/02.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
-                      </div>
-                      <div class="card-description with-transition">
-                        <div class="cart-content">
-                          <div class="content-left">
-                            <h5 class="iq-title text-capitalize">
-                              <a href="./movie-detail.html">Arrival</a>
-                            </h5>
-                            <div class="movie-time d-flex align-items-center my-2">
-                              <span class="movie-time-text font-normal">1hr : 22mins</span>
-                            </div>
-                          </div>
-                          <div class="watchlist">
-                            <a class="watch-list-not" href="playlist.html">
-                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-10">
-                                <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg>
-                              <span class="watchlist-label"> Watchlist </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="block-social-info align-items-center">
-                        <ul class="p-0 m-0 d-flex gap-2 music-play-lists">
-                          <li class="share position-relative d-flex align-items-center text-center mb-0">
-                            <span class="w-100 h-100 d-inline-block bg-transparent">
-                              <i class="fas fa-share-alt"></i>
-                            </span>
-                            <div class="share-wrapper">
-                              <div class="share-boxs d-inline-block">
-                                <svg width="15" height="40" class="share-shape" viewBox="0 0 15 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8842 40C6.82983 37.2868 1 29.3582 1 20C1 10.6418 6.82983 2.71323 14.8842 0H0V40H14.8842Z" fill="#191919"></path>
-                                </svg>
-                                <div class=" overflow-hidden">
-                                  <a href="" target="_blank">
-                                    <i class="fab fa-facebook-f"></i>
-                                  </a>
-                                  <a href="" target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                  </a>
-                                  <a href="#">
-                                    <i class="fas fa-link"></i>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="share position-relative d-flex align-items-center text-center mb-0">
-                            <span class="w-100 h-100 d-inline-block bg-transparent">
-                              <i class="fa-regular fa-heart"></i>
-                            </span>
-                            <div class="share-wrapper">
-                              <div class="share-boxs d-inline-block">
-                                <svg width="15" height="40" class="share-shape" viewBox="0 0 15 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8842 40C6.82983 37.2868 1 29.3582 1 20C1 10.6418 6.82983 2.71323 14.8842 0H0V40H14.8842Z" fill="#191919"></path>
-                                </svg>
-                                <div class=" overflow-hidden">
-                                  <span>+51</span>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                        <div class="iq-button">
-                          <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
-                            <i class="fa-solid fa-play ms-0"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                @endforeach
 
-
-                </li>
-                <li class="swiper-slide">
-                  <div class="iq-card card-hover">
-                    <div class="block-images position-relative w-100">
-                      <div class="img-box w-100">
-                        <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
-                        <img src="./assets/images/movies/recommended/03.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
-                      </div>
-                      <div class="card-description with-transition">
-                        <div class="cart-content">
-                          <div class="content-left">
-                            <h5 class="iq-title text-capitalize">
-                              <a href="./movie-detail.html">Pricess</a>
-                            </h5>
-                            <div class="movie-time d-flex align-items-center my-2">
-                              <span class="movie-time-text font-normal">1hr : 30mins</span>
-                            </div>
-                          </div>
-                          <div class="watchlist">
-                            <a class="watch-list-not" href="playlist.html">
-                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-10">
-                                <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg>
-                              <span class="watchlist-label"> Watchlist </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="block-social-info align-items-center">
-                        <ul class="p-0 m-0 d-flex gap-2 music-play-lists">
-                          <li class="share position-relative d-flex align-items-center text-center mb-0">
-                            <span class="w-100 h-100 d-inline-block bg-transparent">
-                              <i class="fas fa-share-alt"></i>
-                            </span>
-                            <div class="share-wrapper">
-                              <div class="share-boxs d-inline-block">
-                                <svg width="15" height="40" class="share-shape" viewBox="0 0 15 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8842 40C6.82983 37.2868 1 29.3582 1 20C1 10.6418 6.82983 2.71323 14.8842 0H0V40H14.8842Z" fill="#191919"></path>
-                                </svg>
-                                <div class=" overflow-hidden">
-                                  <a href="" target="_blank">
-                                    <i class="fab fa-facebook-f"></i>
-                                  </a>
-                                  <a href="" target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                  </a>
-                                  <a href="#">
-                                    <i class="fas fa-link"></i>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="share position-relative d-flex align-items-center text-center mb-0">
-                            <span class="w-100 h-100 d-inline-block bg-transparent">
-                              <i class="fa-regular fa-heart"></i>
-                            </span>
-                            <div class="share-wrapper">
-                              <div class="share-boxs d-inline-block">
-                                <svg width="15" height="40" class="share-shape" viewBox="0 0 15 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8842 40C6.82983 37.2868 1 29.3582 1 20C1 10.6418 6.82983 2.71323 14.8842 0H0V40H14.8842Z" fill="#191919"></path>
-                                </svg>
-                                <div class=" overflow-hidden">
-                                  <span>+51</span>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                        <div class="iq-button">
-                          <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
-                            <i class="fa-solid fa-play ms-0"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-
-                </li>
-                <li class="swiper-slide">
-                  <div class="iq-card card-hover">
-                    <div class="block-images position-relative w-100">
-                      <div class="img-box w-100">
-                        <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
-                        <img src="./assets/images/movies/recommended/04.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
-                      </div>
-                      <div class="card-description with-transition">
-                        <div class="cart-content">
-                          <div class="content-left">
-                            <h5 class="iq-title text-capitalize">
-                              <a href="./movie-detail.html">Soull Meate</a>
-                            </h5>
-                            <div class="movie-time d-flex align-items-center my-2">
-                              <span class="movie-time-text font-normal">2hr : 30mins</span>
-                            </div>
-                          </div>
-                          <div class="watchlist">
-                            <a class="watch-list-not" href="playlist.html">
-                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-10">
-                                <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg>
-                              <span class="watchlist-label"> Watchlist </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="block-social-info align-items-center">
-                        <ul class="p-0 m-0 d-flex gap-2 music-play-lists">
-                          <li class="share position-relative d-flex align-items-center text-center mb-0">
-                            <span class="w-100 h-100 d-inline-block bg-transparent">
-                              <i class="fas fa-share-alt"></i>
-                            </span>
-                            <div class="share-wrapper">
-                              <div class="share-boxs d-inline-block">
-                                <svg width="15" height="40" class="share-shape" viewBox="0 0 15 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8842 40C6.82983 37.2868 1 29.3582 1 20C1 10.6418 6.82983 2.71323 14.8842 0H0V40H14.8842Z" fill="#191919"></path>
-                                </svg>
-                                <div class=" overflow-hidden">
-                                  <a href="" target="_blank">
-                                    <i class="fab fa-facebook-f"></i>
-                                  </a>
-                                  <a href="" target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                  </a>
-                                  <a href="#">
-                                    <i class="fas fa-link"></i>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="share position-relative d-flex align-items-center text-center mb-0">
-                            <span class="w-100 h-100 d-inline-block bg-transparent">
-                              <i class="fa-regular fa-heart"></i>
-                            </span>
-                            <div class="share-wrapper">
-                              <div class="share-boxs d-inline-block">
-                                <svg width="15" height="40" class="share-shape" viewBox="0 0 15 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8842 40C6.82983 37.2868 1 29.3582 1 20C1 10.6418 6.82983 2.71323 14.8842 0H0V40H14.8842Z" fill="#191919"></path>
-                                </svg>
-                                <div class=" overflow-hidden">
-                                  <span>+51</span>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                        <div class="iq-button">
-                          <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
-                            <i class="fa-solid fa-play ms-0"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-
-                </li>
-                <li class="swiper-slide">
-                  <div class="iq-card card-hover">
-                    <div class="block-images position-relative w-100">
-                      <div class="img-box w-100">
-                        <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
-                        <img src="./assets/images/movies/recommended/05.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
-                      </div>
-                      <div class="card-description with-transition">
-                        <div class="cart-content">
-                          <div class="content-left">
-                            <h5 class="iq-title text-capitalize">
-                              <a href="./movie-detail.html">Dangacg</a>
-                            </h5>
-                            <div class="movie-time d-flex align-items-center my-2">
-                              <span class="movie-time-text font-normal">1hr : 45mins</span>
-                            </div>
-                          </div>
-                          <div class="watchlist">
-                            <a class="watch-list-not" href="playlist.html">
-                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-10">
-                                <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg>
-                              <span class="watchlist-label"> Watchlist </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="block-social-info align-items-center">
-                        <ul class="p-0 m-0 d-flex gap-2 music-play-lists">
-                          <li class="share position-relative d-flex align-items-center text-center mb-0">
-                            <span class="w-100 h-100 d-inline-block bg-transparent">
-                              <i class="fas fa-share-alt"></i>
-                            </span>
-                            <div class="share-wrapper">
-                              <div class="share-boxs d-inline-block">
-                                <svg width="15" height="40" class="share-shape" viewBox="0 0 15 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8842 40C6.82983 37.2868 1 29.3582 1 20C1 10.6418 6.82983 2.71323 14.8842 0H0V40H14.8842Z" fill="#191919"></path>
-                                </svg>
-                                <div class=" overflow-hidden">
-                                  <a href="" target="_blank">
-                                    <i class="fab fa-facebook-f"></i>
-                                  </a>
-                                  <a href="" target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                  </a>
-                                  <a href="#">
-                                    <i class="fas fa-link"></i>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="share position-relative d-flex align-items-center text-center mb-0">
-                            <span class="w-100 h-100 d-inline-block bg-transparent">
-                              <i class="fa-regular fa-heart"></i>
-                            </span>
-                            <div class="share-wrapper">
-                              <div class="share-boxs d-inline-block">
-                                <svg width="15" height="40" class="share-shape" viewBox="0 0 15 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8842 40C6.82983 37.2868 1 29.3582 1 20C1 10.6418 6.82983 2.71323 14.8842 0H0V40H14.8842Z" fill="#191919"></path>
-                                </svg>
-                                <div class=" overflow-hidden">
-                                  <span>+51</span>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                        <div class="iq-button">
-                          <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
-                            <i class="fa-solid fa-play ms-0"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-
-                </li>
-                <li class="swiper-slide">
-                  <div class="iq-card card-hover">
-                    <div class="block-images position-relative w-100">
-                      <div class="img-box w-100">
-                        <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
-                        <img src="./assets/images/movies/recommended/06.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
-                      </div>
-                      <div class="card-description with-transition">
-                        <div class="cart-content">
-                          <div class="content-left">
-                            <h5 class="iq-title text-capitalize">
-                              <a href="./movie-detail.html">crcikeft</a>
-                            </h5>
-                            <div class="movie-time d-flex align-items-center my-2">
-                              <span class="movie-time-text font-normal">2hr : 25mins</span>
-                            </div>
-                          </div>
-                          <div class="watchlist">
-                            <a class="watch-list-not" href="playlist.html">
-                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-10">
-                                <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg>
-                              <span class="watchlist-label"> Watchlist </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="block-social-info align-items-center">
-                        <ul class="p-0 m-0 d-flex gap-2 music-play-lists">
-                          <li class="share position-relative d-flex align-items-center text-center mb-0">
-                            <span class="w-100 h-100 d-inline-block bg-transparent">
-                              <i class="fas fa-share-alt"></i>
-                            </span>
-                            <div class="share-wrapper">
-                              <div class="share-boxs d-inline-block">
-                                <svg width="15" height="40" class="share-shape" viewBox="0 0 15 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8842 40C6.82983 37.2868 1 29.3582 1 20C1 10.6418 6.82983 2.71323 14.8842 0H0V40H14.8842Z" fill="#191919"></path>
-                                </svg>
-                                <div class=" overflow-hidden">
-                                  <a href="" target="_blank">
-                                    <i class="fab fa-facebook-f"></i>
-                                  </a>
-                                  <a href="" target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                  </a>
-                                  <a href="#">
-                                    <i class="fas fa-link"></i>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="share position-relative d-flex align-items-center text-center mb-0">
-                            <span class="w-100 h-100 d-inline-block bg-transparent">
-                              <i class="fa-regular fa-heart"></i>
-                            </span>
-                            <div class="share-wrapper">
-                              <div class="share-boxs d-inline-block">
-                                <svg width="15" height="40" class="share-shape" viewBox="0 0 15 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8842 40C6.82983 37.2868 1 29.3582 1 20C1 10.6418 6.82983 2.71323 14.8842 0H0V40H14.8842Z" fill="#191919"></path>
-                                </svg>
-                                <div class=" overflow-hidden">
-                                  <span>+51</span>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                        <div class="iq-button">
-                          <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
-                            <i class="fa-solid fa-play ms-0"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-
-                </li>
-                <li class="swiper-slide">
-                  <div class="iq-card card-hover">
-                    <div class="block-images position-relative w-100">
-                      <div class="img-box w-100">
-                        <a href="./movie-detail.html" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
-                        <img src="./assets/images/movies/recommended/07.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
-                      </div>
-                      <div class="card-description with-transition">
-                        <div class="cart-content">
-                          <div class="content-left">
-                            <h5 class="iq-title text-capitalize">
-                              <a href="./movie-detail.html">Avengrs</a>
-                            </h5>
-                            <div class="movie-time d-flex align-items-center my-2">
-                              <span class="movie-time-text font-normal">1hr : 45mins</span>
-                            </div>
-                          </div>
-                          <div class="watchlist">
-                            <a class="watch-list-not" href="playlist.html">
-                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-10">
-                                <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg>
-                              <span class="watchlist-label"> Watchlist </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="block-social-info align-items-center">
-                        <ul class="p-0 m-0 d-flex gap-2 music-play-lists">
-                          <li class="share position-relative d-flex align-items-center text-center mb-0">
-                            <span class="w-100 h-100 d-inline-block bg-transparent">
-                              <i class="fas fa-share-alt"></i>
-                            </span>
-                            <div class="share-wrapper">
-                              <div class="share-boxs d-inline-block">
-                                <svg width="15" height="40" class="share-shape" viewBox="0 0 15 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8842 40C6.82983 37.2868 1 29.3582 1 20C1 10.6418 6.82983 2.71323 14.8842 0H0V40H14.8842Z" fill="#191919"></path>
-                                </svg>
-                                <div class=" overflow-hidden">
-                                  <a href="" target="_blank">
-                                    <i class="fab fa-facebook-f"></i>
-                                  </a>
-                                  <a href="" target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                  </a>
-                                  <a href="#">
-                                    <i class="fas fa-link"></i>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="share position-relative d-flex align-items-center text-center mb-0">
-                            <span class="w-100 h-100 d-inline-block bg-transparent">
-                              <i class="fa-regular fa-heart"></i>
-                            </span>
-                            <div class="share-wrapper">
-                              <div class="share-boxs d-inline-block">
-                                <svg width="15" height="40" class="share-shape" viewBox="0 0 15 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8842 40C6.82983 37.2868 1 29.3582 1 20C1 10.6418 6.82983 2.71323 14.8842 0H0V40H14.8842Z" fill="#191919"></path>
-                                </svg>
-                                <div class=" overflow-hidden">
-                                  <span>+51</span>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                        <div class="iq-button">
-                          <a href="movie-detail.html" class="btn text-uppercase position-relative rounded-circle">
-                            <i class="fa-solid fa-play ms-0"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-
-                </li>
               </ul>
               <div class="swiper-button swiper-button-next"></div>
               <div class="swiper-button swiper-button-prev"></div>
