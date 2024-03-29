@@ -111,6 +111,7 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         //LIVE ROOM
         Route::get('/rooms', [LiveRoomController::class, 'index'])->name('rooms.index');
         Route::get('/rooms/{room}', [LiveRoomController::class, 'show'])->name('rooms.show');
+        Route::get('/room-detail/{id}', [LiveRoomController::class, 'detail'])->name('rooms.detail');
 
         Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
         Route::get('/my-account', [MyAccountController::class, 'index'])->name('myaccount.index');

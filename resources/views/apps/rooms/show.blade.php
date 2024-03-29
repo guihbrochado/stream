@@ -33,6 +33,16 @@
                 overflow: hidden; /* Para garantir que nada saia fora do contêiner */
             }
 
+            .video-cover {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Isso garante que a imagem cubra o espaço sem perder as proporções */
+                z-index: 2; /* Garante que a imagem fique sobre o vídeo */
+            }
+
             #localVideo {
                 width: 100%;
                 height: auto;
@@ -89,18 +99,21 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="video-container pt-0">
+                            <div class="video-container pt-0" style="height: 700px;">
+                                <img id="videoCover" src="{{ $room->cover ? asset('assets/images/rooms/' . $room->cover) : asset('assets/images/movies/related/01.webp') }}" alt="video cover" class="video-cover">
                                 <video id="localVideo" class="video-js vjs-big-play-centered" controls preload="auto" autoplay muted>
                                     <source src="./assets/images/video/sample-video.mp4" type="video/mp4" />
                                     <source src="MY_VIDEO.webm" type="video/webm" />
                                 </video>
-                                <!-- O vídeo remoto foi removido pois pode não ser necessário -->
+                                <!-- Botões exibidos apenas para administradores -->
+                                @if(auth()->user() && auth()->user()->isAdmin())
                                 <button id="startButton" class="start-button btn-play">
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
                                     <polygon points="5 3 19 12 5 21 5 3"></polygon>
                                     </svg>
                                 </button>
-<button id="shareScreenButton">Compartilhar Tela</button>
+                                <button id="shareScreenButton">Compartilhar Tela</button>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -129,14 +142,16 @@
                                                     <li><i class="fa fa-star" aria-hidden="true"></i></li>
                                                     <li><i class="fa fa-star-half" aria-hidden="true"></i></li>
                                                 </ul>
-                                                <span class="text-white ms-2">4.8 (imdb)</span>
                                             </div>
                                         </div>
+
+                                        @if ($room->tags->isNotEmpty())
                                         <ul class="p-0 mt-2 list-inline d-flex flex-wrap movie-tag">
-                                            <li class="trending-list"><a class="text-primary" href="./view-all-movie.html">Action</a></li>
-                                            <li class="trending-list"><a class="text-primary" href="./view-all-movie.html">Adventure</a></li>
-                                            <li class="trending-list"><a class="text-primary" href="./view-all-movie.html">Drama</a></li>
+                                            @foreach ($room->tags as $tag)
+                                            <li class="tag trending-list"><span class="text-primary">{{ $tag->tag_name }}</span></li>
+                                            @endforeach
                                         </ul>
+                                        @endif
                                         <div class="d-flex flex-wrap align-items-center text-white text-detail flex-wrap mb-4">
                                             <span class="badge bg-secondary">Horror</span>
                                             <span class="ms-3 font-Weight-500 genres-info">1hr : 48mins</span>
@@ -175,17 +190,20 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        @if ($room->tags->isNotEmpty())
                                         <ul class="iq-blogtag list-unstyled d-flex flex-wrap align-items-center gap-3 p-0">
                                             <li class="iq-tag-title text-primary mb-0">
                                                 <i class="fa fa-tags" aria-hidden="true"></i>
                                                 Tags:
                                             </li>
-                                            <li><a class="title" href="./view-all-movie.html">Action</a><span
-                                                    class="text-secondary">,</span></li>
-                                            <li><a class="title" href="./view-all-movie.html">Adventure</a><span
-                                                    class="text-secondary">,</span></li>
-                                            <li><a class="title" href="./view-all-movie.html">Drama</a></li>
+                                            @foreach ($room->tags as $tag)
+                                            <li>
+                                                <span class="tag title">{{ $tag->tag_name }}</span>
+                                            </li>
+                                            @endforeach
+
                                         </ul>
+                                        @endif
                                     </div>
                                     <div class="trailor-video col-md-3 col-12 mt-lg-0 mt-4 mb-md-0 mb-1 text-lg-right">
                                         <a data-fslightbox="html5-video" href="https://www.youtube.com/watch?v=QCGq1epI9pQ"
@@ -223,13 +241,7 @@
                                 <div class="tab-content">
                                     <div id="description-01" class="tab-pane animated fadeInUp active show" role="tabpanel">
                                         <div class="description-content">
-                                            <p>
-                                                Zombie Island is a 1998 direct-to-video animated comedy horror film
-                                                based on Hanna-Barbera's Scooby-Doo Saturday-morning cartoons. In the
-                                                film, Shaggy, Scooby, Fred, Velma, and Daphne reunite after a
-                                                year-long hiatus from Mystery, Inc. to investigate a bayou island said
-                                                to be haunted by the ghost of the pirate Morgan Moonscar. The film was
-                                                directed by Jim Stenstrum, from a screenplay by Glenn Leopold.
+                                            <p>{{ $room->description }}
                                             </p>
                                         </div>
                                     </div>
@@ -2924,6 +2936,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 localVideo.pause();
             }
         });
+    }
+});
+
+document.getElementById('startButton').addEventListener('click', function () {
+    var videoElement = document.getElementById('localVideo');
+    var coverElement = document.getElementById('videoCover');
+
+    // Verifica se o vídeo está pausado antes de tentar reproduzir
+    if (videoElement.paused) {
+        videoElement.play();
+        coverElement.style.display = 'none'; // Oculta a imagem de capa
+    } else {
+        videoElement.pause();
     }
 });
         </script>

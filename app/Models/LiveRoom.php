@@ -16,8 +16,12 @@ class LiveRoom extends Model {
         'is_free',
         'price'
     ];
-    
-    public function purchases(){
+
+    public function purchases() {
         return $this->hasMany(Purchase::class, 'room_id');
+    }
+
+    public function tags() {
+        return $this->belongsToMany(LiveRoomTag::class, 'liveroom_tag_associations', 'liveroom_id', 'tag_id');
     }
 }

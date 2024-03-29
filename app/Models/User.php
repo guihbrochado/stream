@@ -111,4 +111,8 @@ class User extends Authenticatable
             RedisController::update_supervisor_members();
         });
     }
+    
+    public function isAdmin() {
+    return $this->can('admin');
+}
 }

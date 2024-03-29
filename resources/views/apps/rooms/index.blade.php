@@ -52,7 +52,7 @@
                                     <div class="block-images position-relative w-100">
                                         <div class="img-box w-100">
                                             <a href="{{ route('rooms.show', ['room' => $room->id]) }}" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
-                                            <img src="./assets/images/movies/related/01.webp" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
+                                            <img src="{{ $room->cover ? asset('assets/images/rooms/' . $room->cover) : asset('assets/images/movies/related/01.webp') }}" alt="room-cover" class="img-fluid object-cover w-100 d-block border-0">
                                         </div>
                                         <div class="card-description with-transition">
                                             <div class="cart-content">
@@ -64,7 +64,7 @@
                                                         <span class="movie-time-text font-normal">2hr : 12mins</span>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
                                         <div class="block-social-info align-items-center">
