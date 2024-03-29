@@ -11,6 +11,35 @@
   @vite(['resources/js/app.js'])
 </head>
 
+<style>
+  .embed-responsive {
+  position: relative;
+  display: block;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.embed-responsive.embed-responsive-16by9 {
+  padding-bottom: 56.25%; /* 16:9 ratio */
+}
+
+.embed-responsive .embed-responsive-item, .embed-responsive iframe, .embed-responsive embed, .embed-responsive object, .embed-responsive video {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.embed-responsive .card-img-top {
+  max-width: 100%;
+  height: auto;
+}
+
+</style>
+
 <body class=" custom-header-relative ">
   <span class="screen-darken"></span>
   <!-- loader Start -->
@@ -32,22 +61,17 @@
     <div class="iq-main-slider site-video">
       <div class="container-fluid">
         <div class="row mt-3">
-          <div class="col-lg-9">
-            <!-- <video id="my-video" poster="https://i.ytimg.com/vi_webp/rKVEoyTedv4/maxresdefault.webp"
-                        class="video-js vjs-big-play-centered w-100" controls preload="auto"
-                        data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=QCGq1epI9pQ"}], "youtube": { "iv_load_policy": 1 } }'>
-                        <source src="./assets/images/video/sample-video.mp4" type="video/mp4" />
-                        <source src="MY_VIDEO.webm" type="video/webm" />
-                    </video> -->
-            <iframe allowfullscreen class="card-img-top rounded-3" style="width: 1700px; height: 700px;" src="https://www.youtube.com/embed/{{$data->link}}"></iframe>
-
+          <div class="col-md-9">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe class="embed-responsive-item rounded-3" src="https://www.youtube.com/embed/{{$data->link}}" allowfullscreen></iframe>
+            </div>
           </div>
           <div class="col-lg-3">
 
             <div class="widget widget_categories">
               @foreach ($modules as $row)
               <div class="d-flex justify-content-between" id="module{{ $row->id }}">
-                <h5 class="widget-title position-relative" >Módulo: {{ $row->module }}</h5>
+                <h5 class="widget-title position-relative">Módulo: {{ $row->module }}</h5>
                 <i id="icon{{ $row->id }}" class="fa-solid fa-chevron-down"></i>
               </div>
               <ul class="p-0 m-0 list-unstyled " id="ul{{ $row->id }}">
@@ -73,7 +97,7 @@
                   } else {
                     $("#ul{{ $row->id }}").addClass('hide');
                     $("#ul{{ $row->id }}").hide();
-                
+
 
                     $("#icon{{ $row->id }}").removeClass('fa-solid fa-chevron-up');
                     $("#icon{{ $row->id }}").addClass('fa-solid fa-chevron-down');
