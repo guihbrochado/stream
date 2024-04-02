@@ -16,7 +16,7 @@ class LiveRoomController extends Controller {
         $rooms = LiveRoom::all();
         return view('apps.rooms.index', compact('rooms'));
     }
-    
+
     //Método para o manager ver todos os usuários no dashboard
     public function all() {
         $rooms = LiveRoom::all();
@@ -49,14 +49,14 @@ class LiveRoomController extends Controller {
                         'is_free' => $request->is_free,
                         'price' => $price,
             ]);
-            
+
             $tagNames = $request->input('tags');
-            
-            if($tagNames) {
-                if(is_string($tagNames)) {
+
+            if ($tagNames) {
+                if (is_string($tagNames)) {
                     $tagNames = explode(',', $tagNames);
                 }
-                
+
                 $tagIds = [];
                 foreach ($tagNames as $tagName) {
                     $tagName = trim($tagName);
@@ -70,19 +70,20 @@ class LiveRoomController extends Controller {
         }
         return redirect()->route('rooms.all')->with('message', "Sala '{$room->title}' criada com sucesso.");
     }
-    
+
     public function detail($id) {
         $data = LiveRoom::with('tags')->find($id);
-        
+
         $otherRooms = LiveRoom::where('id', '!=', $id)->get();
-        
-        return view('apps.rooms.detail', compact('data', 'otherRooms'));        
+
+        return view('apps.rooms.detail', compact('data', 'otherRooms'));
     }
 
     public function show(LiveRoom $room) {
-        
+
+        $otherRooms = LiveRoom::all();
         $room->load('tags');
-        
-        return view('apps.rooms.show', compact('room'));
+
+        return view('apps.rooms.show', compact('room', 'otherRooms'));
     }
 }

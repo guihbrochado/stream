@@ -41,7 +41,7 @@
                     </div>
                     <!--Logo -->
                     <div class="logo-default">
-                        <a class="navbar-brand text-primary" href="./index.html"> 
+                        <a class="navbar-brand text-primary" href="{{ url('/') }}"> 
                             <img class="img-fluid logo" src="{{ asset('assets/images/logo.webp')}}" loading="lazy" alt="streamit" />
                         </a>
                     </div>

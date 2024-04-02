@@ -1,6 +1,6 @@
 <aside class="sidebar sidebar-base sidebar-white sidebar-default navs-rounded-all " id="first-tour" data-toggle="main-sidebar" data-sidebar="responsive">
     <div class="sidebar-header d-flex align-items-center justify-content-start">
-        <a href="dashboard/index.html" class="navbar-brand">
+        <a href="{{ url('/') }}" class="navbar-brand">
 
             <!--Logo start-->
             <img class="logo-normal" src="assets/dashboard/images/logo.png" alt="#">
@@ -115,14 +115,6 @@
                                                             <i class="fa-regular fa-square-full"></i>
                                                         </i>
                                                         <span class="item-name">Categoria</span>
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link " href="/rooms">
-                                                        <i class="icon" data-bs-toggle="tooltip" title="Aulas" data-bs-placement="right" aria-label="Aulas" data-bs-original-title="Aulas">
-                                                            <i class="fa-regular fa-square-full"></i>
-                                                        </i>
-                                                        <span class="item-name">Aulas</span>
                                                     </a>
                                                 </li>
                                             </ul>
