@@ -31,10 +31,19 @@ class CourseController extends Controller
         GROUP BY (ce.idcourse)
         order by total_rate DESC
         limit 10;");
+        
+        $firstLesson = DB::Select("
+        select distinct cl.id 
+        from courseslessons cl
+        inner join coursesmodules cm on cl.id_module = cm.id
+        where cm.id_course =  $data->id
+        order by cm.modulenumber and cl.lessonnumber asc;");
+
+        $firstLesson = $firstLesson[0]->id;
 
         $allCourses = Courses::get();
 
-        return view('apps.course.detail')->with(['data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'allCourses' => $allCourses]);
+        return view('apps.course.detail')->with(['data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'allCourses' => $allCourses, 'firstLesson' => $firstLesson]);
     }
 
     public function lesson($id)

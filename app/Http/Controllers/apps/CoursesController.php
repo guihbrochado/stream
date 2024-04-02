@@ -74,6 +74,7 @@ class CoursesController extends Controller
                     'isfree' => $request->isfree,
                     'price' => $price,
                     'certification' => $request->certification,
+                    'tags' => $request->tags,
                 ]
             );
 
@@ -136,17 +137,17 @@ class CoursesController extends Controller
 
         }
 
-        dump($courses);
+        // dump($courses);
         try {
             $courses->save();
         } catch (Exception $e) {
             // You can check get the details of the error using `errorInfo`:
             $errorInfo = $e->getMessage();
             echo $errorInfo;
-            // return to_route($this->controller)->with('message', $errorInfo);
+            return to_route($this->controller)->with('message', $errorInfo);
         }
 
-        // return to_route($this->controller)->with('message', "Registro Atualizado");
+        return to_route($this->controller)->with('message', "Registro Atualizado");
     }
 
     /**

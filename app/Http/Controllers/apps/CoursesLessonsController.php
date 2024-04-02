@@ -95,6 +95,7 @@ class CoursesLessonsController extends Controller
                     'materials' => $request->materials,
                     'duration' => $request->duration,
                     'link' => $embed,
+                    'tags' => $request->tags,
                 ]
             );
         } catch (Exception $e) {
@@ -153,27 +154,7 @@ class CoursesLessonsController extends Controller
         }
 
         $coursesLessons->fill($request->all());
-
-        // function getYouTubeEmbedCode($url)
-        // {
-        //     $video_id = '';
-        //     $parsed_url = parse_url($url);
-
-        //     if (isset($parsed_url['query'])) {
-        //         parse_str($parsed_url['query'], $query_params);
-
-        //         if (isset($query_params['v'])) {
-        //             $video_id = $query_params['v'];
-        //         }
-        //     }
-
-        //     if ($video_id) {
-        //         return "$video_id";
-        //     } else {
-        //         return "O URL do vídeo do YouTube é inválido.";
-        //     }
-        // }
-
+  
         $coursesLessons->link = $this->getYouTubeEmbedCode($request->link);
 
         try {

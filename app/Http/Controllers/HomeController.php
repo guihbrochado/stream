@@ -39,7 +39,7 @@ class HomeController extends Controller
         limit 10;");
         
         $dateOrder = Courses::orderBy('created_at', 'desc')->get();
-
+        
         return view('apps.course.index', ['data' => $data, 'coursesTop10' => $coursesTop10, 'rooms' => $rooms,'dateOrder' => $dateOrder]);
     }
 

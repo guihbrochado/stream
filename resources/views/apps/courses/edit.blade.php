@@ -33,18 +33,22 @@
                             <div class="card-body">
                                 <form class="row g-3 needs-validation" action="{{ route('courses.update', ['id' => $data->id] ) }}" method="post" enctype="multipart/form-data" novalidate>
                                     @csrf
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label for="course" class="form-label">Nome do Curso</label>
                                         <input type="text" class="form-control" id="course" name="course" value="{{$data->course}}" required />
                                         <div class="invalid-feedback">
                                             Este campo é obrigatório
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label for="cover" class="form-label">Capa</label>
                                         <div class="input-group has-validation">
                                             <input id="cover" name="cover" type="file" class="form-control" aria-describedby="inputGroupPrepend" />
                                         </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="form-label" for="tag">TAG:</label>
+                                        <input type="text" name="tags" class="form-control" value="{{ $data->tags }}" placeholder="Digite as tags, separadas por vírgula">
                                     </div>
                                     <div class="col-md-3">
                                         <label for="duration" class="form-label">Duração</label>

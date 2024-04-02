@@ -33,14 +33,18 @@
                             <div class="card-body">
                                 <form class="row g-3 needs-validation" method="post" enctype="multipart/form-data" novalidate>
                                     @csrf
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label for="course" class="form-label">Nome do Curso</label>
                                         <input type="text" class="form-control" id="course" name="course" value="{{$data->course}}" disabled />
                                         <div class="invalid-feedback">
                                             Este campo é obrigatório
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="form-group col-md-4">
+                                        <label class="form-label" for="tag">TAG:</label>
+                                        <input type="text" disabled name="tags" class="form-control" value="{{ $data->tags }}" placeholder="Digite as tags, separadas por vírgula">
+                                    </div>
+                                    <div class="col-md-4">
                                         <label for="cover" class="form-label">Capa</label>
                                         <div class="input-group has-validation">
                                             <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -66,6 +70,7 @@
                                         </div>
 
                                     </div>
+                                  
                                     <div class="col-md-3">
                                         <label for="duration" class="form-label">Duração</label>
                                         <input type="text" class="form-control" id="duration" name="duration" value="{{$data->duration}}" disabled />

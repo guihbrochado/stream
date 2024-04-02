@@ -20,5 +20,7 @@ class CoursesLessons extends Model
         'link',
         'duration',
         'materials',
+        'tags',
+
     ];
 }

@@ -73,19 +73,23 @@
                                     </div>
 
                                     <div class="row g-3 mt-1">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <label class="form-label" for="link">Link da Aula</label>
                                             <input required id="link" name="link" type="text" class="form-control @error('link') is-invalid @enderror" placeholder="Link" />
                                             @error('coursesModules')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <label class="form-label" for="duration">Duração do vídeo</label>
                                             <input required id="duration" name="duration" step="1" type="time" class="form-control @error('duration') is-invalid @enderror" placeholder="duration" />
                                             @error('coursesModules')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="form-label" for="tag">TAG:</label>
+                                            <input type="text" name="tags" class="form-control" placeholder="Digite as tags, separadas por vírgula">
                                         </div>
                                     </div>
                                     <div class="row g-3 mt-1">

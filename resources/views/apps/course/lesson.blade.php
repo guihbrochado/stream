@@ -78,9 +78,9 @@
                 @foreach ($row['lessons'] as $rowlesson)
                 <li>
                   <div class="d-flex justify-content-between">
-                    <span class="post_count"><i class="fas fa-play"></i></span>
-                    <a href="{{ route('course.lesson', ['id' => $rowlesson->id ]) }}" class="position-relative">{{ $rowlesson->lesson }}</a>
-
+                    <span class="post_count mt-1"><i class="fas fa-play"></i></span>
+                    &nbsp; &nbsp;
+                    <a href="{{ route('course.lesson', ['id' => $rowlesson->id ]) }}" class="position-relative">{{ $rowlesson->lesson }}</a>                                     
                   </div>
                 </li>
                 @endforeach
@@ -206,20 +206,24 @@
                   <a class="nav-link" data-bs-toggle="pill" href="#review-01" role="tab" aria-selected="false">
                     Avalie </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="pill" href="#source-01" role="tab" aria-selected="false">
-                    Sources
-                  </a>
-                </li>
+              
               </ul>
               <div class="tab-content">
                 <div id="description-01" class="tab-pane animated fadeInUp active show" role="tabpanel">
                   <div class="description-content">
                     <p>
-                      {{$data->description}}
+                    Descrição: {{$data->description}}
                     </p>
                   </div>
                 </div>
+                <div id="description-01" class="tab-pane animated fadeInUp active show" role="tabpanel">
+                  <div class="description-content">
+                    <p>
+                    Autor: {{$data->author}}                    </p>
+                  </div>
+                </div>
+
+
                 <div id="review-01" class="tab-pane animated fadeInUp" role="tabpanel">
                   <div class="streamit-reviews">
                     <div id="comments" class="comments-area validate-form">
@@ -228,58 +232,24 @@
                       </p>
                     </div>
                     <div class="review_form">
-                      <div class="comment-respond">
-                        <h3 class="fw-500 my-2">
-                          Be the first to review “Zombie Island”
-                        </h3>
+                      <div class="comment-respond">                     
                         <div class="row">
                           <div class="col-md-12">
                             <div class="form-group">
                               <label class="mb-2">
-                                Your review
+                                Digite seu comentário
                                 <span class="required">
                                   *
                                 </span>
                               </label>
-                              <textarea class="form-control" name="comment" cols="5" rows="8" required=""></textarea>
+                              <textarea class="form-control" name="comment" cols="5" rows="4" required=""></textarea>
                             </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label class="mb-2">
-                                Name
-                                <span class="required">
-                                  *
-                                </span>
-                              </label>
-                              <input class="form-control" name="author" type="text" value="" size="30" required="" />
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label class="mb-2">
-                                Email&nbsp;
-                                <span class="required">
-                                  *
-                                </span>
-                              </label>
-                              <input class="form-control" name="email" type="email" value="" size="30" required="" />
-                            </div>
-                          </div>
-                          <div class="col-md-12">
-                            <div class="mt-3 mt-3 d-flex gap-2 align-items-center">
-                              <input class="form-check-input mt-0" type="checkbox" value="" id="check1" checked />
-                              <label class="form-check-label" for="check1">
-                                Save my name, email, and website in this browser for the
-                                next time I comment.
-                              </label>
-                            </div>
-                          </div>
+                          </div>                       
                           <div class="col-md-12">
                             <div class="form-submit mt-4">
                               <div class="iq-button">
                                 <button name="submit" type="submit" id="submit" class="btn text-uppercase position-relative" value="Submit">
-                                  <span class="button-text">Submit</span>
+                                  <span class="button-text">Enviar</span>
                                   <i class="fa-solid fa-play"></i>
                                 </button>
                               </div>
@@ -290,99 +260,7 @@
                     </div>
                   </div>
                 </div>
-                <div id="source-01" class="tab-pane animated fadeInUp" role="tabpanel">
-                  <div class="source-list-content table-responsive">
-                    <table class="table custom-table">
-                      <thead>
-                        <tr>
-                          <th>
-                            Links
-                          </th>
-                          <th>
-                            Quality
-                          </th>
-                          <th>
-                            Language
-                          </th>
-                          <th>
-                            Player
-                          </th>
-                          <th>
-                            Date Added
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <div class="iq-button">
-                              <a href="./movie-detail.html" class="btn text-uppercase position-relative">
-                                <span class="button-text"> Play Now</span>
-                                <i class="fa-solid fa-play"></i>
-                              </a>
-                            </div>
-                          </td>
-                          <td>
-                            1080p
-                          </td>
-                          <td>
-                            english
-                          </td>
-                          <td>
-                            MusicBee
-                          </td>
-                          <td>
-                            2021-11-28
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="iq-button">
-                              <a href="./movie-detail.html" class="btn text-uppercase position-relative">
-                                <span class="button-text"> Play Now</span>
-                                <i class="fa-solid fa-play"></i>
-                              </a>
-                            </div>
-                          </td>
-                          <td>
-                            800p
-                          </td>
-                          <td>
-                            english
-                          </td>
-                          <td>
-                            5KPlayer
-                          </td>
-                          <td>
-                            2021-11-25
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="iq-button">
-                              <a href="./movie-detail.html" class="btn text-uppercase position-relative">
-                                <span class="button-text"> Play Now</span>
-                                <i class="fa-solid fa-play"></i>
-                              </a>
-                            </div>
-                          </td>
-                          <td>
-                            720p
-                          </td>
-                          <td>
-                            English
-                          </td>
-                          <td>
-                            MediaMonkey
-                          </td>
-                          <td>
-                            2021-11-20
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+            
               </div>
             </div>
           </div>
@@ -390,106 +268,9 @@
       </div>
     </div>
 
-    <div class="cast-tabs">
-      <div class="container-fluid">
-        <div class="content-details trending-info g-border iq-rtl-direction">
-          <ul class="iq-custom-tab tab-bg-fill d-flex nav nav-pills mb-5 " role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active show" data-bs-toggle="pill" href="#cast-1" role="tab" aria-selected="true">Cast</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="pill" href="#crew-1" role="tab" aria-selected="false">Crew</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div id="cast-1" class="tab-pane animated fadeInUp active show" role="tabpanel">
-              <div class="position-relative swiper swiper-card" data-slide="5" data-laptop="5" data-tab="3" data-mobile="2" data-mobile-sm="1" data-autoplay="false" data-loop="false" data-navigation="true" data-pagination="true">
-                <ul class="list-inline swiper-wrapper">
-                  <li class="swiper-slide">
-                    <div class="cast-images m-0 row align-items-center position-relative">
-                      <!-- <div class="col-4 img-box p-0">                                
-                                    <img src="./assets/images/genre/g1.webp" class="img-fluid" alt="image" loading="lazy">
-                                </div> -->
-                      <div class="col-8 block-description">
-                        <h6 class="iq-title">
-                          <a tabindex="0">Autor: {{$data->author}}</a>
-                        </h6>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- <li class="swiper-slide">
-                            <div class="cast-images m-0 row align-items-center position-relative">
-                                <div class="col-4 img-box p-0">
-                                    <img src="./assets/images/genre/g2.webp" class="img-fluid" alt="image" loading="lazy">
-                                </div>
-                                <div class="col-8 block-description">
-                                    <h6 class="iq-title">
-                                        <a href="./person-detail.html" tabindex="0">James Earl Jones </a>
-                                    </h6>
-                                    <div class="video-time d-flex align-items-center my-2">
-                                        <small class="text-white">As Jones</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </li> -->
-                </ul>
-              </div>
-            </div>
-            <div id="crew-1" class="tab-pane animated fadeInUp" role="tabpanel">
-              <div class="position-relative swiper swiper-card" data-slide="5" data-laptop="5" data-tab="3" data-mobile="2" data-mobile-sm="2" data-autoplay="false" data-loop="false" data-navigation="true" data-pagination="true">
-                <ul class="list-inline swiper-wrapper">
-                  <li class="swiper-slide">
-                    <div class="cast-images m-0 row align-items-center position-relative">
-                      <div class="col-4 img-box p-0">
-                        <img src="./assets/images/genre/g3.webp" class="img-fluid" alt="image" loading="lazy">
-                      </div>
-                      <div class="col-8 block-description starring-desc ">
-                        <h6 class="iq-title">
-                          <a href="./person-detail.html" tabindex="0"> Jeff Nathanson </a>
-                        </h6>
-                        <div class="video-time d-flex align-items-center my-2">
-                          <small class="text-white">Writing</small>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="swiper-slide">
-                    <div class="cast-images m-0 row align-items-center position-relative">
-                      <div class="col-4 img-box p-0">
-                        <img src="./assets/images/genre/g5.webp" class="person__poster--image img-fluid" alt="image" loading="lazy">
-                      </div>
-                      <div class="col-8 block-description starring-desc ">
-                        <h6 class="iq-title">
-                          <a href="./person-detail.html" tabindex="0"> Irene Mecchi </a>
-                        </h6>
-                        <div class="video-time d-flex align-items-center my-2">
-                          <small class="text-white">Writing</small>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="swiper-slide">
-                    <div class="cast-images m-0 row align-items-center position-relative">
-                      <div class="col-4 img-box p-0">
-                        <img src="./assets/images/genre/g4.webp" class="person__poster--image img-fluid" alt="image" loading="lazy">
-                      </div>
-                      <div class="col-8 block-description starring-desc ">
-                        <h6 class="iq-title">
-                          <a href="./person-detail.htmll" tabindex="0"> Karen Gilchrist </a>
-                        </h6>
-                        <div class="video-time d-flex align-items-center my-2">
-                          <small class="text-white">Production</small>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
+
+    
 
     <section class="recommended-block">
       <div class="container-fluid">

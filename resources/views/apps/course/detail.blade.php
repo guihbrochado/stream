@@ -37,7 +37,7 @@
 
                             <!-- Botão Assistir Agora com estilos do Bootstrap -->
                             <div class="position-absolute top-50 start-50 translate-middle">
-                                <a href="#" class="btn btn-primary waves-effect waves-light">Assistir Agora</a>
+                                <a href="{{ route('course.lesson', ['id' => $firstLesson]) }}" class="btn btn-primary waves-effect waves-light">Assistir Agora</a>
                             </div>
 
                             <ul class="p-0 m-0 list-unstyled widget_social_media position-absolute w-100 text-center">

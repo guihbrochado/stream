@@ -22,5 +22,6 @@ class Courses extends Model
         'price',
         'certification',
         'isfree',
+        'tags',
     ];
 }
