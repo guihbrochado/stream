@@ -12,3 +12,12 @@ CREATE TABLE lessonrating (
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL
     )
+
+CREATE TABLE lessoncomments (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    id_user int NOT NULL,
+    id_lesson TEXT NOT NULL,
+    comment int NOT NULL,
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL
+    )

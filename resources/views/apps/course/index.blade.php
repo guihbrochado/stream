@@ -110,7 +110,7 @@
                                                 <div class="RightAnimate-four">
                                                     <div class="iq-button">
                                                         <a href="{{ route('firstLessonRedirect', ['id' => $row->id]) }}" class="btn text-uppercase position-relative">
-                                                            <span class="button-text">Assistir {{$row->id}}</span>
+                                                            <span class="button-text">Assistir</span>
                                                             <i class="fa-solid fa-play"></i>
                                                         </a>
                                                     </div>

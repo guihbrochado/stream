@@ -233,10 +233,8 @@
 
                 <div id="review-01" class="tab-pane animated fadeInUp" role="tabpanel">
                   <div class="streamit-reviews">
-                    <div id="comments" class="comments-area validate-form">
-                      <p class="masvideos-noreviews mt-3">
-                        There are no reviews yet.
-                      </p>
+                    <div id="divcomments" class="comments-area validate-form">
+                      
                     </div>
                     <div class="review_form">
                       <div class="comment-respond">
@@ -249,13 +247,13 @@
                                   *
                                 </span>
                               </label>
-                              <textarea class="form-control" name="comment" cols="5" rows="4" required=""></textarea>
+                              <textarea class="form-control" id="inputcomment" cols="5" rows="4"></textarea>
                             </div>
                           </div>
                           <div class="col-md-12">
                             <div class="form-submit mt-4">
                               <div class="iq-button">
-                                <button name="submit" type="submit" id="submit" class="btn text-uppercase position-relative" value="Submit">
+                                <button name="submit" type="submit" id="submitcomment" class="btn text-uppercase position-relative" value="Submit">
                                   <span class="button-text">Enviar</span>
                                   <i class="fa-solid fa-play"></i>
                                 </button>
@@ -508,8 +506,30 @@
 
       $.get(url, function(data) {
         $('#rating').html(data);
-      });      
+      });
+
+      getComment()
     });
+    
+    $("#submitcomment").click(function(e) {
+      const comment = $("#inputcomment").val();
+      
+      const idlesson = Number('{{$data->id}}');
+      const urlstore = (`{{ url('/lesson-comment/commentstore/${idlesson}/${comment}') }}`);
+      $.get(urlstore, function(data) {});
+      
+      getComment()
+    });
+
+    function getComment(){
+      const idlesson = Number('{{$data->id}}');
+
+      const urlget = (`{{ url('/lesson-comment/${idlesson}') }}`);
+      $.get(urlget, function(data) {
+        $('#divcomments').html(data);
+      });
+    }
+
   </script>
 
 </body>

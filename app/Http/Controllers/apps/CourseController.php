@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Courses;
 use App\Models\CoursesLessons;
 use App\Models\CoursesModules;
+use App\Models\LessonComment;
 use App\Models\LessonRating;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,7 @@ class CourseController extends Controller
         GROUP BY (ce.idcourse)
         order by total_rate DESC
         limit 10;");
-        
+
         $firstLesson = DB::Select("
         select distinct cl.id 
         from courseslessons cl
@@ -72,7 +73,8 @@ class CourseController extends Controller
         order by total_rate DESC
         limit 10;");
 
-        $searchIdCourse = DB::Select("        
+        $searchIdCourse = DB::Select(
+            "        
         select distinct cm.id_course
         from courseslessons cl
         inner join coursesmodules cm on cl.id_module = cl.id
@@ -89,14 +91,14 @@ class CourseController extends Controller
         }
 
         $lessonrating = LessonRating::where('id_user', '=', $iduser)
-                                    ->where('id_lesson', '=', $id)
-                                    ->first();
+            ->where('id_lesson', '=', $id)
+            ->first();
         if ($lessonrating) {
             $rate = $lessonrating->rate;
         } else {
             $rate = 0;
         }
-        
+
         return view('apps.course.lesson')->with(['data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'rate' => $rate]);
     }
 
@@ -112,44 +114,88 @@ class CourseController extends Controller
         return view('apps.course.courseslessonsajax', ['data' => $data]);
     }
 
-    function lessonrating($idlesson, $rate){
-        
+    function lessonrating($idlesson, $rate)
+    {
+
         return view('apps.course.lessonrating')->with(['idlesson' => $idlesson, 'rate' => $rate]);
     }
 
-    public function lessonratingstore($idlesson, $rate) {
+    public function lessoncommenttore($idlesson, $rate)
+    {
         $iduser = Auth::user()->id;
-       
+
         $lessonRating = LessonRating::where('id_lesson', $idlesson)->where('id_user', $iduser)->get();
-        
+
         intval($rate);
         if ($lessonRating->isEmpty()) {
             echo 'if';
             try {
-                $traderTvCreate = LessonRating::create(
-                                [
-                                    'id_lesson' => $idlesson,
-                                    'id_user' => $iduser,
-                                    'rate' => $rate,
-                                ]
+                $resCreate = LessonRating::create(
+                    [
+                        'id_lesson' => $idlesson,
+                        'id_user' => $iduser,
+                        'rate' => $rate,
+                    ]
                 );
             } catch (Exception $e) {
                 $errorInfo = $e->getMessage();
                 var_dump($errorInfo);
             }
             $successMessage = "Registro salvo com sucesso.";
-
         } else {
 
             try {
                 LessonRating::where('id_lesson', $idlesson)->where('id_user', $iduser)->update(['rate' => $rate]);
-
             } catch (Exception $e) {
                 $errorInfo = $e->getMessage();
                 var_dump($errorInfo);
             }
             $successMessage = "Registro salvo com sucesso.";
+        }
+    }
 
+    function lessoncomment($idlesson)
+    {
+        $data = DB::select("select u.name as username, lc.comment as comment from lessoncomments lc
+        inner join users u on lc.id_user = u.id
+        where lc.id_lesson = $idlesson        
+        ;");
+
+        return view('apps.course.lessoncomment')->with(['data' => $data]);
+    }
+
+    public function lessoncommentstore($idlesson, $comment)
+    {
+        $iduser = Auth::user()->id;
+
+        echo $idlesson;
+
+        $lessonRating = LessonComment::where('id_lesson', $idlesson)->where('id_user', $iduser)->get();
+
+        if ($lessonRating->isEmpty()) {
+            echo 'if';
+            try {
+                $resCreate = LessonComment::create(
+                    [
+                        'id_lesson' => $idlesson,
+                        'id_user' => $iduser,
+                        'comment' => $comment,
+                    ]
+                );
+            } catch (Exception $e) {
+                $errorInfo = $e->getMessage();
+                var_dump($errorInfo);
+            }
+            $successMessage = "Registro salvo com sucesso.";
+        } else {
+
+            try {
+                LessonComment::where('id_lesson', $idlesson)->where('id_user', $iduser)->update(['comment' => $comment]);
+            } catch (Exception $e) {
+                $errorInfo = $e->getMessage();
+                var_dump($errorInfo);
+            }
+            $successMessage = "Registro salvo com sucesso.";
         }
     }
 }
