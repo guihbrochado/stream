@@ -84,7 +84,7 @@
                             <ul class="p-0 mb-0 list-inline d-flex flex-wrap align-items-center movie-tag">
                                 @foreach (explode(',', $data->tags) as $tag)
                                 <li class="position-relative text-capitalize font-size-14 letter-spacing-1">
-                                    <span  class="text-decoration-none">{{ $tag }}</span>
+                                    <span class="text-decoration-none">{{ $tag }}</span>
                                 </li>
                                 @endforeach
                             </ul>
@@ -199,6 +199,11 @@
                                         Aulas
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="pill" href="#evaluation" role="tab" aria-selected="false">
+                                        Avaliações
+                                    </a>
+                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div id="all" class="tab-pane animated fadeInUp active show" role="tabpanel">
@@ -275,6 +280,101 @@
                                                         Selecione um módulo
                                                     </th>
                                                 </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="evaluation" class="tab-pane animated fadeInUp mb-2" role="tabpanel">
+                                    <form action="{{ route('courseevaluation.store', ['idcourse' => $data->id]) }}" method="post">
+                                        @csrf
+                                        <div class="d-flex gap-1 align-items-center">
+                                            <input class="form-check-input rate" type="radio" name="rate" id="rate1" hidden value="1" />
+                                            <label class="form-check-label" for="rate1" id="labelrate1">
+                                                <i id="iconrate1" class="far fa-star fa-2xl icon" style="color: #ecba12;"></i>
+                                            </label>
+
+                                            <input class="form-check-input rate" type="radio" name="rate" id="rate2" hidden value="2" />
+                                            <label class="form-check-label" for="rate2" id="labelrate2">
+                                                <i id="iconrate2" class="far fa-star fa-2xl icon" style="color: #ecba12;"></i>
+                                            </label>
+
+                                            <input class="form-check-input rate" type="radio" name="rate" id="rate3" hidden value="3" />
+                                            <label class="form-check-label" for="rate3" id="labelrate3">
+                                                <i id="iconrate3" class="far fa-star fa-2xl icon" style="color: #ecba12;"></i>
+                                            </label>
+
+                                            <input class="form-check-input rate" type="radio" name="rate" id="rate4" hidden value="4" />
+                                            <label class="form-check-label" for="rate4" id="labelrate4">
+                                                <i id="iconrate4" class="far fa-star fa-2xl icon" style="color: #ecba12;"></i>
+                                            </label>
+
+                                            <input class="form-check-input rate" type="radio" name="rate" id="rate5" hidden value="5" />
+                                            <label class="form-check-label" for="rate5" id="labelrate5">
+                                                <i id="iconrate5" class="far fa-star fa-2xl icon" style="color: #ecba12;"></i>
+                                            </label>
+
+                                            <textarea required name="textevaluation" id="textevaluation" placeholder="Faça sua avaliação..." cols="200" rows="2"></textarea>
+                                            <button id="btnEvaluation" type="submit" class="btn btn-primary">Enviar</button>
+                                        </div>
+                                    </form>
+
+                                    <div class="source-list-content table-responsive">
+                                        <table class="table custom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Usuário
+                                                    </th>
+                                                    <th>
+                                                        Nota
+                                                    </th>
+                                                    <th>
+                                                        Comentário
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse ($courseEvaluation as $row)
+                                                <tr>
+                                                    <td>
+                                                        {{$row->name}}
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex gap-1 align-content-center">
+                                                            <input class="form-check-input rate" type="radio" name="rate" id="rate1" hidden value="1" />
+                                                            <label class="form-check-label" for="rate1" id="labelrate1">
+                                                                <i id="iconrate1" class="<?= $row->rate >= '1' ? 'fas fa-star' : 'far fa-star'; ?> fa-2xl icon" style="color: #ecba12;"></i>
+                                                            </label>
+
+                                                            <input class="form-check-input rate" type="radio" name="rate" id="rate2" hidden value="2" />
+                                                            <label class="form-check-label" for="rate2" id="labelrate2">
+                                                                <i id="iconrate2" class="<?= $row->rate >= '2' ? 'fas fa-star' : 'far fa-star'; ?> fa-2xl icon" style="color: #ecba12;"></i>
+                                                            </label>
+
+                                                            <input class="form-check-input rate" type="radio" name="rate" id="rate3" hidden value="3" />
+                                                            <label class="form-check-label" for="rate3" id="labelrate3">
+                                                                <i id="iconrate3" class="<?= $row->rate >= '3' ? 'fas fa-star' : 'far fa-star'; ?> fa-2xl icon" style="color: #ecba12;"></i>
+                                                            </label>
+
+                                                            <input class="form-check-input rate" type="radio" name="rate" id="rate4" hidden value="4" />
+                                                            <label class="form-check-label" for="rate4" id="labelrate4">
+                                                                <i id="iconrate4" class="<?= $row->rate >= '4' ? 'fas fa-star' : 'far fa-star'; ?> fa-2xl icon" style="color: #ecba12;"></i>
+                                                            </label>
+
+                                                            <input class="form-check-input rate" type="radio" name="rate" id="rate5" hidden value="5" />
+                                                            <label class="form-check-label" for="rate5" id="labelrate5">
+                                                                <i id="iconrate5" class="<?= $row->rate >= '5' ? 'fas fa-star' : 'far fa-star'; ?> fa-2xl icon" style="color: #ecba12;"></i>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <p>{{$row->comment}}</p>
+                                                    </td>
+                                                </tr>
+                                                @empty
+                                                <h3> Faça a primeira avaliação!</h3>
+                                                @endforelse
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -396,6 +496,48 @@
                 console.log("Ajax course-detail-ajax concluído com sucesso!");
             });
         });
+
+        $('.rate').click(function(e) {
+            $('.text-primary').removeClass('text-primary');
+
+            var rate = $(this).val()
+            console.log(rate);
+            $('.icon').removeClass("far fa-star")
+            $('.icon').removeClass("fas fa-star")
+
+            paintStar(rate);
+        });
+
+        function paintStar(rate) {
+
+            if (rate === '1') {
+                console.log(rate);
+                $('.icon').addClass("far fa-star")
+                $('#iconrate1').addClass("fas fa-star")
+            }
+            if (rate === '2') {
+                $('.icon').addClass("far fa-star")
+                $('#iconrate1').addClass("fas fa-star")
+                $('#iconrate2').addClass("fas fa-star")
+            }
+            if (rate === '3') {
+                $('.icon').addClass("far fa-star")
+                $('#iconrate1').addClass("fas fa-star")
+                $('#iconrate2').addClass("fas fa-star")
+                $('#iconrate3').addClass("fas fa-star")
+            }
+            if (rate === '4') {
+                $('.icon').addClass("far fa-star")
+                $('#iconrate1').addClass("fas fa-star")
+                $('#iconrate2').addClass("fas fa-star")
+                $('#iconrate3').addClass("fas fa-star")
+                $('#iconrate4').addClass("fas fa-star")
+            }
+            if (rate === '5') {
+                $('.icon').removeClass("far fa-star")
+                $('.icon').addClass("fas fa-star")
+            }
+        }
     </script>
 </body>
 

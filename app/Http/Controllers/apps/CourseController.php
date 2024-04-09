@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\apps;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseEvaluation;
 use Illuminate\Http\Request;
 use App\Models\Courses;
 use App\Models\CoursesLessons;
@@ -45,7 +46,14 @@ class CourseController extends Controller
 
         $allCourses = Courses::get();
 
-        return view('apps.course.detail')->with(['data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'allCourses' => $allCourses, 'firstLesson' => $firstLesson]);
+        $courseEvaluation =  DB::Select("
+        select ce.rate, ce.comment, u.name
+        from coursesevaluation ce
+        inner join users u on ce.iduser = u.id
+        where ce.idcourse = $data->id");
+        
+        return view('apps.course.detail')->with(['data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'allCourses' => $allCourses,
+        'courseEvaluation' => $courseEvaluation, 'firstLesson' => $firstLesson]);
     }
 
     public function firstLessonRedirect($id)
@@ -191,6 +199,48 @@ class CourseController extends Controller
 
             try {
                 LessonComment::where('id_lesson', $idlesson)->where('id_user', $iduser)->update(['comment' => $comment]);
+            } catch (Exception $e) {
+                $errorInfo = $e->getMessage();
+                var_dump($errorInfo);
+            }
+            $successMessage = "Registro salvo com sucesso.";
+        }
+    }
+    public function courseevaluationstore($idcourse, Request $request)
+    {
+        $iduser = Auth::user()->id;
+        $data = $request->all();
+        
+        $rate = $data['rate'];
+        $textevaluation = $data['textevaluation'];
+        $courseEvaluation = CourseEvaluation::where('idcourse', $idcourse)->where('iduser', $iduser)->get();
+
+        if ($courseEvaluation->isEmpty()) {
+            try {
+                $resCreate = CourseEvaluation::create(
+                    [
+                        'idcourse' => $idcourse,
+                        'iduser' => $iduser,
+                        'comment' => $textevaluation,
+                        'rate' => $rate,
+                    ]
+                );
+            } catch (Exception $e) {
+                $errorInfo = $e->getMessage();
+                var_dump($errorInfo);
+            }
+            $successMessage = "Registro salvo com sucesso.";
+            return redirect()->route('course.detail', $idcourse);
+            
+        } else {
+
+            $rate = $data['rate'];
+            $textevaluation = $data['textevaluation'];
+
+            try {
+                CourseEvaluation::where('idcourse', $idcourse)->where('iduser', $iduser)->update(['comment' => $textevaluation, 'rate' => $rate]);
+            return redirect()->route('course.detail', $idcourse);
+
             } catch (Exception $e) {
                 $errorInfo = $e->getMessage();
                 var_dump($errorInfo);
