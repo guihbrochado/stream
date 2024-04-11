@@ -16,7 +16,7 @@
         <!-- loader Start -->
         <!-- loader Start -->
         <div class="loader simple-loader">
-            <div class="loader-body">
+            <div class="loader-body">Admin
                 <img src="./assets/images/loader.gif" alt="loader" class="img-fluid " width="300">
             </div>
         </div>
@@ -216,7 +216,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>Admin
             </div>
 
         </main>
@@ -311,24 +311,7 @@
         </div>
         @include('layouts.vendor-scripts')
 
-        <script>
-            $(".selectmodule").click(function (e) {
-                $(".selectmodule").addClass("btn-secondary")
-                $(this).removeClass("btn-secondary")
-                $(this).addClass("btn-primary")
-
-                const idmodule = $(this).attr('idmodule')
-                const idcourse = '{{$data->id}}'
-
-                var baseurl = "<?= url('/') ?>";
-                var url = baseurl + '/course-detail-ajax/' + idcourse + '/' + idmodule;
-
-                $.get(url, function (data) {
-                    $('.divCoursesLessons').html(data);
-                    console.log("Ajax course-detail-ajax concluído com sucesso!");
-                });
-            });
-        </script>
+       
     </body>
 
 </html>
