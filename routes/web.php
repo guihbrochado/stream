@@ -104,9 +104,17 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/quote', [QuoteController::class, 'index'])->name('quote.index');
 
         Route::get('/course-detail/{id}', [CourseController::class, 'detail'])->name('course.detail');
+        Route::post('/courseevaluation-store/{idcourse}', [CourseController::class, 'courseevaluationstore'])->name('courseevaluation.store');
         Route::get('/course-detail-ajax/{idcourse}/{idmodules}', [CourseController::class, 'ajaxCoursesLessons'])->name('ajaxCoursesLessons');
-
         Route::get('/course-lesson/{id}', [CourseController::class, 'lesson'])->name('course.lesson');
+
+        Route::get('/lesson-rating/{idlesson}/{rate}', [CourseController::class, 'lessonrating'])->name('lessonrating');
+        Route::get('/lesson-rating/ratingstore/{idlesson}/{rate}', [CourseController::class, 'lessonratingstore'])->name('lesson.ratingstore');
+
+        Route::get('/lesson-comment/{idlesson}', [CourseController::class, 'lessoncomment'])->name('lessoncomment');
+        Route::get('/lesson-comment/commentstore/{idlesson}/{comment}', [CourseController::class, 'lessoncommentstore'])->name('lesson.commentstore');
+
+        Route::get('/course-redirecttolesson/{id}', [CourseController::class, 'firstLessonRedirect'])->name('firstLessonRedirect');
 
         //LIVE ROOM
         Route::get('/rooms', [LiveRoomController::class, 'index'])->name('rooms.index');
