@@ -3,6 +3,33 @@
 
 @include('components.headdash')
 
+<style>
+    #cke_1_bottom {
+        background: #00000090;
+        color: #fff
+    }
+
+    #cke_conteudo {
+        background: #00000090;
+        color: #fff
+    }
+
+    #cke_1_toolbox {
+        background: #00000090;
+        color: #fff
+    }
+
+    #cke_1_top {
+        background: #00000090;
+        color: #fff
+    }
+
+    #cke_1_contents {
+        background: #00000090;
+        color: #fff
+    }
+</style>
+
 <body class="  ">
     <!-- loader Start -->
     <div id="loading">
@@ -26,86 +53,54 @@
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
-                                    <h4 class="card-title">Adicionar Aula</h4>
+                                    <h4 class="card-title">Adicionar Blog</h4>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form class="row g-3 needs-validation" action="{{ route('courseslessons.store') }}" method="post" enctype="multipart/form-data" novalidate>
+                                <form class="row g-3 needs-validation" action="{{ route('blogstream.store') }}" method="post" enctype="multipart/form-data" novalidate>
                                     @csrf
                                     @php $message = "Este campo é obrigatório"; @endphp
-
                                     <div class="row g-3">
-                                        <div class="col-md-3">
-                                            <label class="form-label" for="lesson">Aula</label>
-                                            <input id="lesson" required name="lesson" type="text" class="form-control @error('lesson') is-invalid @enderror" placeholder="Aula" maxlength="100" />
-                                            @error('coursesModules')
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="titulo">Título</label>
+                                            <input required id="titulo" required name="titulo" type="text" class="form-control @error('titulo') is-invalid @enderror" placeholder="Aula" maxlength="100" />
+                                            @error('blog')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="col-md-3">
-                                            <label class="form-label" for="lessonnumber">Número da Aula</label>
-                                            <input required id="lessonnumber" name="lessonnumber" type="number" class="form-control @error('lessonnumber') is-invalid @enderror" placeholder="Número da Aula" min="1" />
-                                            @error('coursesModules')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <label class="form-label" for="author">Autor</label>
                                             <input required id="author" name="author" type="text" class="form-control @error('author') is-invalid @enderror" placeholder="Autor" min="1" />
-                                            @error('coursesModules')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="form-label" for="id_module">Curso - Módulo</label>
-                                            <select required class="form-control" name="id_module" id="id_module">
-                                                <option value="">Selecione...</option>
-                                                @foreach ($modulesandcourses as $row)
-                                                <option value="<?= $row->id; ?>" <?php //echo $row->id == $id_module ? 'selected' : '' 
-                                                                                    ?>> {{ $row->coursename . ' - ' . $row->module }} </option>
-                                                @endforeach
-                                            </select>
-
-                                            @error('coursesModules')
+                                            @error('blog')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
 
                                     <div class="row g-3 mt-1">
-                                        <div class="col-md-4">
-                                            <label class="form-label" for="link">Link da Aula</label>
-                                            <input required id="link" name="link" type="text" class="form-control @error('link') is-invalid @enderror" placeholder="Link" />
-                                            @error('coursesModules')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                                        <div class="col-md-6">
+                                            <label for="imgcapa" class="form-label">Capa</label>
+                                            <div class="input-group has-validation">
+                                                <input id="imgcapa" name="imgcapa" type="file" class="form-control" aria-describedby="inputGroupPrepend" required />
+                                                <div class="invalid-feedback">
+                                                    Este campo é obrigatório
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label" for="duration">Duração do vídeo</label>
-                                            <input required id="duration" name="duration" step="1" type="time" class="form-control @error('duration') is-invalid @enderror" placeholder="duration" />
-                                            @error('coursesModules')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label class="form-label" for="tag">TAG:</label>
-                                            <input type="text" name="tags" class="form-control" placeholder="Digite as tags, separadas por vírgula">
-                                        </div>
-                                    </div>
-                                    <div class="row g-3 mt-1">
-                                        <div class="col-md-12">
-                                            <label class="form-label" for="description">Descrição</label>
-                                            <textarea required id="description" name="description" type="text" class="form-control @error('description') is-invalid @enderror" placeholder="Descrição"></textarea>
-                                            @error('coursesModules')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                                        <div class="form-group col-md-6">
+                                            <label class="form-label" for="status">Status</label>
+                                            <select class="form-select" id="status" name="status" required>
+                                            <option value="">Selecione...</option>
+                                            <option value="1"> Visível </option>
+                                            <option value="0"> Invisível </option>
+                                        </select>
                                         </div>
                                     </div>
                                     <div class="row g-3 mt-1">
                                         <div class="col-md-12">
-                                            <label class="form-label" for="materials">Materiais</label>
-                                            <textarea required id="materials" name="materials" type="text" class="form-control @error('materials') is-invalid @enderror" placeholder="Materiais"></textarea>
-                                            @error('coursesModules')
+                                            <label class="form-label" for="conteudo">Conteúdo</label>
+                                            <textarea required rows="5" class="form-control @error('conteudo') is-invalid @enderror" name="conteudo" id="conteudo"></textarea>
+                                            @error('blog')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -454,17 +449,79 @@
 
     @include('layouts.vendor-script-dash')
 
+    <script src="//cdn.ckeditor.com/4.10.0/full-all/ckeditor.js"></script>
+
     <script>
-        $('#isfree').click(function(e) {
-            const checked = $("#isfree").prop('checked');
-            console.log(checked);
-            if (checked === true) {
-                const price = $("#price").prop('disabled', 'true');
-                $("#price").val('');
-            }
-            if (checked === false) {
-                const price = $("#price").removeAttr('disabled');
-            }
+        CKEDITOR.replace('conteudo', {
+            toolbar: [{
+                    name: 'document',
+                    groups: ['mode', 'document', 'doctools'],
+                    items: ['Save', 'Preview', 'Print']
+                },
+                {
+                    name: 'clipboard',
+                    groups: ['clipboard', 'undo'],
+                    items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
+                },
+                {
+                    name: 'editing',
+                    groups: ['find', 'selection', 'spellchecker'],
+                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                },
+                {
+                    name: 'forms',
+                    items: ['Checkbox', 'Radio', 'TextField', 'Textarea', 'Button', 'ImageButton']
+                },
+                {
+                    name: 'basicstyles',
+                    groups: ['basicstyles', 'cleanup'],
+                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']
+                },
+                {
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl']
+                },
+                {
+                    name: 'links',
+                    items: ['Link', 'Unlink', ]
+                },
+                {
+                    name: 'insert',
+                    items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak']
+                },
+                '/',
+                {
+                    name: 'styles',
+                    items: ['Styles', 'Format', 'Font', 'FontSize']
+                },
+                {
+                    name: 'colors',
+                    items: ['TextColor', 'BGColor']
+                },
+                {
+                    name: 'tools',
+                    items: ['Maximize']
+                },
+                {
+                    name: 'others',
+                    items: ['-']
+                },
+            ]
+        });
+    </script>
+    <script>
+        CKEDITOR.on('instanceReady', function(e) {
+            // First time
+            e.editor.document.getBody().setStyle('background-color', '#000');
+            e.editor.document.getBody().setStyle('color', 'white');
+            e.editor.document.appendStyleText('a { color: white; }');
+            // in case the user switches to source and back
+            e.editor.on('contentDom', function() {
+                e.editor.document.getBody().setStyle('background-color', '#000');
+                e.editor.document.getBody().setStyle('color', 'white');
+                e.editor.document.appendStyleText('a { color: white; }');
+            });
         });
     </script>
 </body>

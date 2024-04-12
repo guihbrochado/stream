@@ -27,11 +27,11 @@
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
-                                    <h4 class="card-title">Aulas</h4>
+                                    <h4 class="card-title">Blog</h4>
                                 </div>
 
                                 <div>
-                                    <a href="{{ route('courseslessons.create') }}" class="btn btn-primary "> Adicionar</a>
+                                    <a href="{{ route('blogstream.create') }}" class="btn btn-primary "> Adicionar</a>
                                 </div>
 
                             </div>
@@ -40,9 +40,8 @@
                                     <table id="datatable" class="table " data-toggle="data-table">
                                         <thead>
                                             <tr>
-                                                <th class="text-center">Ordem do Aula</th>
-                                                <th class="text-center">Modulo</th>
-                                                <th class="text-center">Aula</th>
+                                                <th class="text-center">Título</th>
+                                                <th class="text-center">Status</th>
                                                 <th class="text-center">Atualizado</th>
                                                 <th class="text-center">Ações</th>
                                             </tr>
@@ -50,14 +49,13 @@
                                         <tbody>
                                             @foreach ($data as $row)
                                             <tr>
-                                                <td class="text-center">{{$row->lessonnumber}}</td>
-                                                <td class="text-center">{{$row->module}}</td>
-                                                <td class="text-center">{{$row->lesson}}</td>
-                                                <td class="text-center">{{date("d/m/Y", strtotime($row->updated_at))}}</td>
+                                                <td class="text-center">{{$row->titulo}}</td>
+                                                <td class="text-center">{{ $row->status ? 'Visível' : 'Invisível' }}</td>
+                                                <td class="text-center">{{ date("d/m/Y", strtotime($row->updated_at)) }}</td>
                                                 <td class="text-center">
-                                                    <a href="{{ route('courseslessons.show', ['id' => $row->id]) }}"> <i class="fa-solid fa-eye  me-2 lh-lg"></i> </a>
-                                                    <a href="{{ route('courseslessons.edit', ['id' => $row->id]) }}"> <i class="fa-solid fa-user-edit  me-2 lh-lg"></i> </a>
-                                                    <a href="{{ route('courseslessons.destroy', ['id' => $row->id]) }}"> <i class="fa-solid fa-trash  me-2 lh-lg"></i> </a>
+                                                    <a href="{{ route('blogstream.show', ['id' => $row->id]) }}"> <i class="fa-solid fa-eye  me-2 lh-lg"></i> </a>
+                                                    <a href="{{ route('blogstream.edit', ['id' => $row->id]) }}"> <i class="fa-solid fa-user-edit  me-2 lh-lg"></i> </a>
+                                                    <a href="{{ route('blogstream.destroy', ['id' => $row->id]) }}"> <i class="fa-solid fa-trash  me-2 lh-lg"></i> </a>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -407,22 +405,10 @@
     <!-- Flatpickr Script -->
     <script src="assets/dashboard/vendor/flatpickr/dist/flatpickr.min.js"></script>
     <script src="assets/dashboard/js/plugins/flatpickr.js" defer></script>
-
-
-
     <!-- Select2 Script -->
     <script src="assets/dashboard/js/plugins/select2.js" defer></script>
-
-
-
-
     <!-- Slider-tab Script -->
     <script src="assets/dashboard/js/plugins/slider-tabs.js"></script>
-
-
-
-
-
     <!-- SwiperSlider Script -->
     <script src="assets/dashboard/vendor/swiperSlider/swiper-bundle.min.js"></script>
     <script src="assets/dashboard/js/plugins/swiper-slider.js" defer></script>
