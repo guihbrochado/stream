@@ -21,7 +21,7 @@
             <!--Nav Start-->
             <nav class="nav navbar navbar-expand-xl header-hover-menu navbar-light iq-navbar">
                <div class="container-fluid navbar-inner">
-                  <a href="dashboard/index.html" class="navbar-brand">
+                  <a href="{{ url('/') }}" class="navbar-brand">
                      
                      <!--Logo start-->
                             <img class="logo-normal" src="assets/dashboard/images/logo.png" alt="#">
@@ -44,7 +44,7 @@
                         <div class="offcanvas-body">
                            <ul class="iq-nav-menu list-unstyled">
                                <li class="nav-item"><a class="nav-link active"
-                                          href="dashboard/index.html">Home</a></li>
+                                          href="{{ url('/') }}">Home</a></li>
                                  </ul>
                               </li>
                            </ul>
