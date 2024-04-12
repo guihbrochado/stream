@@ -27,6 +27,7 @@ CREATE TABLE lessoncomments (
         id serial PRIMARY KEY,        
         titulo varchar(200) NOT NULL,			
         subtitulo varchar(200) NOT NULL,			
+        author varchar(200) NOT NULL,			
         idtema int NOT NULL,			
         conteudo varchar(5000) NOT NULL,			
         status boolean,						      	

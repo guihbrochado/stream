@@ -49,6 +49,7 @@ use App\Http\Controllers\apps\LiveRoomController;
 use App\Http\Controllers\apps\CoursesController;
 use App\Http\Controllers\apps\CoursesModulesController;
 use App\Http\Controllers\apps\CoursesLessonsController;
+use App\Http\Controllers\apps\BlogStreamController;
 
 /*
   |--------------------------------------------------------------------------
@@ -195,6 +196,14 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/all-rooms', [LiveRoomController::class, 'all'])->name('rooms.all');
     Route::get('add-rooms', [LiveRoomController::class, 'create'])->name('rooms.create');
     Route::post('/add-rooms/store', [LiveRoomController::class, 'store'])->name('rooms.store');
+
+    Route::get('/blogstream', [BlogStreamController::class, 'index'])->name('blogstream.index');
+    Route::post('/blogstream/store', [BlogStreamController::class, 'store'])->name('blogstream.store');
+    Route::post('/blogstream/update/{id}', [BlogStreamController::class, 'update'])->name('blogstream.update');
+    Route::get('/blogstream/create', [BlogStreamController::class, 'create'])->name('blogstream.create');
+    Route::get('/blogstream/show/{id}', [BlogStreamController::class, 'show'])->name('blogstream.show');
+    Route::get('/blogstream/edit/{id}', [BlogStreamController::class, 'edit'])->name('blogstream.edit');
+    Route::get('/blogstream/destroy/{id}', [BlogStreamController::class, 'destroy'])->name('blogstream.destroy');
 
     Route::get('/courses', [CoursesController::class, 'index'])->name('courses.index');
     Route::post('/courses/store', [CoursesController::class, 'store'])->name('courses.store');

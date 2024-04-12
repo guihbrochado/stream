@@ -110,7 +110,7 @@
                                                     <div class="cart-content">
                                                         <div class="content-left">
                                                             <h5 class="iq-title text-capitalize">
-                                                                <a href="{{ route('course.detail', ['id' => $row->id]) }}">CRW</a>
+                                                                <a href="{{ route('course.detail', ['id' => $row->id]) }}">{{$row->course}}</a>
                                                             </h5>
                                                             <div class="movie-time d-flex align-items-center my-2">
                                                                 <span class="movie-time-text font-normal">2hr
