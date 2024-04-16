@@ -101,7 +101,7 @@
                                                             <span class="text-white ms-2 font-size-14 fw-500">4.3/5</span>
                                                         </div>
                                                         <span class="font-size-14 fw-500">{{$row->duration}} minutes</span>
-                                                        <div class="text-primary font-size-14 fw-500 text-capitalize">Possui certifido? : <span class="text-decoration-none ms-1">{{$row->certification == 1 ? 'Sim' : 'Não'}}</span>
+                                                        <div class="text-primary font-size-14 fw-500 text-capitalize">Possui certificado? : <span class="text-decoration-none ms-1">{{$row->certification == 1 ? 'Sim' : 'Não'}}</span>
                                                         </div>
                                                         <!-- <div class="text-primary font-size-14 fw-500 text-capitalize">Starting: <a href="person-detail.html" class="text-decoration-none ms-1">Jeffrey Silver</a>
                                                                 </div> -->

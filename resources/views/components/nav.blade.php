@@ -154,18 +154,7 @@
                                             <li class="nav-item">
                                                 <a class="nav-link " href="{{ route('blog.index') }}"> Blog Template </a>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link " href="{{ route('audio.index') }}"> Audio </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link " href="{{ route('blogvideo.index') }}"> Video </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link " href="{{ route('link.index') }}"> Link </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link " href="{{ route('quote.index') }}"> Quote </a>
-                                            </li>
+                                         
                                         </ul>
                                     </li>
                                 </ul>

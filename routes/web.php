@@ -50,6 +50,8 @@ use App\Http\Controllers\apps\CoursesController;
 use App\Http\Controllers\apps\CoursesModulesController;
 use App\Http\Controllers\apps\CoursesLessonsController;
 use App\Http\Controllers\apps\BlogStreamController;
+use App\Http\Controllers\apps\BlogCategoryController;
+use App\Http\Controllers\apps\BlogImageController;
 
 /*
   |--------------------------------------------------------------------------
@@ -99,10 +101,12 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/plans', [PlanController::class, 'index'])->name('plan.index');
         //ROTAS BLOG
         Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-        Route::get('/audio', [AudioController::class, 'index'])->name('audio.index');
-        Route::get('/blog-video', [BlogVideoController::class, 'index'])->name('blogvideo.index');
-        Route::get('/link', [LinkController::class, 'index'])->name('link.index');
-        Route::get('/quote', [QuoteController::class, 'index'])->name('quote.index');
+        Route::get('/blog-by-category/{idcategory}', [BlogController::class, 'blogByCategory'])->name('blogByCategory');
+
+        // Route::get('/audio', [AudioController::class, 'index'])->name('audio.index');
+        // Route::get('/blog-video', [BlogVideoController::class, 'index'])->name('blogvideo.index');
+        // Route::get('/link', [LinkController::class, 'index'])->name('link.index');
+        // Route::get('/quote', [QuoteController::class, 'index'])->name('quote.index');
 
         Route::get('/course-detail/{id}', [CourseController::class, 'detail'])->name('course.detail');
         Route::post('/courseevaluation-store/{idcourse}', [CourseController::class, 'courseevaluationstore'])->name('courseevaluation.store');
@@ -128,7 +132,7 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
         Route::get('/detail', [ShopController::class, 'detail'])->name('shop.detail');
 
-        Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+        // Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 
 
         Route::get('/loja', function () {
@@ -204,6 +208,22 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/blogstream/show/{id}', [BlogStreamController::class, 'show'])->name('blogstream.show');
     Route::get('/blogstream/edit/{id}', [BlogStreamController::class, 'edit'])->name('blogstream.edit');
     Route::get('/blogstream/destroy/{id}', [BlogStreamController::class, 'destroy'])->name('blogstream.destroy');
+
+    Route::get('/blogcategory', [BlogCategoryController::class, 'index'])->name('blogcategory.index');
+    Route::post('/blogcategory/store', [BlogCategoryController::class, 'store'])->name('blogcategory.store');
+    Route::post('/blogcategory/update/{id}', [BlogCategoryController::class, 'update'])->name('blogcategory.update');
+    Route::get('/blogcategory/create', [BlogCategoryController::class, 'create'])->name('blogcategory.create');
+    Route::get('/blogcategory/show/{id}', [BlogCategoryController::class, 'show'])->name('blogcategory.show');
+    Route::get('/blogcategory/edit/{id}', [BlogCategoryController::class, 'edit'])->name('blogcategory.edit');
+    Route::get('/blogcategory/destroy/{id}', [BlogCategoryController::class, 'destroy'])->name('blogcategory.destroy');
+
+    Route::get('/blogimage', [BlogImageController::class, 'index'])->name('blogimage.index');
+    Route::post('/blogimage/store', [BlogImageController::class, 'store'])->name('blogimage.store');
+    Route::post('/blogimage/update/{id}', [BlogImageController::class, 'update'])->name('blogimage.update');
+    Route::get('/blogimage/create', [BlogImageController::class, 'create'])->name('blogimage.create');
+    Route::get('/blogimage/show/{id}', [BlogImageController::class, 'show'])->name('blogimage.show');
+    Route::get('/blogimage/edit/{id}', [BlogImageController::class, 'edit'])->name('blogimage.edit');
+    Route::get('/blogimage/destroy/{id}', [BlogImageController::class, 'destroy'])->name('blogimage.destroy');
 
     Route::get('/courses', [CoursesController::class, 'index'])->name('courses.index');
     Route::post('/courses/store', [CoursesController::class, 'store'])->name('courses.store');

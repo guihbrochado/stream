@@ -11,7 +11,7 @@ CREATE TABLE lessonrating (
     rate int NOT NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL
-    )
+)
 
 CREATE TABLE lessoncomments (
     id int AUTO_INCREMENT PRIMARY KEY,
@@ -20,35 +20,37 @@ CREATE TABLE lessoncomments (
     comment int NOT NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL
-    )
+)
+      
+CREATE TABLE IF NOT EXISTS blogcategories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    description VARCHAR(200) NOT NULL,
+    status BOOLEAN NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS blogimages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    imgfile VARCHAR(200) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-
-    CREATE TABLE IF NOT EXISTS blog (
-        id serial PRIMARY KEY,        
-        titulo varchar(200) NOT NULL,			
-        subtitulo varchar(200) NOT NULL,			
-        author varchar(200) NOT NULL,			
-        idtema int NOT NULL,			
-        conteudo varchar(5000) NOT NULL,			
-        status boolean,						      	
-        imgcapa varchar(5000),		
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        deleted_at timestamp NULL DEFAULT NULL,
-        idusuario_inclusao INTEGER,
-        idusuario_alteracao INTEGER,
-        idusuario_exclusao INTEGER
-    );
-
-    CREATE TABLE IF NOT EXISTS blogtema (
-        id serial PRIMARY KEY,
-        descricao varchar(200) NOT NULL,			
-        status boolean NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        deleted_at timestamp NULL DEFAULT NULL,
-        idusuario_inclusao INTEGER,
-        idusuario_alteracao INTEGER,
-        idusuario_exclusao INTEGER
-    );
-
+CREATE TABLE IF NOT EXISTS blog (
+    id SERIAL PRIMARY KEY,        
+    titulo VARCHAR(200) NOT NULL,			
+    subtitulo VARCHAR(200) NOT NULL,			
+    author VARCHAR(200) NOT NULL,			
+    idtema INT,			
+    idcategory INT,			
+    conteudo VARCHAR(5000) NOT NULL,			
+    status BOOLEAN,						      	
+    imgcapa VARCHAR(5000),		
+    audiofile VARCHAR(5000),		
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    idusuario_inclusao INTEGER,
+    idusuario_alteracao INTEGER,
+    CONSTRAINT fk_blog_category FOREIGN KEY (idcategory) REFERENCES blogcategories(id)
+);

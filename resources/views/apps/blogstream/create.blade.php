@@ -61,58 +61,72 @@
                                     @csrf
                                     @php $message = "Este campo é obrigatório"; @endphp
                                     <div class="row g-3">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <label class="form-label" for="titulo">Título</label>
                                             <input required id="titulo" required name="titulo" type="text" class="form-control @error('titulo') is-invalid @enderror" placeholder="Aula" maxlength="100" />
                                             @error('blog')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <label class="form-label" for="author">Autor</label>
                                             <input required id="author" name="author" type="text" class="form-control @error('author') is-invalid @enderror" placeholder="Autor" min="1" />
                                             @error('blog')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label" for="idcategory">Categoria</label>
+                                            <select class="form-select" id="idcategory" name="idcategory" required>
+                                                <option value="">Selecione...</option>
+                                                @foreach ($blogcategories as $row)
+                                                    <option value="{{ $row->id }}"> {{ $row->description }} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
 
-                                    <div class="row g-3 mt-1">
-                                        <div class="col-md-6">
+                                    <div class="row mt-1">
+                                        <div class="col-md-4">
                                             <label for="imgcapa" class="form-label">Capa</label>
                                             <div class="input-group has-validation">
-                                                <input id="imgcapa" name="imgcapa" type="file" class="form-control" aria-describedby="inputGroupPrepend" required />
+                                                <input id="imgcapa" name="imgcapa" type="file" class="form-control" aria-describedby="inputGroupPrepend" accept="image/*" required />
                                                 <div class="invalid-feedback">
                                                     Este campo é obrigatório
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="col-md-4">
+                                            <label for="audiofile" class="form-label">Audio</label>
+                                            <div class="input-group ">
+                                                <input id="audiofile" name="audiofile" type="file" class="form-control" aria-describedby="inputGroupPrepend" accept="audio/*" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
                                             <label class="form-label" for="status">Status</label>
                                             <select class="form-select" id="status" name="status" required>
-                                            <option value="">Selecione...</option>
-                                            <option value="1"> Visível </option>
-                                            <option value="0"> Invisível </option>
-                                        </select>
+                                                <option value="">Selecione...</option>
+                                                <option value="1"> Visível </option>
+                                                <option value="0"> Invisível </option>
+                                            </select>
                                         </div>
-                                    </div>
-                                    <div class="row g-3 mt-1">
-                                        <div class="col-md-12">
-                                            <label class="form-label" for="conteudo">Conteúdo</label>
-                                            <textarea required rows="5" class="form-control @error('conteudo') is-invalid @enderror" name="conteudo" id="conteudo"></textarea>
-                                            @error('blog')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                                        <div class="row g-3 mt-1">
+                                            <div class="col-md-12">
+                                                <label class="form-label" for="conteudo">Conteúdo</label>
+                                                <textarea required rows="5" class="form-control @error('conteudo') is-invalid @enderror" name="conteudo" id="conteudo"></textarea>
+                                                @error('blog')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <a href="{{ route( $controller ) }}" class="btn btn-secondary">
-                                            Voltar
-                                        </a>
-                                        <button class="btn btn-primary" type="submit">
-                                            Enviar
-                                        </button>
-                                    </div>
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <a href="{{ route( $controller ) }}" class="btn btn-secondary">
+                                                Voltar
+                                            </a>
+                                            <button class="btn btn-primary" type="submit">
+                                                Enviar
+                                            </button>
+                                        </div>
 
 
                                 </form>

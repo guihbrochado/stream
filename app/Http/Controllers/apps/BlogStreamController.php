@@ -5,6 +5,7 @@ namespace App\Http\Controllers\apps;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogstreamFormRequest;
 use App\Models\Blogstream;
+use App\Models\BlogCategory;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -26,7 +27,6 @@ class BlogStreamController extends Controller
         $data = Blogstream::all();
         $message = session('message');
 
-
         return view('apps.blogstream.index', ['data' => $data, 'controller' => $this->controller, 'message' => $message]);
     }
 
@@ -36,8 +36,10 @@ class BlogStreamController extends Controller
     public function create()
     {
         $blogstream = new Blogstream;
-        
-        return view('apps.blogstream.create')->with(['blogstream' => $blogstream, 'controller' => $this->controller,]);
+
+        $blogcategories = BlogCategory::where('status', 1)->get();
+
+        return view('apps.blogstream.create')->with(['blogstream' => $blogstream, 'blogcategories' => $blogcategories, 'controller' => $this->controller,]);
     }
 
     /**
@@ -48,7 +50,9 @@ class BlogStreamController extends Controller
         // dd($request);
 
         $fileName = '';
+        $audioFileName = '';
         $folder = public_path('images/blogstream');
+        $audioFolder = public_path('audios/blogstream');
 
         if ($request->hasFile('imgcapa') && $request->file('imgcapa')->isValid()) {
             $file = $request->file('imgcapa');
@@ -57,14 +61,20 @@ class BlogStreamController extends Controller
             $file->move($folder, $fileName);
         }
 
+        if ($request->hasFile('audiofile') && $request->file('audiofile')->isValid()) {
+            $audioFile = $request->file('audiofile');
+            $extension = $audioFile->extension();
+            $audioFileName = md5($audioFile->getClientOriginalName() . strtotime("now")) . "." . $extension;
+            $audioFile->move($audioFolder, $audioFileName);
+        }
+
         try {
             $blogstream = Blogstream::create($request->all());
-
         } catch (Exception $e) {
             // You can check get the details of the error using `errorInfo`:
             $errorInfo = $e->getMessage();
             echo $errorInfo;
-            
+
             return to_route($this->controller)->with('message', $errorInfo);
         }
 
@@ -77,8 +87,9 @@ class BlogStreamController extends Controller
     public function show($id)
     {
         $data = Blogstream::find($id);
-      
-        return view('apps.blogstream.show')->with(['data' => $data, 'controller' => $this->controller, 'action' => 'show']);
+        $blogcategories = BlogCategory::where('status', 1)->get();
+
+        return view('apps.blogstream.show')->with(['data' => $data, 'blogcategories' => $blogcategories, 'controller' => $this->controller,]);
     }
 
     /**
@@ -87,8 +98,9 @@ class BlogStreamController extends Controller
     public function edit($id)
     {
         $data = Blogstream::find($id);
-     
-        return view('apps.blogstream.edit')->with(['data' => $data, 'controller' => $this->controller, 'action' => 'edit']);
+        $blogcategories = BlogCategory::where('status', 1)->get();
+
+        return view('apps.blogstream.edit')->with(['data' => $data, 'blogcategories' => $blogcategories, 'controller' => $this->controller, 'action' => 'edit']);
     }
 
     /**
@@ -104,14 +116,24 @@ class BlogStreamController extends Controller
 
         $fileName = '';
         $folder = public_path('images/blogstream');
+        $audioFileName = '';
+        $audioFolder = public_path('audios/blogstream');
+
 
         if ($request->hasFile('imgcapa') && $request->file('imgcapa')->isValid()) {
             $file = $request->file('imgcapa');
             $extension = $file->extension();
             $fileName = md5($file->getClientOriginalName() . strtotime("now")) . "." . $extension;
-            $file->move($folder, $fileName);        
+            $file->move($folder, $fileName);
             $blogstream->imgcapa = $fileName;
+        }
 
+        if ($request->hasFile('audiofile') && $request->file('audiofile')->isValid()) {
+            $audioFile = $request->file('audiofile');
+            $extension = $audioFile->extension();
+            $audioFileName = md5($audioFile->getClientOriginalName() . strtotime("now")) . "." . $extension;
+            $audioFile->move($audioFolder, $audioFileName);
+            $blogstream->audiofile = $audioFileName;
         }
 
         try {
