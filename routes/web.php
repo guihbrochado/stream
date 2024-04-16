@@ -3,9 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\apps\AccountController;
 use App\Http\Controllers\apps\BrokerController;
-use App\Http\Controllers\apps\CockpitController;
 use App\Http\Controllers\apps\CustomerController;
-use App\Http\Controllers\apps\ChargesController;
 use App\Http\Controllers\apps\CartController;
 use App\Http\Controllers\apps\DashboardController;
 use App\Http\Controllers\apps\DealController;
@@ -16,17 +14,12 @@ use App\Http\Controllers\apps\LicenseController;
 use App\Http\Controllers\apps\UsagePolicyCategoryController;
 use App\Http\Controllers\apps\UsagePolicyController;
 use App\Http\Controllers\apps\StatusCopyController;
-use App\Http\Controllers\apps\StoreCompanyController;
-use App\Http\Controllers\apps\StoreTraderController;
 use App\Http\Controllers\apps\SupervisorController;
 use App\Http\Controllers\apps\SupervisorGroupController;
 use App\Http\Controllers\apps\SupervisorGroupExpertController;
 use App\Http\Controllers\apps\SupervisorGroupMemberController;
-use App\Http\Controllers\apps\TicketController;
-use App\Http\Controllers\apps\TicketReplyController;
 use App\Http\Controllers\apps\UserController;
 use App\Http\Controllers\apps\StoreController;
-use App\Http\Controllers\Web\CalendarController;
 use App\Http\Controllers\Web\PageController;
 use App\Http\Controllers\apps\TermsController;
 use Illuminate\Support\Facades\Route;
@@ -141,24 +134,12 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::post('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-        Route::get('/cockpit', [CockpitController::class, 'index'])->name('cockpit.index');
         Route::get('/deals', [DealController::class, 'index'])->name('deals.index');
         Route::post('/deals', [DealController::class, 'index'])->name('deals.index');
-        Route::get('/calendar', [CalendarController::class, 'index'])->name('page.calendar.index');
         Route::get('/economic_calendar', [PageController::class, 'economic_calendar'])->name('page.economic_calendar');
         Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
         Route::get('/usage_policy', [UsagePolicyController::class, 'index'])->name('usage_policy.index');
 
-        Route::get('/suporte/index/{id?}', [TicketController::class, 'index_client'])->name('suporte.index');
-        Route::post('/suporte/store', [TicketController::class, 'store_client'])->name('suporte.store');
-        Route::get('/suporte/create', [TicketController::class, 'create_client'])->name('suporte.create');
-        Route::get('/suporte/edit/{id}', [TicketController::class, 'edit_client'])->name('suporte.edit');
-        Route::post('/suporte/reply', [TicketReplyController::class, 'store_client'])->name('suporte.reply');
-        Route::post('/reply', [TicketReplyController::class, 'index'])->name('reply.index');
-        Route::post('/ticket/image_upload', [TicketController::class, 'image_upload'])->name('ticket.image_upload');
-
-        Route::post('/ticket_categories_qtd_client', [TicketController::class, 'ticket_categories_qtd_client'])->name('ticket.ticket_categories_qtd_client');
-        Route::post('/ticket_status', [TicketController::class, 'ticket_status'])->name('ticket.ticket_status');
 
         Route::get('/user/profile', [UserController::class, 'profile'])->name('profile.show');
         Route::get('/user/profile/edit', [UserController::class, 'profile_edit'])->name('profile.edit');
@@ -167,8 +148,6 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/store', [StoreController::class, 'index'])->name('store.index');
         Route::get('/store/checkout', [StoreController::class, 'checkout'])->name('store.checkout');
         Route::get('/store/payment', [StoreController::class, 'payment'])->name('store.payment');
-        Route::post('/charge', [ChargesController::class, 'create'])->name('charge.create');
-        Route::get('/charge/list', [ChargesController::class, 'getCharges'])->name('charge.getcharge');
 
 
         Route::get('/cart', [CartController::class, 'viewCart'])->name('view.cart');
@@ -241,20 +220,7 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::post('/conta_investimento/store', [AccountController::class, 'store_client'])->name('conta_investimento.store');
     Route::get('/conta_investimento/show/{id}', [AccountController::class, 'show_client'])->name('conta_investimento.show');
 
-    Route::get('/ticket/index/{id?}', [TicketController::class, 'index'])->name('ticket.index');
-    Route::get('/ticket/edit/{id}', [TicketController::class, 'edit'])->name('ticket.edit');
-    Route::get('/ticket/create', [TicketController::class, 'create'])->name('ticket.create');
-    Route::post('/ticket/store', [TicketController::class, 'store'])->name('ticket.store');
-    Route::get('/ticket/edit/status/{id}/{status}', [TicketController::class, 'status'])->name('ticket.status');
-    Route::get('/ticket/edit/category/{id}/{category}', [TicketController::class, 'category'])->name('ticket.category');
-    Route::post('/ticket_categories_qtd', [TicketController::class, 'ticket_categories_qtd'])->name('ticket.ticket_categories_qtd');
-
-    Route::post('/ticket/reply', [TicketReplyController::class, 'store'])->name('ticket.reply');
-
     Route::get('/pagamento', [ChargesController::class, 'showPayments'])->name('pagamento.index');
-
-
-    Route::get('/calendar_admin', [CalendarController::class, 'index_admin'])->name('calendar.index');
 
     Route::get('/expert_advisor', [ExpertAdvisorController::class, 'index'])->name('expert_advisor.index');
     Route::get('/expert_advisor/create', [ExpertAdvisorController::class, 'create'])->name('expert_advisor.create');
@@ -345,25 +311,7 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::get('/user/show/{id}', [UserController::class, 'show'])->name('user.show');
 
-    //store
-
-
-    Route::get('/store_company', [StoreCompanyController::class, 'index'])->name('store_company.index');
-    Route::get('/store_company/create', [StoreCompanyController::class, 'create'])->name('store_company.create');
-    Route::post('/store_company/store', [StoreCompanyController::class, 'store'])->name('store_company.store');
-    Route::patch('/store_company/{id}', [StoreCompanyController::class, 'update'])->name('store_company.update');
-    Route::get('/store_company/destroy/{id}', [StoreCompanyController::class, 'destroy'])->name('store_company.destroy');
-    Route::get('/store_company/edit/{id}', [StoreCompanyController::class, 'edit'])->name('store_company.edit');
-    Route::get('/store_company/show/{id}', [StoreCompanyController::class, 'show'])->name('store_company.show');
-
-    Route::get('/store_trader', [StoreTraderController::class, 'index'])->name('store_trader.index');
-    Route::get('/store_trader/create', [StoreTraderController::class, 'create'])->name('store_trader.create');
-    Route::post('/store_trader/store', [StoreTraderController::class, 'store'])->name('store_trader.store');
-    Route::patch('/store_trader/{id}', [StoreTraderController::class, 'update'])->name('store_trader.update');
-    Route::get('/store_trader/destroy/{id}', [StoreTraderController::class, 'destroy'])->name('store_trader.destroy');
-    Route::get('/store_trader/edit/{id}', [StoreTraderController::class, 'edit'])->name('store_trader.edit');
-    Route::get('/store_trader/show/{id}', [StoreTraderController::class, 'show'])->name('store_trader.show');
-
+ 
     // supervisor
     Route::get('/supervisor_group', [SupervisorGroupController::class, 'index'])->name('supervisor_group.index');
     Route::get('/supervisor_group/create', [SupervisorGroupController::class, 'create'])->name('supervisor_group.create');

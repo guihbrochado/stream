@@ -1,114 +1,152 @@
-@extends('layouts.master')
-@section('title')
-@lang('translation.Shops')
-@endsection
+<!doctype html>
+<html lang="en" dir="">
 
-@section('content')
-@component('common-components.breadcrumb')
-@slot('pagetitle') Ecommerce @endslot
-@slot('title') Shops @endslot
-@endcomponent
-
-@if(Auth::check())
-<div class="row mb-2">
-    @can('admin')
-    <div class="col-md-6">
-        <div class="mb-3">
-            <a href="{{ route('store_trader.create') }}" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-plus me-2"></i> Add New</a>
-        </div>
-    </div>
-    @endcan
-    <div class="col-md-6">
-        <div class="d-flex justify-content-end align-items-center mb-3">
-            <a href="{{ route('view.cart') }}" class="btn btn-primary me-2">
-                <i class="mdi mdi-cart"></i> Carrinho
-            </a>
-            <div class="search-box">
-                <div class="position-relative">
-                    <input type="text" class="form-control rounded border-0" placeholder="Search...">
-                    <i class="mdi mdi-magnify search-icon"></i>
-                </div>
+@include('components.headdash')
+<body class="  ">
+    <!-- loader Start -->
+    <div id="loading">
+        <div class="loader simple-loader">
+            <div class="loader-body ">
+                <img src="{{ asset('assets/dashboard/images/loader.gif')}}" alt="loader" class="image-loader img-fluid ">
             </div>
         </div>
     </div>
-</div>
-@endif
-<!-- end row -->
+    <!-- loader END -->
 
-<div class="row">
-    <!-- Loop para exibir os itens da loja -->
-    @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-    @endif
-    @foreach ($data as $item)
-    @if ($item->active == 1)
-    <div class="col-xl-4 col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex align-items-start">
-                    <div class="flex-shrink-0 me-4">
-                        <div class="avatar-sm">
-                            @if(file_exists('images/traders/' . $item->trader_image_path) && $item->trader_image_path)
-                            <img src="{{ asset('images/traders/' . $item->trader_image_path ) }}" class="avatar-title bg-soft-primary text-primary font-size-16 rounded-circle" />
-                            @else
-                            <span class="avatar-title bg-soft-primary text-primary font-size-16 rounded-circle">{{ strtoupper(substr($item->trader, 0, 1)) }}</span>
+    @include('components.sidebardash')
+    <main class="main-content">
+        <!-- Nav START -->
+        @include('layouts.navdash')
+        <!--Nav End-->
+        </div>
+        <div class="content-inner container-fluid pb-0" id="page_layout">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <div class="header-title">
+                                    <h4 class="card-title">Cursos</h4>
+                                </div>
 
-                            @endif
-                        </div>
-                    </div>
-                    <div class="row">
+                                <div>
+                                    <a href="" class="btn btn-primary "> Adicionar</a>
+                                </div>
 
-
-                    </div>
-                    <div class="flex-grow-1 align-self-center">
-                        <div class="row">
-                            <div class="border-bottom pb-1 col-6">
-                                <h5 class="text-truncate font-size-16 mb-1">
-                                    <a href="#" class="text-dark">{{ $item->company }}</a>
-                                </h5>
-                                <p class="text-muted">
-                                    <i class="mdi mdi-account me-1"></i> {{ $item->trader }}
-                                </p>
                             </div>
-                            <div class="col-6 border-bottom pb-1">
-                                <div class="mt-3">
-                                    <p class="text-muted mb-2">Preço</p>
-                                    <h5 class="font-size-16 mb-0">{{ $item->price }}</h5>
+                            <div class="card-body">
+                                <div class="table-responsive border rounded py-4">
+                                    <table id="datatable" class="table " data-toggle="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Sala</th>
+                                                <th class="text-center">Descrição</th>
+                                                <th class="text-center">Paga/Gratuira</th>
+                                                <th class="text-center">Preço</th>
+                                                <th class="text-center">Criado</th>
+                                                <th class="text-center">Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <tr>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center">
+                                                    <a href=""> <i class="fa-solid fa-eye  me-2 lh-lg"></i> </a>
+                                                    <a href=""> <i class="fa-solid fa-user-edit  me-2 lh-lg"></i> </a>
+                                                    <a href=""> <i class="fa-solid fa-trash  me-2 lh-lg"></i> </a>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>                                    
+                                    </table>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="mt-3">
-                                    <p class="text-muted mb-2">Codigo do Trader</p>
-                                    <h5 class="font-size-16 mb-0">{{ $item->id }}</h5>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mt-3">
-                                    <p class="text-muted mb-2">Média das operações</p>
-                                    <h5 class="font-size-16 mb-0">{{ $item->mediaOperacoes }}</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="{{ route('add.to.cart', $item->id) }}" class="btn btn-primary mt-3">Adicionar ao carrinho</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    @endif
-    @endforeach
-</div>
-<!-- end row -->
+        <!-- Footer Section Start -->
+        <footer class="footer">
+            <div class="footer-body">
+                <ul class="left-panel list-inline mb-0 p-0">
+                    <li class="list-inline-item"><a href="javascript:void(0);">Privacy Policy</a></li>
+                    <li class="list-inline-item"><a href="javascript:void(0);">Terms of Use</a></li>
+                </ul>
+                <div class="right-panel">
+                    ©<script>
+                        2022
+                    </script> <span data-setting="app_name">Streamit</span>, Made with
+                    <span class="text-gray">
+                        <svg class="icon-16" width="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M15.85 2.50065C16.481 2.50065 17.111 2.58965 17.71 2.79065C21.401 3.99065 22.731 8.04065 21.62 11.5806C20.99 13.3896 19.96 15.0406 18.611 16.3896C16.68 18.2596 14.561 19.9196 12.28 21.3496L12.03 21.5006L11.77 21.3396C9.48102 19.9196 7.35002 18.2596 5.40102 16.3796C4.06102 15.0306 3.03002 13.3896 2.39002 11.5806C1.26002 8.04065 2.59002 3.99065 6.32102 2.76965C6.61102 2.66965 6.91002 2.59965 7.21002 2.56065H7.33002C7.61102 2.51965 7.89002 2.50065 8.17002 2.50065H8.28002C8.91002 2.51965 9.52002 2.62965 10.111 2.83065H10.17C10.21 2.84965 10.24 2.87065 10.26 2.88965C10.481 2.96065 10.69 3.04065 10.89 3.15065L11.27 3.32065C11.3618 3.36962 11.4649 3.44445 11.554 3.50912C11.6104 3.55009 11.6612 3.58699 11.7 3.61065C11.7163 3.62028 11.7329 3.62996 11.7496 3.63972C11.8354 3.68977 11.9247 3.74191 12 3.79965C13.111 2.95065 14.46 2.49065 15.85 2.50065ZM18.51 9.70065C18.92 9.68965 19.27 9.36065 19.3 8.93965V8.82065C19.33 7.41965 18.481 6.15065 17.19 5.66065C16.78 5.51965 16.33 5.74065 16.18 6.16065C16.04 6.58065 16.26 7.04065 16.68 7.18965C17.321 7.42965 17.75 8.06065 17.75 8.75965V8.79065C17.731 9.01965 17.8 9.24065 17.94 9.41065C18.08 9.58065 18.29 9.67965 18.51 9.70065Z" fill="currentColor"></path>
+                        </svg>
+                    </span> by <a href="https://iqonic.design/" target="_blank">IQONIC Design</a>.
+                </div>
+            </div>
+        </footer>
+        <!-- Footer Section End -->
+    </main>
+    <!-- Wrapper End-->
+   
+    <!-- Library Bundle Script -->
+    <script src="assets/dashboard/js/core/libs.min.js"></script>
+    <!-- Plugin Scripts -->
+    <!-- Tour plugin Start -->
+    <script src="assets/dashboard/vendor/sheperd/dist/js/sheperd.min.js"></script>
+    <script src="assets/dashboard/js/plugins/tour.js" defer></script>
 
-@php
-$count = count($data);
-@endphp
+
+    <!-- Flatpickr Script -->
+    <script src="assets/dashboard/vendor/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="assets/dashboard/js/plugins/flatpickr.js" defer></script>
 
 
-<!-- end row -->
-@endsection
+
+    <!-- Select2 Script -->
+    <script src="assets/dashboard/js/plugins/select2.js" defer></script>
+
+
+
+
+    <!-- Slider-tab Script -->
+    <script src="assets/dashboard/js/plugins/slider-tabs.js"></script>
+
+
+
+
+
+    <!-- SwiperSlider Script -->
+    <script src="assets/dashboard/vendor/swiperSlider/swiper-bundle.min.js"></script>
+    <script src="assets/dashboard/js/plugins/swiper-slider.js" defer></script>
+    <!-- Lodash Utility -->
+    <script src="assets/dashboard/vendor/lodash/lodash.min.js"></script>
+    <!-- Utilities Functions -->
+    <script src="assets/dashboard/js/iqonic-script/utility.min.js"></script>
+    <!-- Settings Script -->
+    <script src="assets/dashboard/js/iqonic-script/setting.min.js"></script>
+    <!-- Settings Init Script -->
+    <script src="assets/dashboard/js/setting-init.js"></script>
+    <!-- External Library Bundle Script -->
+    <script src="assets/dashboard/js/core/external.min.js"></script>
+    <!-- Widgetchart Script -->
+    <script src="assets/dashboard/js/charts/widgetcharts.js?v=1.0.1" defer></script>
+    <!-- Dashboard Script -->
+    <script src="assets/dashboard/js/charts/dashboard.js?v=1.0.1" defer></script>
+    <!-- qompacui Script -->
+    <script src="assets/dashboard/js/streamit.js?v=1.0.1" defer></script>
+    <script src="assets/dashboard/js/sidebar.js?v=1.0.1" defer></script>
+    <script src="assets/dashboard/js/chart-custom.js?v=1.0.1" defer></script>
+
+    <script src="assets/dashboard/js/plugins/select2.js?v=1.0.1" defer></script>
+
+    <script src="assets/dashboard/js/plugins/flatpickr.js?v=1.0.1" defer></script>
+
+</body>
+
+</html>
