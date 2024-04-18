@@ -103,6 +103,10 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
         Route::get('/blog-by-category/{idcategory}', [BlogController::class, 'blogByCategory'])->name('blogByCategory');
 
+        Route::get('/blogcomments/{idblog}', [BlogController::class, 'ajaxBlogComments'])->name('blog.ajaxBlogComments');
+        Route::get('/bloginsertcomments/{idblog}/{comment}', [BlogController::class, 'ajaxBlogInsertComments'])->name('blog.ajaxBlogInsertComments');
+
+
         // Route::get('/audio', [AudioController::class, 'index'])->name('audio.index');
         // Route::get('/blog-video', [BlogVideoController::class, 'index'])->name('blogvideo.index');
         // Route::get('/link', [LinkController::class, 'index'])->name('link.index');

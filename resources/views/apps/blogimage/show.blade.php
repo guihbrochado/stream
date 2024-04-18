@@ -61,45 +61,13 @@
                                     @csrf
                                     @php $message = "Este campo é obrigatório"; @endphp
                                     <div class="col-md-6">
-                                        <label class="form-label" for="titulo">Título</label>
-                                        <input id="titulo" value="{{ $data->titulo }}" disabled name="titulo" type="text" class="form-control @error('titulo') is-invalid @enderror" placeholder="Aula" maxlength="100" />
-                                        @error('data')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                        <label class="form-label" for="author">Autor</label>
-                                        <input id="author" value="{{ $data->author }}" disabled name="author" type="text" class="form-control @error('author') is-invalid @enderror" placeholder="Autor" min="1" />
-                                        @error('data')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                        <label class="form-label" for="status">Status</label>
-                                        <select class="form-select" id="status" name="status" disabled>
-                                            <option value="">Nenhum item selecionado
-                                            <option>
-                                            <option {{ $data->status == 1 ? 'selected' : ''}} value="1"> Visível </option>
-                                            <option {{ $data->status == 0 ? 'selected' : ''}}value="0"> Invisível </option>
-                                        </select>
-                                        <label class="form-label" for="idcategory">Categoria</label>
-                                        <select class="form-select" id="idcategory" name="idcategory" disabled>
-                                            <option value="">Nenhum item selecionado
-                                            <option>
-                                                @foreach ($blogcategories as $row)
-                                            <option {{ $data->idcategory == $row->id ? 'selected' : ''}} value="{{ $row->id }}"> {{ $row->description }} </option>
-                                            @endforeach
-                                        </select>
-                                        <label class="form-label" for="conteudo">Conteúdo</label>
-                                        {!! $data->conteudo !!}
+                                        <label class="form-label" for="name">Título</label>
+                                        <input id="name" value="{{ $data->name }}" disabled name="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Aula" maxlength="200" />
                                     </div>
 
                                     <div class="col-md-6">
                                         <label class="form-label">Capa</label>
-
-                                        <img src="{{asset('images/blogstream/' . $data->imgcapa)}}" alt="Capa do Blog " class="img-fluid object-cover w-100 d-block border-0">
-                                        <label class="form-label">Audio</label>
-                                        <div class="row mt-2 mb-2" <?= $data->audiofile == null ? 'hidden' : '' ?>>
-                                            <audio controls>
-                                                <source src="{{asset('audios/blogstream/' . $data->audiofile)}}" type="audio/ogg">
-                                            </audio>
-                                        </div>
+                                        <img src="{{asset('images/blogimages/' . $data->imgfile)}}" alt="Imagem" class="img-fluid object-cover w-100 d-block border-0">
                                     </div>
 
                                     <div class="row g-3 mt-1">

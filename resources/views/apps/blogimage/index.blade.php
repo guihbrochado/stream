@@ -40,7 +40,8 @@
                                     <table id="datatable" class="table " data-toggle="data-table">
                                         <thead>
                                             <tr>
-                                                <th class="text-center">Imagem</th>
+                                                <th class="text-center">Nome da imagem</th>
+                                                <th class="text-center">Copiar link</th>
                                                 <th class="text-center">Atualizado</th>
                                                 <th class="text-center">Ações</th>
                                             </tr>
@@ -48,12 +49,13 @@
                                         <tbody>
                                             @foreach ($data as $row)
                                             <tr>
-                                                <td class="text-center">{{$row->imgfile}}</td>
+                                                <td class="text-center">{{$row->name}}</td>
+                                                <td class="text-center"> <button class="copybtn btn-primary btn" data="{{$row->imgfile}}"> Copiar Link </button> </td>
                                                 <td class="text-center">{{ date("d/m/Y", strtotime($row->updated_at)) }}</td>
                                                 <td class="text-center">
-                                                    <a href="{{ route('blogstream.show', ['id' => $row->id]) }}"> <i class="fa-solid fa-eye  me-2 lh-lg"></i> </a>
-                                                    <a href="{{ route('blogstream.edit', ['id' => $row->id]) }}"> <i class="fa-solid fa-user-edit  me-2 lh-lg"></i> </a>
-                                                    <a href="{{ route('blogstream.destroy', ['id' => $row->id]) }}"> <i class="fa-solid fa-trash  me-2 lh-lg"></i> </a>
+                                                    <a href="{{ route('blogimage.show', ['id' => $row->id]) }}"> <i class="fa-solid fa-eye  me-2 lh-lg"></i> </a>
+                                                    <a href="{{ route('blogimage.edit', ['id' => $row->id]) }}"> <i class="fa-solid fa-user-edit  me-2 lh-lg"></i> </a>
+                                                    <a href="{{ route('blogimage.destroy', ['id' => $row->id]) }}"> <i class="fa-solid fa-trash  me-2 lh-lg"></i> </a>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -432,6 +434,26 @@
     <script src="assets/dashboard/js/plugins/select2.js?v=1.0.1" defer></script>
 
     <script src="assets/dashboard/js/plugins/flatpickr.js?v=1.0.1" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(".copybtn").click(function(e) {
+            const data = $(this).attr('data');
+            const baseurl = "{{asset('images/blogimages')}}";
+            const imgurl = baseurl + '/' + data;
+
+            navigator.clipboard.writeText(imgurl).then(function() {
+                Swal.fire({
+                    icon: "success",
+                    title: "Link copiado para area de transferencia!",
+                    timer: 2000,
+                });
+
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        });
+    </script>
 
 </body>
 

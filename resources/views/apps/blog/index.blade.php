@@ -58,13 +58,33 @@
                 </audio>
               </div>
               <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="modal fade" id="commentModal-{{$row->id}}" tabindex="-1" aria-labelledby="commentModal-{{$row->id}}Label" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="commentModal-{{$row->id}}Label">Comentários</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div id="comments-{{$row->id}}"></div>
+                      </div>
+                      <div class="modal-footer">
+                        <div class="d-flex">
+                          <label for="recipient-name" class="col-form-label">Recipient:</label>
+                          <input type="text" class="" id="input-comment{{$row->id}}">
+                          <button type="button" id="btn-submit-comment{{$row->id}}" class="btn btn-primary">Enviar Mensagem</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <ul class="iq-blog-category-2 m-0  p-0 list-unstyled">
                   <li>
                     <a class="fw-500" href="blog/blog-category.html">{{$row->titulo}}</a>
                   </li>
                 </ul>
                 <div class="d-flex align-items-center gap-2">
-                  <span class="font-size-12"> 5 Min Read </span>
+                  <span class="font-size-12"> Leitura de {{$row->duration}} </span>
                   <div>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M12.2428 12.2419C10.4091 14.0758 7.69386 14.472 5.47185 13.4444C5.14382 13.3123 4.87489 13.2056 4.61922 13.2056C3.90709 13.2098 3.0207 13.9003 2.56002 13.4402C2.09933 12.9795 2.79036 12.0924 2.79036 11.3759C2.79036 11.1202 2.68785 10.8561 2.55579 10.5274C1.5277 8.30577 1.92447 5.58961 3.75816 3.75632C6.09896 1.41466 9.90201 1.41466 12.2428 3.75572C14.5878 6.101 14.5836 9.90086 12.2428 12.2419Z" stroke="#E50914" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -72,7 +92,7 @@
                       <path d="M7.95843 8.24775H7.96383" stroke="#E50914" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                       <path d="M5.55316 8.24775H5.55856" stroke="#E50914" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    <span class="font-size-12"> Comments</span>
+                    <span data-bs-toggle="modal" data-bs-target="#commentModal-{{$row->id}}" class="font-size-12 btn-comments" data-idcomment="{{$row->id}}"> Comments</span>
                   </div>
                 </div>
               </div>
@@ -123,7 +143,7 @@
                   <a href="blog/blog-tag.html" class="position-relative">Comedies</a>
                 </li>
                 <li>
-                  <a href="blog/blog-tag.html" class="position-relative">comedy</a>
+                  <a href="blog/blog-tag.html" class="position-relative">Comedy</a>
                 </li>
               </ul>
             </div>
@@ -570,6 +590,41 @@
     </a>
   </div>
   @include('layouts.vendor-scripts')
+
+  <script>
+    $(".btn-comments").click(function(e) {
+
+      const idComment = $(this).attr('data-idcomment');
+      console.log(idComment);
+
+      const urlget = (`{{ url('/blogcomments/${idComment}') }}`);
+
+      $.get(urlget, function(data) {
+        $('#comments-' + idComment).html(data);
+        console.log("Ajax comments concluído com sucesso!");
+      });
+
+      $("#btn-submit-comment" + idComment).click(function(e) {
+        const comment = $("#input-comment" + idComment).val();
+
+        const urlstore = (`{{ url('/bloginsertcomments/${idComment}/${comment}') }}`);
+
+        $.get(urlstore, function(data) {
+          console.log("Comentarioinserido concluído com sucesso!");
+
+          $.get(urlget, function(data) {
+            $('#comments-' + idComment).html(data);
+            console.log("Ajax comments concluído com sucesso!");
+          });
+          
+        });
+
+      });
+
+
+    });
+  </script>
+
 </body>
 
 </html>

@@ -12,6 +12,7 @@ class BlogImage extends Model
     protected $table = 'blogimages';
 
     protected $fillable = [
+        'name',
         'imgfile'   
     ];
 }
