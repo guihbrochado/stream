@@ -69,11 +69,16 @@
                         <div id="comments-{{$row->id}}"></div>
                       </div>
                       <div class="modal-footer">
-                        <div class="d-flex">
-                          <label for="recipient-name" class="col-form-label">Recipient:</label>
-                          <input type="text" class="" id="input-comment{{$row->id}}">
+                        <!-- <div class="row">
+                          <input type="text" class="form-control " id="input-comment{{$row->id}}" placeholder="Faça sua postagem">
                           <button type="button" id="btn-submit-comment{{$row->id}}" class="btn btn-primary">Enviar Mensagem</button>
+                        </div> -->
+                        <div class="input-group input-group-sm mb-3">
+                          <input id="input-comment{{$row->id}}" placeholder="Faça sua postagem"
+                           type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                          <span class="input-group-text btn btn-primary" id="btn-submit-comment{{$row->id}}">Enviar Mensagem</span>
                         </div>
+
                       </div>
                     </div>
                   </div>
@@ -595,8 +600,7 @@
     $(".btn-comments").click(function(e) {
 
       const idComment = $(this).attr('data-idcomment');
-      console.log(idComment);
-
+      id="input-comment{{$row->id}}"
       const urlget = (`{{ url('/blogcomments/${idComment}') }}`);
 
       $.get(urlget, function(data) {
@@ -615,12 +619,12 @@
           $.get(urlget, function(data) {
             $('#comments-' + idComment).html(data);
             console.log("Ajax comments concluído com sucesso!");
+            $("#input-comment" + idComment).val('');
           });
-          
+
         });
 
       });
-
 
     });
   </script>
