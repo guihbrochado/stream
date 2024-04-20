@@ -34,5 +34,5 @@
 </div>
 
 @empty
-<h6>Sem comentários até o momento...</h6>
+<h6 class="mt-5">Sem comentários até o momento...</h6>
 @endforelse

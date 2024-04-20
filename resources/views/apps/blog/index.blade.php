@@ -25,13 +25,12 @@
     <!--Nav Start-->
     @include('components.nav')<!--Nav End-->
 
-    <!--bread-crumb-->
     <div class="iq-breadcrumb" style="background-image: url(assets/images/pages/01.webp);">
       <div class="container-fluid">
         <div class="row align-items-center">
           <div class="col-sm-12">
             <nav aria-label="breadcrumb" class="text-center">
-              <h2 class="title">Fique mais informados com nossos blogs.</h2>
+              <h2 class="title">Fique mais informado com nossos blogs.</h2>
               <ol class="breadcrumb justify-content-center">
                 <li class="breadcrumb-item"><a href="{{ url('/')}}">Home</a></li>
                 <li class="breadcrumb-item active">Blog</li>
@@ -41,9 +40,6 @@
         </div>
       </div>
     </div>
-
-    <!--bread-crumb-->
-
 
     <div class="section-padding">
       <div class="container">
@@ -62,7 +58,7 @@
                   <div class="modal-dialog modal-dialog-scrollable modal-xl">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="commentModal-{{$row->id}}Label">Comentários</h1>
+                        <span class="modal-title fs-5" id="commentModal-{{$row->id}}Label">Comentários</span>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
@@ -85,7 +81,7 @@
                 </div>
                 <ul class="iq-blog-category-2 m-0  p-0 list-unstyled">
                   <li>
-                    <a class="fw-500" href="blog/blog-category.html">{{$row->titulo}}</a>
+                    <span class="fw-500">{{$row->titulo}}</span>
                   </li>
                 </ul>
                 <div class="d-flex align-items-center gap-2">
@@ -125,7 +121,7 @@
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M11.8571 2.4563H2.14453V12.3959H11.8571V2.4563Z" stroke="#E50914" stroke-width="1.5" stroke-linecap="square"></path>
                   </svg>
                   <span class="font-size-14 text-uppercase">
-                    <a href="#">{{ date("d/m/Y", strtotime($row->created_at)) }}</a>
+                    <span >{{ date("d/m/Y", strtotime($row->created_at)) }}</span>
                   </span>
                 </div>
               </div>
@@ -133,104 +129,7 @@
             @empty
             <h3>Faça a primeira postagem</h3>
             @endforelse
-
-
-            <div class="iq-blog-tag">
-              <ul class="p-0 m-0 list-unstyled gap-2 widget_tags">
-                <li>
-                  <i class="fas fa-tags text-primary" aria-hidden="true"></i>
-                  <span class="font-size-12 fw-semibold">TAGS:</span>
-                </li>
-                <li>
-                  <a href="blog/blog-tag.html" class="position-relative">Action</a>
-                </li>
-                <li>
-                  <a href="blog/blog-tag.html" class="position-relative">Comedies</a>
-                </li>
-                <li>
-                  <a href="blog/blog-tag.html" class="position-relative">Comedy</a>
-                </li>
-              </ul>
-            </div>
-            <div class="widget my-5 my-md-0">
-              <div class="iq-author-meta-details d-flex align-items-start align-items-md-center gap-4 flex-column flex-md-row">
-                <div class="iq-author-image">
-                  <img src="assets/images/user/user1.webp" class="img-fluid rounded" alt="user">
-                </div>
-                <div>
-                  <h5>Jenny</h5>
-                  <ul class="p-0 m-0 list-unstyled widget_social_media mt-4">
-                    <li class="">
-                      <a href="https://www.facebook.com/">
-                        <i class="fab fa-facebook"></i>
-                      </a>
-                    </li>
-                    <li class="">
-                      <a href="https://www.instagram.com/">
-                        <i class="fab fa-instagram"></i>
-                      </a>
-                    </li>
-                    <li class="">
-                      <a href="https://twitter.com/">
-                        <i class="fab fa-twitter"></i>
-                      </a>
-                    </li>
-                    <li class="">
-                      <a href="https://dribbble.com/">
-                        <i class="fab fa-dribbble"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="blog-nav row">
-              <div class="blog-prev-post col-lg-6 mb-5 mb-lg-0">
-                <a href="blog/blog-gallery.html">
-                  <div class="blog-arrow font-size-14 fw-normal mb-3">
-                    <i class="fas fa-arrow-left"></i>
-                    <span class="previous fw-medium fst-italic"> Previous Post</span>
-                  </div>
-                  <span class="fw-semibold text-white">First Glass Photos Bring Unbreakable and Split Villians Together
-                  </span>
-                </a>
-              </div>
-              <div class="blog-next-post col-lg-6 text-start text-lg-end">
-                <a href="blog/blog-detail.html">
-                  <div class="blog-arrow font-size-14 fw-normal mb-3">
-                    <span class="next fw-medium fst-italic"> Next Post</span>
-                    <i class="fas fa-arrow-right"></i>
-                  </div>
-                  <span class="fw-semibold text-white">Birds Of Prey Star Says She’s Definitely Open To A Ghost
-                    Return</span>
-                </a>
-              </div>
-            </div>
-
-            <form>
-              <h4 class="fw-500 mb-3">Leave a Reply </h4>
-              <p class="mb-4">Logged in as Jenny. <span class="text-primary">Edit your profile. Log out?</span>
-                Required fields are marked *</p>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <textarea class="form-control" name="comment" cols="5" rows="8" required="" placeholder="Comment"></textarea>
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-submit mt-4">
-                    <div class="iq-button">
-                      <button name="submit" type="submit" id="submit" class="btn text-uppercase position-relative" value="Submit">
-                        <span class="button-text">Post Comment</span>
-                        <i class="fa-solid fa-play"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-
+             
           </div>
           <div class="col-lg-4 col-sm-12 mt-5 mt-lg-0">
             <div class="widget-area">
@@ -290,7 +189,7 @@
                   @endforelse
                 </ul>
               </div>
-              <div class="widget">
+              <!-- <div class="widget">
                 <h5 class="widget-title position-relative">Tags</h5>
                 <ul class="p-0 m-0 list-unstyled gap-2 widget_tags">
                   <li>
@@ -324,9 +223,9 @@
                     <a href="blog/blog-tag.html" class="position-relative">Rumors</a>
                   </li>
                 </ul>
-              </div>
+              </div> -->
               <div class="widget">
-                <h5 class="widget-title position-relative">Follow Us :</h5>
+                <h5 class="widget-title position-relative">Nossas redes sociais:</h5>
                 <ul class="p-0 m-0 list-unstyled widget_social_media">
                   <li class="">
                     <a href="https://www.facebook.com/" class="position-relative"><i class="fab fa-facebook"></i></a>
@@ -341,11 +240,7 @@
                     <a href="https://www.instagram.com/" class="position-relative"><i class="fab fa-instagram"></i></a>
                   </li>
                 </ul>
-              </div>
-              <div class="widget text-center">
-                <a href="shop/shop.html"> <img class="img-fluid" src="assets/images/blog/01.webp" loading="lazy" alt="streamit" />
-                </a>
-              </div>
+              </div>           
             </div>
           </div>
         </div>
