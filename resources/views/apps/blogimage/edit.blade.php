@@ -2,32 +2,6 @@
 <html lang="en" dir="ltr">
 
 @include('components.headdash')
-<style>
-    #cke_1_bottom {
-        background: #00000090;
-        color: #fff
-    }
-
-    #cke_conteudo {
-        background: #00000090;
-        color: #fff
-    }
-
-    #cke_1_toolbox {
-        background: #00000090;
-        color: #fff
-    }
-
-    #cke_1_top {
-        background: #00000090;
-        color: #fff
-    }
-
-    #cke_1_contents {
-        background: #00000090;
-        color: #fff
-    }
-</style>
 
 <body class="  ">
     <!-- loader Start -->
@@ -57,69 +31,28 @@
                             </div>
 
                             <div class="card-body">
-                                <form class="row g-3 needs-validation" action="{{ route('blogstream.update', ['id' => $data->id] ) }}" method="post" enctype="multipart/form-data" novalidate>
+                                <form class="row g-3 needs-validation" action="{{ route('blogimage.update', ['id' => $data->id] ) }}" method="post" enctype="multipart/form-data" novalidate>
                                     @csrf
                                     @php $message = "Este campo é obrigatório"; @endphp
                                     <div class="row g-3">
-                                        <div class="col-md-4">
-                                            <label class="form-label" for="titulo">Título</label>
-                                            <input id="titulo" value="{{ $data->titulo }}" required name="titulo" type="text" class="form-control @error('titulo') is-invalid @enderror" placeholder="Aula" maxlength="100" />
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="name">Nome</label>
+                                            <input id="name" value="{{ $data->name }}" required name="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Aula" maxlength="100" />
                                             @error('data')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label" for="author">Autor</label>
-                                            <input id="author" value="{{ $data->author }}" name="author" type="text" class="form-control @error('author') is-invalid @enderror" placeholder="Autor" min="1" />
-                                            @error('data')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label" for="idcategory">Categoria</label>
-                                            <select class="form-select" id="idcategory" name="idcategory" required>
-                                                <option value="">Selecione...</option>
-                                                @foreach ($blogcategories as $row)
-                                                    <option {{ $data->idcategory == $row->id ? 'selected' : ''}} value="{{ $row->id }}"> {{ $row->description }} </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="row g-3 mt-1">
-                                        <div class="col-md-4">
-                                            <label for="imgcapa" class="form-label">Capa</label>
+                                        <div class="col-md-6">
+                                            <label for="imgfile" class="form-label">Capa</label>
                                             <div class="input-group has-validation">
-                                                <input id="imgcapa" name="imgcapa" type="file" class="form-control" accept="image/*" aria-describedby="inputGroupPrepend" />
+                                                <input id="imgfile" name="imgfile" type="file" class="form-control" accept="image/*" aria-describedby="inputGroupPrepend" />
                                                 <div class="invalid-feedback">
                                                     Este campo é obrigatório
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <label for="audiofile" class="form-label">Audio</label>
-                                            <div class="input-group">
-                                                <input id="audiofile" name="audiofile" type="file" class="form-control" aria-describedby="inputGroupPrepend" accept="audio/*" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label class="form-label" for="status">Status</label>
-                                            <select class="form-select" id="status" name="status" required>
-                                                <option value="">Selecione...</option>
-                                                <option {{ $data->status == 1 ? 'selected' : ''}} value="1"> Visível </option>
-                                                <option {{ $data->status == 0 ? 'selected' : ''}} value="0"> Invisível </option>
-                                            </select>
-                                        </div>
                                     </div>
-                                    <div class="row g-3 mt-1">
-                                        <div class="col-md-12">
-                                            <label class="form-label" for="conteudo">Conteúdo</label>
-                                            <textarea rows="5" class="form-control @error('conteudo') is-invalid @enderror" name="conteudo" id="conteudo">{{$data->conteudo}}</textarea>
-                                            @error('blog')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
+                             
                                     <div class="d-flex justify-content-between mt-2">
                                         <a href="{{ route( $controller ) }}" class="btn btn-secondary">
                                             Voltar
@@ -464,83 +397,6 @@
 
     @include('layouts.vendor-script-dash')
 
-    <script src="//cdn.ckeditor.com/4.10.0/full-all/ckeditor.js"></script>
-
-    <script>
-        CKEDITOR.replace('conteudo', {
-            extraPlugins: 'sourcedialog',
-            toolbar: [{
-                    name: 'document',
-                    groups: ['mode', 'document', 'doctools'],
-                    items: ['Save', 'Preview', 'Print']
-                },
-                {
-                    name: 'clipboard',
-                    groups: ['clipboard', 'undo'],
-                    items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
-                },
-                {
-                    name: 'editing',
-                    groups: ['find', 'selection', 'spellchecker'],
-                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
-                },
-                {
-                    name: 'forms',
-                    items: ['Checkbox', 'Radio', 'TextField', 'Textarea', 'Button', 'ImageButton']
-                },
-                {
-                    name: 'basicstyles',
-                    groups: ['basicstyles', 'cleanup'],
-                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']
-                },
-                {
-                    name: 'paragraph',
-                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
-                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl']
-                },
-                {
-                    name: 'links',
-                    items: ['Link', 'Unlink', ]
-                },
-                {
-                    name: 'insert',
-                    items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Source']
-                },
-                '/',
-                {
-                    name: 'styles',
-                    items: ['Styles', 'Format', 'Font', 'FontSize']
-                },
-                {
-                    name: 'colors',
-                    items: ['TextColor', 'BGColor']
-                },
-                {
-                    name: 'tools',
-                    items: ['Maximize']
-                },
-                {
-                    name: 'others',
-                    items: ['-']
-                },
-            ]
-        });
-    </script>
-
-    <script>
-        CKEDITOR.on('instanceReady', function(e) {
-            // First time
-            e.editor.document.getBody().setStyle('background-color', '#000');
-            e.editor.document.getBody().setStyle('color', 'white');
-            e.editor.document.appendStyleText('a { color: white; }');
-            // in case the user switches to source and back
-            e.editor.on('contentDom', function() {
-                e.editor.document.getBody().setStyle('background-color', '#000');
-                e.editor.document.getBody().setStyle('color', 'white');
-                e.editor.document.appendStyleText('a { color: white; }');
-            });
-        });
-    </script>
 </body>
 
 

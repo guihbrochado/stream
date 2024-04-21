@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS blogcategories (
 );
 CREATE TABLE IF NOT EXISTS blogimages (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
     imgfile VARCHAR(200) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -41,6 +42,7 @@ CREATE TABLE IF NOT EXISTS blog (
     titulo VARCHAR(200) NOT NULL,			
     subtitulo VARCHAR(200) NOT NULL,			
     author VARCHAR(200) NOT NULL,			
+    duration time,			
     idtema INT,			
     idcategory INT,			
     conteudo VARCHAR(5000) NOT NULL,			
@@ -54,3 +56,13 @@ CREATE TABLE IF NOT EXISTS blog (
     idusuario_alteracao INTEGER,
     CONSTRAINT fk_blog_category FOREIGN KEY (idcategory) REFERENCES blogcategories(id)
 );
+
+CREATE TABLE blogcomments (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    id_user int NOT NULL,
+    id_blog int NOT NULL,
+    comment TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+)

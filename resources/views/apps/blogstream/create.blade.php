@@ -68,14 +68,14 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="form-label" for="author">Autor</label>
                                             <input required id="author" name="author" type="text" class="form-control @error('author') is-invalid @enderror" placeholder="Autor" min="1" />
                                             @error('blog')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="form-label" for="idcategory">Categoria</label>
                                             <select class="form-select" id="idcategory" name="idcategory" required>
                                                 <option value="">Selecione...</option>
@@ -83,6 +83,11 @@
                                                     <option value="{{ $row->id }}"> {{ $row->description }} </option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label" for="duration">Duração</label>
+                                            <input id="duration" name="duration" type="time" class="form-control @error('duration') is-invalid @enderror" placeholder="Duração" min="1" />
+                                         
                                         </div>
                                     </div>
 

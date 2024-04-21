@@ -15,6 +15,7 @@ class BlogStream extends Model
         'titulo',
         'subtitulo',
         'author',
+        'duration',
         'idtema',
         'idcategory',
         'conteudo',

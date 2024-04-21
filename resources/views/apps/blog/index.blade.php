@@ -25,13 +25,12 @@
     <!--Nav Start-->
     @include('components.nav')<!--Nav End-->
 
-    <!--bread-crumb-->
     <div class="iq-breadcrumb" style="background-image: url(assets/images/pages/01.webp);">
       <div class="container-fluid">
         <div class="row align-items-center">
           <div class="col-sm-12">
             <nav aria-label="breadcrumb" class="text-center">
-              <h2 class="title">Fique mais informados com nossos blogs.</h2>
+              <h2 class="title">Fique mais informado com nossos blogs.</h2>
               <ol class="breadcrumb justify-content-center">
                 <li class="breadcrumb-item"><a href="{{ url('/')}}">Home</a></li>
                 <li class="breadcrumb-item active">Blog</li>
@@ -41,9 +40,6 @@
         </div>
       </div>
     </div>
-
-    <!--bread-crumb-->
-
 
     <div class="section-padding">
       <div class="container">
@@ -58,13 +54,38 @@
                 </audio>
               </div>
               <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="modal fade" id="commentModal-{{$row->id}}" tabindex="-1" aria-labelledby="commentModal-{{$row->id}}Label" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <span class="modal-title fs-5" id="commentModal-{{$row->id}}Label">Comentários</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div id="comments-{{$row->id}}"></div>
+                      </div>
+                      <div class="modal-footer">
+                        <!-- <div class="row">
+                          <input type="text" class="form-control " id="input-comment{{$row->id}}" placeholder="Faça sua postagem">
+                          <button type="button" id="btn-submit-comment{{$row->id}}" class="btn btn-primary">Enviar Mensagem</button>
+                        </div> -->
+                        <div class="input-group input-group-sm mb-3">
+                          <input id="input-comment{{$row->id}}" placeholder="Faça sua postagem"
+                           type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                          <span class="input-group-text btn btn-primary" id="btn-submit-comment{{$row->id}}">Enviar Mensagem</span>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <ul class="iq-blog-category-2 m-0  p-0 list-unstyled">
                   <li>
-                    <a class="fw-500" href="blog/blog-category.html">{{$row->titulo}}</a>
+                    <span class="fw-500">{{$row->titulo}}</span>
                   </li>
                 </ul>
                 <div class="d-flex align-items-center gap-2">
-                  <span class="font-size-12"> 5 Min Read </span>
+                  <span class="font-size-12"> Leitura de {{$row->duration}} </span>
                   <div>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M12.2428 12.2419C10.4091 14.0758 7.69386 14.472 5.47185 13.4444C5.14382 13.3123 4.87489 13.2056 4.61922 13.2056C3.90709 13.2098 3.0207 13.9003 2.56002 13.4402C2.09933 12.9795 2.79036 12.0924 2.79036 11.3759C2.79036 11.1202 2.68785 10.8561 2.55579 10.5274C1.5277 8.30577 1.92447 5.58961 3.75816 3.75632C6.09896 1.41466 9.90201 1.41466 12.2428 3.75572C14.5878 6.101 14.5836 9.90086 12.2428 12.2419Z" stroke="#E50914" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -72,7 +93,7 @@
                       <path d="M7.95843 8.24775H7.96383" stroke="#E50914" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                       <path d="M5.55316 8.24775H5.55856" stroke="#E50914" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    <span class="font-size-12"> Comments</span>
+                    <span data-bs-toggle="modal" data-bs-target="#commentModal-{{$row->id}}" class="font-size-12 btn-comments" data-idcomment="{{$row->id}}"> Comments</span>
                   </div>
                 </div>
               </div>
@@ -100,7 +121,7 @@
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M11.8571 2.4563H2.14453V12.3959H11.8571V2.4563Z" stroke="#E50914" stroke-width="1.5" stroke-linecap="square"></path>
                   </svg>
                   <span class="font-size-14 text-uppercase">
-                    <a href="#">{{ date("d/m/Y", strtotime($row->created_at)) }}</a>
+                    <span >{{ date("d/m/Y", strtotime($row->created_at)) }}</span>
                   </span>
                 </div>
               </div>
@@ -108,104 +129,7 @@
             @empty
             <h3>Faça a primeira postagem</h3>
             @endforelse
-
-
-            <div class="iq-blog-tag">
-              <ul class="p-0 m-0 list-unstyled gap-2 widget_tags">
-                <li>
-                  <i class="fas fa-tags text-primary" aria-hidden="true"></i>
-                  <span class="font-size-12 fw-semibold">TAGS:</span>
-                </li>
-                <li>
-                  <a href="blog/blog-tag.html" class="position-relative">Action</a>
-                </li>
-                <li>
-                  <a href="blog/blog-tag.html" class="position-relative">Comedies</a>
-                </li>
-                <li>
-                  <a href="blog/blog-tag.html" class="position-relative">comedy</a>
-                </li>
-              </ul>
-            </div>
-            <div class="widget my-5 my-md-0">
-              <div class="iq-author-meta-details d-flex align-items-start align-items-md-center gap-4 flex-column flex-md-row">
-                <div class="iq-author-image">
-                  <img src="assets/images/user/user1.webp" class="img-fluid rounded" alt="user">
-                </div>
-                <div>
-                  <h5>Jenny</h5>
-                  <ul class="p-0 m-0 list-unstyled widget_social_media mt-4">
-                    <li class="">
-                      <a href="https://www.facebook.com/">
-                        <i class="fab fa-facebook"></i>
-                      </a>
-                    </li>
-                    <li class="">
-                      <a href="https://www.instagram.com/">
-                        <i class="fab fa-instagram"></i>
-                      </a>
-                    </li>
-                    <li class="">
-                      <a href="https://twitter.com/">
-                        <i class="fab fa-twitter"></i>
-                      </a>
-                    </li>
-                    <li class="">
-                      <a href="https://dribbble.com/">
-                        <i class="fab fa-dribbble"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="blog-nav row">
-              <div class="blog-prev-post col-lg-6 mb-5 mb-lg-0">
-                <a href="blog/blog-gallery.html">
-                  <div class="blog-arrow font-size-14 fw-normal mb-3">
-                    <i class="fas fa-arrow-left"></i>
-                    <span class="previous fw-medium fst-italic"> Previous Post</span>
-                  </div>
-                  <span class="fw-semibold text-white">First Glass Photos Bring Unbreakable and Split Villians Together
-                  </span>
-                </a>
-              </div>
-              <div class="blog-next-post col-lg-6 text-start text-lg-end">
-                <a href="blog/blog-detail.html">
-                  <div class="blog-arrow font-size-14 fw-normal mb-3">
-                    <span class="next fw-medium fst-italic"> Next Post</span>
-                    <i class="fas fa-arrow-right"></i>
-                  </div>
-                  <span class="fw-semibold text-white">Birds Of Prey Star Says She’s Definitely Open To A Ghost
-                    Return</span>
-                </a>
-              </div>
-            </div>
-
-            <form>
-              <h4 class="fw-500 mb-3">Leave a Reply </h4>
-              <p class="mb-4">Logged in as Jenny. <span class="text-primary">Edit your profile. Log out?</span>
-                Required fields are marked *</p>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <textarea class="form-control" name="comment" cols="5" rows="8" required="" placeholder="Comment"></textarea>
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-submit mt-4">
-                    <div class="iq-button">
-                      <button name="submit" type="submit" id="submit" class="btn text-uppercase position-relative" value="Submit">
-                        <span class="button-text">Post Comment</span>
-                        <i class="fa-solid fa-play"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-
+             
           </div>
           <div class="col-lg-4 col-sm-12 mt-5 mt-lg-0">
             <div class="widget-area">
@@ -265,7 +189,7 @@
                   @endforelse
                 </ul>
               </div>
-              <div class="widget">
+              <!-- <div class="widget">
                 <h5 class="widget-title position-relative">Tags</h5>
                 <ul class="p-0 m-0 list-unstyled gap-2 widget_tags">
                   <li>
@@ -299,9 +223,9 @@
                     <a href="blog/blog-tag.html" class="position-relative">Rumors</a>
                   </li>
                 </ul>
-              </div>
+              </div> -->
               <div class="widget">
-                <h5 class="widget-title position-relative">Follow Us :</h5>
+                <h5 class="widget-title position-relative">Nossas redes sociais:</h5>
                 <ul class="p-0 m-0 list-unstyled widget_social_media">
                   <li class="">
                     <a href="https://www.facebook.com/" class="position-relative"><i class="fab fa-facebook"></i></a>
@@ -316,11 +240,7 @@
                     <a href="https://www.instagram.com/" class="position-relative"><i class="fab fa-instagram"></i></a>
                   </li>
                 </ul>
-              </div>
-              <div class="widget text-center">
-                <a href="shop/shop.html"> <img class="img-fluid" src="assets/images/blog/01.webp" loading="lazy" alt="streamit" />
-                </a>
-              </div>
+              </div>           
             </div>
           </div>
         </div>
@@ -570,6 +490,40 @@
     </a>
   </div>
   @include('layouts.vendor-scripts')
+
+  <script>
+    $(".btn-comments").click(function(e) {
+
+      const idComment = $(this).attr('data-idcomment');
+      id="input-comment{{$row->id}}"
+      const urlget = (`{{ url('/blogcomments/${idComment}') }}`);
+
+      $.get(urlget, function(data) {
+        $('#comments-' + idComment).html(data);
+        console.log("Ajax comments concluído com sucesso!");
+      });
+
+      $("#btn-submit-comment" + idComment).click(function(e) {
+        const comment = $("#input-comment" + idComment).val();
+
+        const urlstore = (`{{ url('/bloginsertcomments/${idComment}/${comment}') }}`);
+
+        $.get(urlstore, function(data) {
+          console.log("Comentarioinserido concluído com sucesso!");
+
+          $.get(urlget, function(data) {
+            $('#comments-' + idComment).html(data);
+            console.log("Ajax comments concluído com sucesso!");
+            $("#input-comment" + idComment).val('');
+          });
+
+        });
+
+      });
+
+    });
+  </script>
+
 </body>
 
 </html>

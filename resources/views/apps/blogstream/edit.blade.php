@@ -68,14 +68,14 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="form-label" for="author">Autor</label>
-                                            <input id="author" value="{{ $data->author }}" name="author" type="text" class="form-control @error('author') is-invalid @enderror" placeholder="Autor" min="1" />
+                                            <input id="author" value="{{ $data->author }}" name="author" type="text" class="form-control @error('author') is-invalid @enderror" placeholder="Autor" required />
                                             @error('data')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="form-label" for="idcategory">Categoria</label>
                                             <select class="form-select" id="idcategory" name="idcategory" required>
                                                 <option value="">Selecione...</option>
@@ -83,6 +83,13 @@
                                                     <option {{ $data->idcategory == $row->id ? 'selected' : ''}} value="{{ $row->id }}"> {{ $row->description }} </option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label" for="duration">Duração</label>
+                                            <input id="duration" value="{{ $data->duration }}" name="duration" type="time" class="form-control @error('duration') is-invalid @enderror" placeholder="Duração" />
+                                            @error('data')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
