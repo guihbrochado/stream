@@ -42,7 +42,7 @@
                                 </div>
 
                                 <div>
-                                    <a href="{{ route('subcategory.create') }}" class="btn btn-primary "> Adicionar</a>
+                                    <a href="{{ route('product.create') }}" class="btn btn-primary "> Adicionar</a>
                                 </div>
 
                             </div>
@@ -52,18 +52,20 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">Id</th>
-                                                <th class="text-center">Subcategoria</th>
-                                                <th class="text-center">Categoria</th>
+                                                <th class="text-center">Produto</th>
+                                                <th class="text-center">Preço</th>
+                                                <th class="text-center">Quantidade</th>
                                                 <th class="text-center">Criado</th>
                                                 <th class="text-center">Ações</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($subcategories as $row)
+                                            @foreach ($products as $row)
                                             <tr>
                                                 <td class="text-center">{{$row->id}}</td>
                                                 <td class="text-center">{{$row->nome}}</td>
-                                                <td class="text-center">{{$row->categoria_id}}</td>
+                                                <td class="text-center">{{$row->preco}}</td>
+                                                <td class="text-center">{{$row->quantidade}}</td>
                                                 <td class="text-center">{{date("d/m/Y", strtotime($row->created_at))}}</td>
                                                 <td class="text-center">
                                                     <a href="{{ route('category.show', ['id' => $row->id]) }}"> <i class="fa-solid fa-eye  me-2 lh-lg"></i> </a>

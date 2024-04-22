@@ -46,6 +46,7 @@ use App\Http\Controllers\apps\BlogStreamController;
 use App\Http\Controllers\apps\BlogCategoryController;
 use App\Http\Controllers\apps\BlogImageController;
 use App\Http\Controllers\apps\CategoryController;
+use App\Http\Controllers\apps\ProductController;
 use App\Http\Controllers\apps\SubcategoryController;
 
 /*
@@ -264,6 +265,19 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/subcategory/{id}/edit', [SubcategoryController::class, 'edit'])->name('subcategory.edit');
     Route::put('/subcategory/{id}', [SubcategoryController::class, 'update'])->name('subcategory.update');
     Route::delete('/subcategory/{id}', [SubcategoryController::class, 'destroy'])->name('subcategory.destroy');
+    Route::get('/api/subcategorias/{categoria_id}', [SubcategoryController::class, 'getSubcategoriasPorCategoria']);
+
+
+    /**
+     * Rota Produtos
+     */
+    Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+    Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
+    Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+    Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('product.edit');
+    Route::put('/product/{id}', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
 
     Route::get('/clientes', function () {
         return view('pages-under_development');

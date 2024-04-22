@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="">
+<html lang="en" dir="ltr">
 
 @include('components.headdash')
 
@@ -8,73 +8,56 @@
     <div id="loading">
         <div class="loader simple-loader">
             <div class="loader-body ">
-                <img src="{{ asset('assets/dashboard/images/loader.gif')}}" alt="loader" class="image-loader img-fluid ">
+                <img src="{{ asset('assets/images/loader.gif') }}" alt="loader" class="image-loader img-fluid ">
             </div>
         </div>
     </div>
     <!-- loader END -->
-
     @include('components.sidebardash')
     <main class="main-content">
-        <!-- Nav START -->
-        @include('layouts.navdash')
-        <!--Nav End-->
+        <div class="position-relative ">
+            <!--Nav Start-->
+            @include('layouts.navdash')
+            <!--Nav End-->
         </div>
-        @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-        @endif
-
-        @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-        @endif
         <div class="content-inner container-fluid pb-0" id="page_layout">
-            <div class="container-fluid">
+            <div>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-xl-9 col-lg-8">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
-                                    <h4 class="card-title">Cursos</h4>
+                                    <h4 class="card-title">Categoria</h4>
                                 </div>
-
-                                <div>
-                                    <a href="{{ route('subcategory.create') }}" class="btn btn-primary "> Adicionar</a>
-                                </div>
-
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive border rounded py-4">
-                                    <table id="datatable" class="table " data-toggle="data-table">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center">Id</th>
-                                                <th class="text-center">Subcategoria</th>
-                                                <th class="text-center">Categoria</th>
-                                                <th class="text-center">Criado</th>
-                                                <th class="text-center">Ações</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($subcategories as $row)
-                                            <tr>
-                                                <td class="text-center">{{$row->id}}</td>
-                                                <td class="text-center">{{$row->nome}}</td>
-                                                <td class="text-center">{{$row->categoria_id}}</td>
-                                                <td class="text-center">{{date("d/m/Y", strtotime($row->created_at))}}</td>
-                                                <td class="text-center">
-                                                    <a href="{{ route('category.show', ['id' => $row->id]) }}"> <i class="fa-solid fa-eye  me-2 lh-lg"></i> </a>
-                                                    <a href="{{ route('category.edit', ['id' => $row->id]) }}"> <i class="fa-solid fa-user-edit  me-2 lh-lg"></i> </a>
-                                                    <a href="{{ route('category.destroy', ['id' => $row->id]) }}"> <i class="fa-solid fa-trash  me-2 lh-lg"></i> </a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                                @if(session('message'))
+                                <div class="alert alert-success">{{ session('message') }}</div>
+                                @endif
+                                @if(session('error'))
+                                <div class="alert alert-danger">{{ session('error') }}</div>
+                                @endif
+                                <form action="{{ route('subcategory.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="nome">Nome Subcategoria:</label>
+                                            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome Subcategoria" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="categoria_id">Categoria:</label>
+                                            <select class="form-control" id="categoria_id" name="categoria_id" required>
+                                                <option value="">Selecione uma Categoria</option>
+                                                @foreach($categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->nome }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary mt-3">Criar Subcategoria</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -103,6 +86,8 @@
         <!-- Footer Section End -->
     </main>
     <!-- Wrapper End-->
+    <!-- Live Customizer start -->
+    <!-- Setting offcanvas start here -->
 
     <!-- Settings sidebar end here -->
 
@@ -113,58 +98,7 @@
         </svg>
     </a> <!-- Live Customizer end -->
 
-    <!-- Library Bundle Script -->
-    <script src="assets/dashboard/js/core/libs.min.js"></script>
-    <!-- Plugin Scripts -->
-    <!-- Tour plugin Start -->
-    <script src="assets/dashboard/vendor/sheperd/dist/js/sheperd.min.js"></script>
-    <script src="assets/dashboard/js/plugins/tour.js" defer></script>
-
-
-    <!-- Flatpickr Script -->
-    <script src="assets/dashboard/vendor/flatpickr/dist/flatpickr.min.js"></script>
-    <script src="assets/dashboard/js/plugins/flatpickr.js" defer></script>
-
-
-
-    <!-- Select2 Script -->
-    <script src="assets/dashboard/js/plugins/select2.js" defer></script>
-
-
-
-
-    <!-- Slider-tab Script -->
-    <script src="assets/dashboard/js/plugins/slider-tabs.js"></script>
-
-
-
-
-
-    <!-- SwiperSlider Script -->
-    <script src="assets/dashboard/vendor/swiperSlider/swiper-bundle.min.js"></script>
-    <script src="assets/dashboard/js/plugins/swiper-slider.js" defer></script>
-    <!-- Lodash Utility -->
-    <script src="assets/dashboard/vendor/lodash/lodash.min.js"></script>
-    <!-- Utilities Functions -->
-    <script src="assets/dashboard/js/iqonic-script/utility.min.js"></script>
-    <!-- Settings Script -->
-    <script src="assets/dashboard/js/iqonic-script/setting.min.js"></script>
-    <!-- Settings Init Script -->
-    <script src="assets/dashboard/js/setting-init.js"></script>
-    <!-- External Library Bundle Script -->
-    <script src="assets/dashboard/js/core/external.min.js"></script>
-    <!-- Widgetchart Script -->
-    <script src="assets/dashboard/js/charts/widgetcharts.js?v=1.0.1" defer></script>
-    <!-- Dashboard Script -->
-    <script src="assets/dashboard/js/charts/dashboard.js?v=1.0.1" defer></script>
-    <!-- qompacui Script -->
-    <script src="assets/dashboard/js/streamit.js?v=1.0.1" defer></script>
-    <script src="assets/dashboard/js/sidebar.js?v=1.0.1" defer></script>
-    <script src="assets/dashboard/js/chart-custom.js?v=1.0.1" defer></script>
-
-    <script src="assets/dashboard/js/plugins/select2.js?v=1.0.1" defer></script>
-
-    <script src="assets/dashboard/js/plugins/flatpickr.js?v=1.0.1" defer></script>
+    @include('layouts.vendor-script-dash')
 
 </body>
 

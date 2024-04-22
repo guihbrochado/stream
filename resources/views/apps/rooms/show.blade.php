@@ -413,25 +413,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
             if (localVideo.paused) {
                 localVideo.play().then(() => {
                     startButton.style.display = 'none';
-                    coverElement.style.display = 'none'; // Esconde a capa quando o vídeo começa a tocar
+                    coverElement.style.display = 'none'; 
                 }).catch((error) => {
                     console.error('Erro ao tentar reproduzir o vídeo:', error);
                 });
             } else {
                 localVideo.pause();
                 startButton.style.display = 'block';
-                coverElement.style.display = 'block'; // Mostra a capa quando o vídeo é pausado
+                coverElement.style.display = 'block'; 
             }
         });
 
         localVideo.addEventListener('play', () => {
             startButton.style.display = 'none';
-            coverElement.style.display = 'none'; // Esconde a capa quando o vídeo começa a tocar
+            coverElement.style.display = 'none'; 
         });
 
         localVideo.addEventListener('pause', () => {
             startButton.style.display = 'block';
-            coverElement.style.display = 'block'; // Mostra a capa quando o vídeo é pausado
+            coverElement.style.display = 'block'; 
         });
     }
     
@@ -439,7 +439,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (!window.liveRequested) {
             console.log('Espectador solicitando oferta');
             socket.send(JSON.stringify({ event: "request-offer" }));
-            window.liveRequested = true; // Marcar que a oferta foi solicitada
+            window.liveRequested = true; 
         } else {
             console.log('Oferta já foi solicitada');
         }
@@ -449,25 +449,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 </script>
 <script type="text/javascript">
-    // Definir uma variável global para usar no seu arquivo JavaScript
     window.isTransmitter =  {!! json_encode(auth()->check() && auth()->user()->can('admin')) !!};
     console.log('sou admin?', window.isTransmitter);
     console.log('aqui')
 </script>
-// O código de inicialização do WebRTC permanece o mesmo
 
 <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Aguarde o evento DOMContentLoaded antes de chamar initWebRTC
-            // para ter certeza de que todos os scripts foram carregados
             console.log('initWebRTC is', typeof initWebRTC); // Deve mostrar 'function'
             if (typeof initWebRTC === 'function') {
-                initWebRTC(window.isTransmitter); // Inicia como transmissor ou espectador
+                initWebRTC(window.isTransmitter); 
             } else {
                 console.error('initWebRTC is not a function, check webrtc.js file');
             }
             
-            // ... restante do código para lidar com o clique do botão e outros eventos ...
         });
     </script>
     <script src="{{ asset('assets/js/webrtc.js') }}"></script>
