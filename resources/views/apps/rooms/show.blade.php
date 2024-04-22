@@ -1,8 +1,6 @@
 @extends('layouts.master-without-nav')
 
 @section('content')
-<script src="{{ asset('assets/js/webrtc.js') }}"></script>
-@endsection
 
 <!doctype html>
 <html lang="en" data-bs-theme="dark">
@@ -91,9 +89,9 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="video-container pt-0">
-                                <img id="videoCover" src="{{ $room->cover ? asset('assets/images/rooms/' . $room->cover) : asset('assets/images/movies/related/01.webp') }}" alt="video cover" class="video-cover">
+                                <img id="videoCover" src="{{ $room->cover ? asset('assets/images/rooms/' . $room->cover) : asset('') }}" alt="video cover" class="video-cover">
                                 <video id="localVideo" class="video-js vjs-big-play-centered" controls preload="auto" autoplay muted>
-
+                                    
                                 </video>
                                 <!-- Botões exibidos apenas para administradores -->
                                 @if(auth()->user() && auth()->user()->isAdmin())
@@ -105,9 +103,9 @@
                                 <button id="shareScreenButton">Compartilhar Tela</button>
                                 @endif
                                 <video id="remoteVideo" autoplay muted playsinline style="display:none;"></video>
-
+                                
                             </div>
-                            <button id="viewLiveButton">Assistir Live</button>
+                            <button id="viewLiveButton" onclick="requestLive()">Assistir Live</button>
                         </div>
                     </div>
                 </div>
@@ -274,7 +272,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
-
+                                                            
                                                         </div>
                                                         <div class="col-md-12">
                                                             <div class="form-submit mt-4">
@@ -395,29 +393,18 @@
                 <i class="fa-solid fa-chevron-up"></i>
             </a>
         </div>
-        @include('layouts.vendor-scripts')
+        @endsection
 
+        @include('layouts.vendor-scripts')
+        
         @section('script')
-        <script src="{{ asset('assets/js/webrtc.js') }}"></script>
+        
         <script>
 document.addEventListener('DOMContentLoaded', (event) => {
-    // Define a variável isTransmitter após o carregamento do DOM
-    window.isTransmitter = {!! json_encode(auth()-> check() && auth()-> user()-> can('admin')) !!}
-    ;
-    console.log('isTransmitter:', window.isTransmitter);
-
-    // Verifica se initWebRTC é uma função
-    console.log('initWebRTC is', typeof initWebRTC);
-    if (typeof initWebRTC === 'function') {
-        initWebRTC(window.isTransmitter);
-    } else {
-        console.error('initWebRTC is not a function, check webrtc.js file');
-    }
-
-    // Continuação do código que depende do DOM
     const localVideo = document.getElementById('localVideo');
     const coverElement = document.getElementById('videoCover');
     const startButton = document.getElementById('startButton');
+
 
 
     if (localVideo && startButton) {
@@ -447,16 +434,44 @@ document.addEventListener('DOMContentLoaded', (event) => {
             coverElement.style.display = 'block'; // Mostra a capa quando o vídeo é pausado
         });
     }
-
-    console.log('me carregou?')
-
-
-
-
+    
+    function requestLive() {
+        if (!window.liveRequested) {
+            console.log('Espectador solicitando oferta');
+            socket.send(JSON.stringify({ event: "request-offer" }));
+            window.liveRequested = true; // Marcar que a oferta foi solicitada
+        } else {
+            console.log('Oferta já foi solicitada');
+        }
+    }
+    
+    
 });
-        </script>
+</script>
+<script type="text/javascript">
+    // Definir uma variável global para usar no seu arquivo JavaScript
+    window.isTransmitter =  {!! json_encode(auth()->check() && auth()->user()->can('admin')) !!};
+    console.log('sou admin?', window.isTransmitter);
+    console.log('aqui')
+</script>
+// O código de inicialização do WebRTC permanece o mesmo
 
-        @endsection
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Aguarde o evento DOMContentLoaded antes de chamar initWebRTC
+            // para ter certeza de que todos os scripts foram carregados
+            console.log('initWebRTC is', typeof initWebRTC); // Deve mostrar 'function'
+            if (typeof initWebRTC === 'function') {
+                initWebRTC(window.isTransmitter); // Inicia como transmissor ou espectador
+            } else {
+                console.error('initWebRTC is not a function, check webrtc.js file');
+            }
+            
+            // ... restante do código para lidar com o clique do botão e outros eventos ...
+        });
+    </script>
+    <script src="{{ asset('assets/js/webrtc.js') }}"></script>
+@endsection
 
     </body>
 

@@ -45,6 +45,8 @@ use App\Http\Controllers\apps\CoursesLessonsController;
 use App\Http\Controllers\apps\BlogStreamController;
 use App\Http\Controllers\apps\BlogCategoryController;
 use App\Http\Controllers\apps\BlogImageController;
+use App\Http\Controllers\apps\CategoryController;
+use App\Http\Controllers\apps\SubcategoryController;
 
 /*
   |--------------------------------------------------------------------------
@@ -180,10 +182,16 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
 
     Route::get('/manage', [ManageController::class, 'index'])->name('manage.index');
 
+    /**
+     * Rotas Salas AO vivo.
+     */
     Route::get('/all-rooms', [LiveRoomController::class, 'all'])->name('rooms.all');
     Route::get('add-rooms', [LiveRoomController::class, 'create'])->name('rooms.create');
     Route::post('/add-rooms/store', [LiveRoomController::class, 'store'])->name('rooms.store');
 
+    /**
+     * Rotas Blog
+     */
     Route::get('/blogstream', [BlogStreamController::class, 'index'])->name('blogstream.index');
     Route::post('/blogstream/store', [BlogStreamController::class, 'store'])->name('blogstream.store');
     Route::post('/blogstream/update/{id}', [BlogStreamController::class, 'update'])->name('blogstream.update');
@@ -208,6 +216,9 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/blogimage/edit/{id}', [BlogImageController::class, 'edit'])->name('blogimage.edit');
     Route::get('/blogimage/destroy/{id}', [BlogImageController::class, 'destroy'])->name('blogimage.destroy');
 
+    /**
+     * Rotas Cursos
+     */
     Route::get('/courses', [CoursesController::class, 'index'])->name('courses.index');
     Route::post('/courses/store', [CoursesController::class, 'store'])->name('courses.store');
     Route::post('/courses/update/{id}', [CoursesController::class, 'update'])->name('courses.update');
@@ -232,6 +243,28 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/courseslessons/edit/{id}', [CoursesLessonsController::class, 'edit'])->name('courseslessons.edit');
     Route::get('/courseslessons/destroy/{id}', [CoursesLessonsController::class, 'destroy'])->name('courseslessons.destroy');
 
+    /**
+     * Rotas Categoria produtos
+     */
+    Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/category/{id}', [CategoryController::class, 'show'])->name('category.show');
+    Route::get('/category/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::put('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+
+    /**
+     * Rotas Subcategorias Produtos
+     */
+    Route::get('/subcategory', [SubcategoryController::class, 'index'])->name('subcategory.index');
+    Route::get('/subcategory/create', [SubcategoryController::class, 'create'])->name('subcategory.create');
+    Route::post('/subcategory/store', [SubcategoryController::class, 'store'])->name('subcategory.store');
+    Route::get('/subcategory/{id}', [SubcategoryController::class, 'show'])->name('subcategory.show');
+    Route::get('/subcategory/{id}/edit', [SubcategoryController::class, 'edit'])->name('subcategory.edit');
+    Route::put('/subcategory/{id}', [SubcategoryController::class, 'update'])->name('subcategory.update');
+    Route::delete('/subcategory/{id}', [SubcategoryController::class, 'destroy'])->name('subcategory.destroy');
+
     Route::get('/clientes', function () {
         return view('pages-under_development');
     })->name('clientes.index');
@@ -243,8 +276,6 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/conta_investimento/create', [AccountController::class, 'create_client'])->name('conta_investimento.create');
     Route::post('/conta_investimento/store', [AccountController::class, 'store_client'])->name('conta_investimento.store');
     Route::get('/conta_investimento/show/{id}', [AccountController::class, 'show_client'])->name('conta_investimento.show');
-
-    Route::get('/pagamento', [ChargesController::class, 'showPayments'])->name('pagamento.index');
 
     Route::get('/expert_advisor', [ExpertAdvisorController::class, 'index'])->name('expert_advisor.index');
     Route::get('/expert_advisor/create', [ExpertAdvisorController::class, 'create'])->name('expert_advisor.create');
@@ -335,7 +366,7 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::get('/user/show/{id}', [UserController::class, 'show'])->name('user.show');
 
- 
+
     // supervisor
     Route::get('/supervisor_group', [SupervisorGroupController::class, 'index'])->name('supervisor_group.index');
     Route::get('/supervisor_group/create', [SupervisorGroupController::class, 'create'])->name('supervisor_group.create');
