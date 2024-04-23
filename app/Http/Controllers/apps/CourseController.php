@@ -45,9 +45,10 @@ class CourseController extends Controller
 
         $firstLessonId = null;
 
-        if (!empty($firstLessonQuery)) {
-            $firstLessonId = $firstLessonQuery[0]->id;
+        if (!empty($firstLesson)) {
+            $firstLessonId = $firstLesson[0]->id;
         }
+
 
         $allCourses = Courses::get();
 
@@ -59,7 +60,7 @@ class CourseController extends Controller
 
         return view('apps.course.detail')->with([
             'data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'allCourses' => $allCourses,
-            'courseEvaluation' => $courseEvaluation, 'firstLesson' => $firstLesson
+            'courseEvaluation' => $courseEvaluation, 'firstLesson' => $firstLessonId
         ]);
     }
 
