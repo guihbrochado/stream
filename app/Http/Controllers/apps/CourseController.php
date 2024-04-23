@@ -55,15 +55,10 @@ class CourseController extends Controller {
         inner join users u on ce.iduser = u.id
         where ce.idcourse = $data->id");
 
-<<<<<<< HEAD
         return view('apps.course.detail')->with([
             'data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'allCourses' => $allCourses,
             'courseEvaluation' => $courseEvaluation, 'firstLesson' => $firstLesson
         ]);
-=======
-        return view('apps.course.detail')->with(['data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'allCourses' => $allCourses,
-                    'courseEvaluation' => $courseEvaluation, 'firstLesson' => $firstLesson]);
->>>>>>> 685c0c9586b64527cd83e3e5d0c15fb6781cbfd6
     }
 
     public function firstLessonRedirect($id) {
