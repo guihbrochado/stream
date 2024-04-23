@@ -533,7 +533,7 @@
         const urlget = (`{{ url('/course-last-lesson/${idlesson}') }}`);
         $.get(urlget, function(data) {          
         });
-      }, 120000); // 120000 is 2 seconds
+      }, 60); // 120000 - 2 minute  60000 1 minute
 
       // document.querySelector('#lesson-iframe').on("mouseover", function() {        
       //   console.log('sdohasdiokj');

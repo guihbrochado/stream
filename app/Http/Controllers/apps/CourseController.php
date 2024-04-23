@@ -14,9 +14,11 @@ use App\Models\UserLessonsOpeneds;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class CourseController extends Controller {
+class CourseController extends Controller
+{
 
-    public function detail($id) {
+    public function detail($id)
+    {
         $data = Courses::find($id);
 
         $modules = DB::Select("
@@ -61,7 +63,8 @@ class CourseController extends Controller {
         ]);
     }
 
-    public function firstLessonRedirect($id) {
+    public function firstLessonRedirect($id)
+    {
         $firstLesson = DB::Select("
         select distinct cl.id 
         from courseslessons cl
@@ -71,7 +74,8 @@ class CourseController extends Controller {
         return redirect('/course-lesson/' . $firstLesson[0]->id);
     }
 
-    public function lesson($id) {
+    public function lesson($id)
+    {
         $iduser = Auth::user()->id;
 
         $data = CoursesLessons::find($id);
@@ -85,7 +89,7 @@ class CourseController extends Controller {
         limit 10;");
 
         $searchIdCourse = DB::Select(
-                        "        
+            "        
         select distinct cm.id_course
         from courseslessons cl
         inner join coursesmodules cm on cl.id_module = cl.id
@@ -102,8 +106,8 @@ class CourseController extends Controller {
         }
 
         $lessonrating = LessonRating::where('id_user', '=', $iduser)
-                ->where('id_lesson', '=', $id)
-                ->first();
+            ->where('id_lesson', '=', $id)
+            ->first();
         if ($lessonrating) {
             $rate = $lessonrating->rate;
         } else {
@@ -121,67 +125,66 @@ class CourseController extends Controller {
         // echo $countUserLessonsOpeneds;
         if ($countUserLessonsOpeneds > 6) {
             $checkAlreadyInserted = DB::Select("        
-                select * from userlessonsopeneds where id_user = $idUser order by id_order asc      
+                select * from userlessonsopeneds where id_user = $idUser and id_lesson = $idlesson       
             ");
 
-            for ($i = 1; $i < count($checkAlreadyInserted); $i++) {
-                //     $checkAlreadyInserted = DB::update(" update userlessonsopeneds set id_order = id_order + 1 
-                //         where id_user = $idUser and id_order >= ?        
-                //     ");
-                $a = $i - 1;
-                $oneMore = $i + 1;
-                // echo $a;
-                $checkAlreadyInsertedId = $checkAlreadyInserted[$a]->id;
-                echo $i;
-                echo "<br>";
-                if ($i === 6) {
-                    DB::update("update userlessonsopeneds set id_order = 1, id_lesson = $idlesson where id = $checkAlreadyInsertedId");
-                    echo "if update userlessonsopeneds set id_order = 1, id_lesson = $idlesson where id = $checkAlreadyInsertedId";
-                    echo "<br>";
-                } else {
-                    DB::update("update userlessonsopeneds set id_order = $oneMore where id = $checkAlreadyInsertedId");
-                    echo "else update userlessonsopeneds set id_order = $oneMore where id = $checkAlreadyInsertedId";
-                    echo "<br>";
+            if (!$checkAlreadyInserted) {
+                $checkUserLessonsInserted = DB::Select("        
+                select * from userlessonsopeneds where id_user = $idUser order by id_order asc");
+
+                for ($i = 1; $i < count($checkUserLessonsInserted); $i++) {
+                    $a = $i - 1;
+                    $oneMore = $i + 1;
+                    $checkUserLessonsInsertedId = $checkUserLessonsInserted[$a]->id;
+
+                    if ($i === 6) {
+                        DB::update("update userlessonsopeneds set id_order = 1, id_lesson = $idlesson where id = $checkUserLessonsInsertedId");
+                        // echo "if update userlessonsopeneds set id_order = 1, id_lesson = $idlesson where id = $checkUserLessonsInsertedId";
+                        // echo "<br>";
+                    } else {
+                        DB::update("update userlessonsopeneds set id_order = $oneMore where id = $checkUserLessonsInsertedId");
+                        // echo "else update userlessonsopeneds set id_order = $oneMore where id = $checkUserLessonsInsertedId";
+                        // echo "<br>";
+                    }
                 }
+                // dump($checkUserLessonsInserted);
             }
-            dump($checkAlreadyInserted);
+            return;
         }
-        // $userOrder = UserLessonsOpeneds::where('id_user', '=', $idUser)->get();
 
-        // $idOrder = null;
-        // if (!$userOrder) {
-        //     $idOrder = 1;
-        //     echo 'if';
-        // } else {
+        $userOrder = UserLessonsOpeneds::where('id_user', '=', $idUser)->get();
 
-        //     $lastLesson = DB::Select("        
-        //         select * from userlessonsopeneds where id_user = $idUser 
-        //         order by id_order desc
-        //         limit 1");
-        //     if ($lastLesson) {
-        //         $idOrder = $lastLesson[0]->id_order + 1;
-        //     } else {
-        //         $idOrder = 1;
-        //     }
-        // }
+        $idOrder = null;
+        if (!$userOrder) {
+            $idOrder = 1;
+            echo 'if';
+        } else {
+            $lastLesson = DB::Select("        
+                select * from userlessonsopeneds where id_user = $idUser 
+                order by id_order desc
+                limit 1");
+            if ($lastLesson) {
+                $idOrder = $lastLesson[0]->id_order + 1;
+            } else {
+                $idOrder = 1;
+            }
+        }
 
+        $checkAlreadyInserted = DB::Select("        
+        select * from userlessonsopeneds where id_user = $idUser and id_lesson = $idlesson       
+        ");
 
-
-        // $checkAlreadyInserted = DB::Select("        
-        // select * from userlessonsopeneds where id_user = $idUser and id_lesson = $idlesson       
-        // ");
-
-        // if (!$checkAlreadyInserted) {
-        //     $courses = UserLessonsOpeneds::create(
-        //         [
-        //             'id_user' => $idUser,
-        //             'id_lesson' => $idlesson,
-        //             'id_order' => $idOrder,
-        //             'created_at' => now(),
-        //             'updated_at' => now(),
-        //         ]
-        //     );
-        // }
+        if (!$checkAlreadyInserted) {
+            $courses = UserLessonsOpeneds::create(
+                [
+                    'id_user' => $idUser,
+                    'id_lesson' => $idlesson,
+                    'id_order' => $idOrder,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
+        }
     }
 
 
@@ -197,12 +200,14 @@ class CourseController extends Controller {
         return view('apps.course.courseslessonsajax', ['data' => $data]);
     }
 
-    function lessonrating($idlesson, $rate) {
+    function lessonrating($idlesson, $rate)
+    {
 
         return view('apps.course.lessonrating')->with(['idlesson' => $idlesson, 'rate' => $rate]);
     }
 
-    public function lessoncommenttore($idlesson, $rate) {
+    public function lessoncommenttore($idlesson, $rate)
+    {
         $iduser = Auth::user()->id;
 
         $lessonRating = LessonRating::where('id_lesson', $idlesson)->where('id_user', $iduser)->get();
@@ -212,11 +217,11 @@ class CourseController extends Controller {
             echo 'if';
             try {
                 $resCreate = LessonRating::create(
-                                [
-                                    'id_lesson' => $idlesson,
-                                    'id_user' => $iduser,
-                                    'rate' => $rate,
-                                ]
+                    [
+                        'id_lesson' => $idlesson,
+                        'id_user' => $iduser,
+                        'rate' => $rate,
+                    ]
                 );
             } catch (Exception $e) {
                 $errorInfo = $e->getMessage();
@@ -235,7 +240,8 @@ class CourseController extends Controller {
         }
     }
 
-    function lessoncomment($idlesson) {
+    function lessoncomment($idlesson)
+    {
         $data = DB::select("select u.name as username, lc.comment as comment from lessoncomments lc
         inner join users u on lc.id_user = u.id
         where lc.id_lesson = $idlesson        
@@ -244,7 +250,8 @@ class CourseController extends Controller {
         return view('apps.course.lessoncomment')->with(['data' => $data]);
     }
 
-    public function lessoncommentstore($idlesson, $comment) {
+    public function lessoncommentstore($idlesson, $comment)
+    {
         $iduser = Auth::user()->id;
 
         echo $idlesson;
@@ -255,11 +262,11 @@ class CourseController extends Controller {
             echo 'if';
             try {
                 $resCreate = LessonComment::create(
-                                [
-                                    'id_lesson' => $idlesson,
-                                    'id_user' => $iduser,
-                                    'comment' => $comment,
-                                ]
+                    [
+                        'id_lesson' => $idlesson,
+                        'id_user' => $iduser,
+                        'comment' => $comment,
+                    ]
                 );
             } catch (Exception $e) {
                 $errorInfo = $e->getMessage();
@@ -278,7 +285,8 @@ class CourseController extends Controller {
         }
     }
 
-    public function courseevaluationstore($idcourse, Request $request) {
+    public function courseevaluationstore($idcourse, Request $request)
+    {
         $iduser = Auth::user()->id;
         $data = $request->all();
 
@@ -289,12 +297,12 @@ class CourseController extends Controller {
         if ($courseEvaluation->isEmpty()) {
             try {
                 $resCreate = CourseEvaluation::create(
-                                [
-                                    'idcourse' => $idcourse,
-                                    'iduser' => $iduser,
-                                    'comment' => $textevaluation,
-                                    'rate' => $rate,
-                                ]
+                    [
+                        'idcourse' => $idcourse,
+                        'iduser' => $iduser,
+                        'comment' => $textevaluation,
+                        'rate' => $rate,
+                    ]
                 );
             } catch (Exception $e) {
                 $errorInfo = $e->getMessage();

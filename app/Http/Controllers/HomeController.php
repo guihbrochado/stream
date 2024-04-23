@@ -45,18 +45,8 @@ class HomeController extends Controller
 
         $lastLessons = DB::Select("Select ulo.*, cl.id as idlesson, cl.link as link, cl.lesson from userlessonsopeneds as ulo
         inner join courseslessons cl on ulo.id_lesson = cl.id
-        where ulo.id_user = $iduser and ulo.id_order < 7 order by ulo.id_order desc");
-        // dd($lastLessons);
-
-        ////////// faltando criar o ajax pra salvar e criar aas imagens do video no carousel
-        ////////// faltando criar o ajax pra salvar e criar aas imagens do video no carousel
-        ////////// faltando criar o ajax pra salvar e criar aas imagens do video no carousel
-        ////////// faltando criar o ajax pra salvar e criar aas imagens do video no carousel
-        ////////// faltando criar o ajax pra salvar e criar aas imagens do video no carousel
-        ////////// faltando criar o ajax pra salvar e criar aas imagens do video no carousel
-        ////////// faltando criar o ajax pra salvar e criar aas imagens do video no carousel
-        ////////// faltando criar o ajax pra salvar e criar aas imagens do video no carousel
-
+        where ulo.id_user = $iduser and ulo.id_order < 7 order by ulo.id_order asc");
+      
         return view('apps.course.index', ['data' => $data, 'lastLessons' => $lastLessons, 'coursesTop10' => $coursesTop10, 'rooms' => $rooms,'dateOrder' => $dateOrder]);
     }
 
