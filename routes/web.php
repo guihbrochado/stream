@@ -116,6 +116,7 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::post('/courseevaluation-store/{idcourse}', [CourseController::class, 'courseevaluationstore'])->name('courseevaluation.store');
         Route::get('/course-detail-ajax/{idcourse}/{idmodules}', [CourseController::class, 'ajaxCoursesLessons'])->name('ajaxCoursesLessons');
         Route::get('/course-lesson/{id}', [CourseController::class, 'lesson'])->name('course.lesson');
+        Route::get('/course-last-lesson/{id}', [CourseController::class, 'lastLesson'])->name('course.lastLesson');
 
         Route::get('/lesson-rating/{idlesson}/{rate}', [CourseController::class, 'lessonrating'])->name('lessonrating');
         Route::get('/lesson-rating/ratingstore/{idlesson}/{rate}', [CourseController::class, 'lessonratingstore'])->name('lesson.ratingstore');

@@ -10,6 +10,7 @@ use App\Models\CoursesLessons;
 use App\Models\CoursesModules;
 use App\Models\LessonComment;
 use App\Models\LessonRating;
+use App\Models\UserLessonsOpeneds;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,9 +52,11 @@ class CourseController extends Controller
         from coursesevaluation ce
         inner join users u on ce.iduser = u.id
         where ce.idcourse = $data->id");
-        
-        return view('apps.course.detail')->with(['data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'allCourses' => $allCourses,
-        'courseEvaluation' => $courseEvaluation, 'firstLesson' => $firstLesson]);
+
+        return view('apps.course.detail')->with([
+            'data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'allCourses' => $allCourses,
+            'courseEvaluation' => $courseEvaluation, 'firstLesson' => $firstLesson
+        ]);
     }
 
     public function firstLessonRedirect($id)
@@ -109,6 +112,78 @@ class CourseController extends Controller
 
         return view('apps.course.lesson')->with(['data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'rate' => $rate]);
     }
+
+    function lastLesson($idlesson)
+    {
+        $idUser = Auth::user()->id;
+
+        $countUserLessonsOpeneds = UserLessonsOpeneds::where('id_user', '=', $idUser)->count();
+        // echo $countUserLessonsOpeneds;
+        if ($countUserLessonsOpeneds > 6) {
+            $checkAlreadyInserted = DB::Select("        
+                select * from userlessonsopeneds where id_user = $idUser order by id_order asc      
+            ");
+
+            for ($i = 1; $i < count($checkAlreadyInserted); $i++) {
+                //     $checkAlreadyInserted = DB::update(" update userlessonsopeneds set id_order = id_order + 1 
+                //         where id_user = $idUser and id_order >= ?        
+                //     ");
+                $a = $i - 1;
+                $oneMore = $i + 1;
+                // echo $a;
+                $checkAlreadyInsertedId = $checkAlreadyInserted[$a]->id;
+                echo $i;
+                echo "<br>";
+                if ($i === 6) {
+                    DB::update("update userlessonsopeneds set id_order = 1, id_lesson = $idlesson where id = $checkAlreadyInsertedId");
+                    echo "if update userlessonsopeneds set id_order = 1, id_lesson = $idlesson where id = $checkAlreadyInsertedId";
+                    echo "<br>";
+                } else {
+                    DB::update("update userlessonsopeneds set id_order = $oneMore where id = $checkAlreadyInsertedId");
+                    echo "else update userlessonsopeneds set id_order = $oneMore where id = $checkAlreadyInsertedId";
+                    echo "<br>";
+                }
+            }
+            dump($checkAlreadyInserted);
+        }
+        // $userOrder = UserLessonsOpeneds::where('id_user', '=', $idUser)->get();
+
+        // $idOrder = null;
+        // if (!$userOrder) {
+        //     $idOrder = 1;
+        //     echo 'if';
+        // } else {
+
+        //     $lastLesson = DB::Select("        
+        //         select * from userlessonsopeneds where id_user = $idUser 
+        //         order by id_order desc
+        //         limit 1");
+        //     if ($lastLesson) {
+        //         $idOrder = $lastLesson[0]->id_order + 1;
+        //     } else {
+        //         $idOrder = 1;
+        //     }
+        // }
+
+
+
+        // $checkAlreadyInserted = DB::Select("        
+        // select * from userlessonsopeneds where id_user = $idUser and id_lesson = $idlesson       
+        // ");
+
+        // if (!$checkAlreadyInserted) {
+        //     $courses = UserLessonsOpeneds::create(
+        //         [
+        //             'id_user' => $idUser,
+        //             'id_lesson' => $idlesson,
+        //             'id_order' => $idOrder,
+        //             'created_at' => now(),
+        //             'updated_at' => now(),
+        //         ]
+        //     );
+        // }
+    }
+
 
     function ajaxCoursesLessons($idcourse, $idmodule)
     {
@@ -210,7 +285,7 @@ class CourseController extends Controller
     {
         $iduser = Auth::user()->id;
         $data = $request->all();
-        
+
         $rate = $data['rate'];
         $textevaluation = $data['textevaluation'];
         $courseEvaluation = CourseEvaluation::where('idcourse', $idcourse)->where('iduser', $iduser)->get();
@@ -231,7 +306,6 @@ class CourseController extends Controller
             }
             $successMessage = "Registro salvo com sucesso.";
             return redirect()->route('course.detail', $idcourse);
-            
         } else {
 
             $rate = $data['rate'];
@@ -239,8 +313,7 @@ class CourseController extends Controller
 
             try {
                 CourseEvaluation::where('idcourse', $idcourse)->where('iduser', $iduser)->update(['comment' => $textevaluation, 'rate' => $rate]);
-            return redirect()->route('course.detail', $idcourse);
-
+                return redirect()->route('course.detail', $idcourse);
             } catch (Exception $e) {
                 $errorInfo = $e->getMessage();
                 var_dump($errorInfo);

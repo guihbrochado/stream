@@ -66,9 +66,10 @@
       <div class="container-fluid">
         <div class="row mt-3">
           <div class="col-md-9">
-            <div class="embed-responsive embed-responsive-16by9">
-              <iframe class="embed-responsive-item rounded-3" src="https://www.youtube.com/embed/{{$data->link}}" allowfullscreen></iframe>
+            <div class="embed-responsive embed-responsive-16by9" id="lesson-iframe">
+              <iframe class="embed-responsive-item rounded-3 " id="youtubeIframe" src="https://www.youtube.com/embed/{{$data->link}}" allowfullscreen></iframe>
             </div>
+
           </div>
           <div class="col-lg-3">
 
@@ -234,7 +235,7 @@
                 <div id="review-01" class="tab-pane animated fadeInUp" role="tabpanel">
                   <div class="streamit-reviews">
                     <div id="divcomments" class="comments-area validate-form">
-                      
+
                     </div>
                     <div class="review_form">
                       <div class="comment-respond">
@@ -265,17 +266,12 @@
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
-
-
 
     <section class="recommended-block">
       <div class="container-fluid">
@@ -474,16 +470,13 @@
   <script src="./assets/js/core/libs.min.js"></script>
   <!-- Plugin Scripts -->
 
-
   <!-- SwiperSlider Script -->
   <script src="./assets/vendor/swiperSlider/swiper.min.js"></script>
-
   <script src="./assets/vendor/video/video.min.js"></script>
   <script src="./assets/vendor/videojs-youtube-master/youtube.js"></script>
 
   <!-- Select2 Script -->
   <script src="./assets/js/plugins/select2.js" defer></script>
-
 
   <!-- Lodash Utility -->
   <script src="./assets/vendor/lodash/lodash.min.js"></script>
@@ -510,18 +503,18 @@
 
       getComment()
     });
-    
+
     $("#submitcomment").click(function(e) {
       const comment = $("#inputcomment").val();
-      
+
       const idlesson = Number('{{$data->id}}');
       const urlstore = (`{{ url('/lesson-comment/commentstore/${idlesson}/${comment}') }}`);
       $.get(urlstore, function(data) {});
-      
+
       getComment()
     });
 
-    function getComment(){
+    function getComment() {
       const idlesson = Number('{{$data->id}}');
 
       const urlget = (`{{ url('/lesson-comment/${idlesson}') }}`);
@@ -529,9 +522,27 @@
         $('#divcomments').html(data);
       });
     }
+  </script>
 
+  <script>
+    $(document).ready(function() {
+      const idlesson = Number('{{$data->id}}');
+
+      setTimeout(function() {
+        console.log('Await 2m');
+        const urlget = (`{{ url('/course-last-lesson/${idlesson}') }}`);
+        $.get(urlget, function(data) {          
+        });
+      }, 120000); // 120000 is 2 seconds
+
+      // document.querySelector('#lesson-iframe').on("mouseover", function() {        
+      //   console.log('sdohasdiokj');
+      //   // document.querySelector('.ytp-cued-thumbnail-overlay-image').click();
+      // })
+    });
   </script>
 
 </body>
+
 
 </html>

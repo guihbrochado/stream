@@ -64,5 +64,15 @@ CREATE TABLE blogcomments (
     comment TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-
 )
+
+CREATE TABLE userlessonsopeneds (
+    id_order int NULL,
+    id_user int NOT NULL,
+    id_lesson int NOT NULL,
+    current_time time NULL,
+    total_time time NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+
