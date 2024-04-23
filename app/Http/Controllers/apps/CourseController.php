@@ -14,11 +14,9 @@ use App\Models\UserLessonsOpeneds;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+class CourseController extends Controller {
 
-class CourseController extends Controller
-{
-    public function detail($id)
-    {
+    public function detail($id) {
         $data = Courses::find($id);
 
         $modules = DB::Select("
@@ -43,24 +41,32 @@ class CourseController extends Controller
         inner join coursesmodules cm on cl.id_module = cm.id
         where cm.id_course =  $data->id");
 
-        $firstLesson = $firstLesson[0]->id;
+        $firstLessonId = null;
+
+        if (!empty($firstLessonQuery)) {
+            $firstLessonId = $firstLessonQuery[0]->id;
+        }
 
         $allCourses = Courses::get();
 
-        $courseEvaluation =  DB::Select("
+        $courseEvaluation = DB::Select("
         select ce.rate, ce.comment, u.name
         from coursesevaluation ce
         inner join users u on ce.iduser = u.id
         where ce.idcourse = $data->id");
 
+<<<<<<< HEAD
         return view('apps.course.detail')->with([
             'data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'allCourses' => $allCourses,
             'courseEvaluation' => $courseEvaluation, 'firstLesson' => $firstLesson
         ]);
+=======
+        return view('apps.course.detail')->with(['data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'allCourses' => $allCourses,
+                    'courseEvaluation' => $courseEvaluation, 'firstLesson' => $firstLesson]);
+>>>>>>> 685c0c9586b64527cd83e3e5d0c15fb6781cbfd6
     }
 
-    public function firstLessonRedirect($id)
-    {
+    public function firstLessonRedirect($id) {
         $firstLesson = DB::Select("
         select distinct cl.id 
         from courseslessons cl
@@ -70,8 +76,7 @@ class CourseController extends Controller
         return redirect('/course-lesson/' . $firstLesson[0]->id);
     }
 
-    public function lesson($id)
-    {
+    public function lesson($id) {
         $iduser = Auth::user()->id;
 
         $data = CoursesLessons::find($id);
@@ -85,7 +90,7 @@ class CourseController extends Controller
         limit 10;");
 
         $searchIdCourse = DB::Select(
-            "        
+                        "        
         select distinct cm.id_course
         from courseslessons cl
         inner join coursesmodules cm on cl.id_module = cl.id
@@ -102,8 +107,8 @@ class CourseController extends Controller
         }
 
         $lessonrating = LessonRating::where('id_user', '=', $iduser)
-            ->where('id_lesson', '=', $id)
-            ->first();
+                ->where('id_lesson', '=', $id)
+                ->first();
         if ($lessonrating) {
             $rate = $lessonrating->rate;
         } else {
@@ -197,14 +202,12 @@ class CourseController extends Controller
         return view('apps.course.courseslessonsajax', ['data' => $data]);
     }
 
-    function lessonrating($idlesson, $rate)
-    {
+    function lessonrating($idlesson, $rate) {
 
         return view('apps.course.lessonrating')->with(['idlesson' => $idlesson, 'rate' => $rate]);
     }
 
-    public function lessoncommenttore($idlesson, $rate)
-    {
+    public function lessoncommenttore($idlesson, $rate) {
         $iduser = Auth::user()->id;
 
         $lessonRating = LessonRating::where('id_lesson', $idlesson)->where('id_user', $iduser)->get();
@@ -214,11 +217,11 @@ class CourseController extends Controller
             echo 'if';
             try {
                 $resCreate = LessonRating::create(
-                    [
-                        'id_lesson' => $idlesson,
-                        'id_user' => $iduser,
-                        'rate' => $rate,
-                    ]
+                                [
+                                    'id_lesson' => $idlesson,
+                                    'id_user' => $iduser,
+                                    'rate' => $rate,
+                                ]
                 );
             } catch (Exception $e) {
                 $errorInfo = $e->getMessage();
@@ -237,8 +240,7 @@ class CourseController extends Controller
         }
     }
 
-    function lessoncomment($idlesson)
-    {
+    function lessoncomment($idlesson) {
         $data = DB::select("select u.name as username, lc.comment as comment from lessoncomments lc
         inner join users u on lc.id_user = u.id
         where lc.id_lesson = $idlesson        
@@ -247,8 +249,7 @@ class CourseController extends Controller
         return view('apps.course.lessoncomment')->with(['data' => $data]);
     }
 
-    public function lessoncommentstore($idlesson, $comment)
-    {
+    public function lessoncommentstore($idlesson, $comment) {
         $iduser = Auth::user()->id;
 
         echo $idlesson;
@@ -259,11 +260,11 @@ class CourseController extends Controller
             echo 'if';
             try {
                 $resCreate = LessonComment::create(
-                    [
-                        'id_lesson' => $idlesson,
-                        'id_user' => $iduser,
-                        'comment' => $comment,
-                    ]
+                                [
+                                    'id_lesson' => $idlesson,
+                                    'id_user' => $iduser,
+                                    'comment' => $comment,
+                                ]
                 );
             } catch (Exception $e) {
                 $errorInfo = $e->getMessage();
@@ -281,8 +282,8 @@ class CourseController extends Controller
             $successMessage = "Registro salvo com sucesso.";
         }
     }
-    public function courseevaluationstore($idcourse, Request $request)
-    {
+
+    public function courseevaluationstore($idcourse, Request $request) {
         $iduser = Auth::user()->id;
         $data = $request->all();
 
@@ -293,12 +294,12 @@ class CourseController extends Controller
         if ($courseEvaluation->isEmpty()) {
             try {
                 $resCreate = CourseEvaluation::create(
-                    [
-                        'idcourse' => $idcourse,
-                        'iduser' => $iduser,
-                        'comment' => $textevaluation,
-                        'rate' => $rate,
-                    ]
+                                [
+                                    'idcourse' => $idcourse,
+                                    'iduser' => $iduser,
+                                    'comment' => $textevaluation,
+                                    'rate' => $rate,
+                                ]
                 );
             } catch (Exception $e) {
                 $errorInfo = $e->getMessage();

@@ -1,144 +1,134 @@
-document.addEventListener('DOMContentLoaded', function () {
-    console.log("DOM fully loaded and parsed");
-
-    // DOM elements
+// Inicializa o WebRTC dependendo se o usuário é o transmissor ou o receptor
+window.initWebRTC = function (isTransmitter) {
+    // Elementos do DOM para controle da transmissão e exibição de vídeos
     const startButton = document.getElementById('startButton');
     const shareScreenButton = document.getElementById('shareScreenButton');
     const viewLiveButton = document.getElementById('viewLiveButton');
     const localVideo = document.getElementById('localVideo');
     const remoteVideo = document.getElementById('remoteVideo');
-    const videoCover = document.getElementById('videoCover'); // Define videoCover here
+    const videoCover = document.getElementById('videoCover');
 
-    // Role determination
-    let isTransmitter = window.isTransmitter;
+    // Configuração de servidores ICE para ajudar na conexão peer-to-peer
+    const servers = {
+        iceServers: [
+            {
+                urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302']
+            }
+        ]
+    };
 
-    // Signaling server connection
-    const socket = new WebSocket('ws://localhost:6001/app/0?protocol=7&client=js&version=7.0&flash=false');
+    // Cria uma nova conexão peer com a configuração de servidores ICE
+    const peerConnection = new RTCPeerConnection(servers);
 
-    // WebRTC setup
-    let peerConnection = new RTCPeerConnection({
-        iceServers: [{urls: 'stun:stun.l.google.com:19302'}]
-    });
-
-    // Handling ICE candidates
+    // Quando um novo candidato ICE é encontrado, envia para o servidor de sinalização
     peerConnection.onicecandidate = event => {
         if (event.candidate) {
-            socket.send(JSON.stringify({type: 'new-ice-candidate', candidate: event.candidate}));
+            socket.send(JSON.stringify({
+                event: "ice-candidate",
+                data: {
+                    type: 'new-ice-candidate',
+                    candidate: event.candidate
+                }
+            }));
         }
     };
 
-    // Setting remote stream
+    // Quando um stream remoto é adicionado, define o src do vídeo remoto para o stream
     peerConnection.ontrack = event => {
-        console.log('Track event:', event);
-        const [remoteStream] = event.streams;
-        console.log('Remote stream:', remoteStream);
-        remoteVideo.srcObject = remoteStream;
-        remoteVideo.onloadedmetadata = () => {
-            console.log('Remote video is now playing');
-            remoteVideo.play().catch(console.error);
-        };
+        remoteVideo.srcObject = event.streams[0];
     };
 
-    // Handle messages from signaling server
-    socket.onmessage = async function (event) {
-        const message = JSON.parse(event.data);
-
-        switch (message.type) {
-            case 'offer':
-                if (!isTransmitter) {
-                    await peerConnection.setRemoteDescription(new RTCSessionDescription(message.offer));
-                    const answer = await peerConnection.createAnswer();
-                    await peerConnection.setLocalDescription(answer);
-                    socket.send(JSON.stringify({type: 'answer', answer}));
-                }
-                break;
-            case 'answer':
-                if (isTransmitter) {
-                    await peerConnection.setRemoteDescription(new RTCSessionDescription(message.answer));
-                }
-                break;
-            case 'new-ice-candidate':
-                await peerConnection.addIceCandidate(new RTCIceCandidate(message.candidate));
-                break;
+    // Inicia a transmissão de vídeo e áudio do usuário
+    async function startTransmitting() {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        localVideo.srcObject = stream;
+        for (const track of stream.getTracks()) {
+            peerConnection.addTrack(track, stream);
         }
-    };
 
-    //if (!isTransmitter) {
-    // Hide transmitter-specific buttons
-    //  console.log('não sou trasmissor')
-    //  startButton.style.display = 'none';
-    //  shareScreenButton.style.display = 'none';
-    //  
-    //  console.log('cheguei aqui');
+        // Cria uma oferta e a envia para o servidor de sinalização
+        const offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
+        socket.send(JSON.stringify({
+            event: "offer", // Substitua pelo valor correto esperado pelo seu servidor.
+            data: {
+                type: 'offer',
+                offer: offer
+            }
+        }));
+    }
 
-    // Make the 'Assistir Live' button visible
-    //  viewLiveButton.style.display = 'block';
-    //  viewLiveButton.addEventListener( 'click', function() {
-    //      console.log('clicou');
-    // Hide the video cover and show the remote video when 'Assistir Live' is clicked
-    //      videoCover.style.display = 'none'; // Correctly references videoCover now
-    //      remoteVideo.style.display = 'block';
+    // Inicia o compartilhamento de tela e substitui o track de vídeo da conexão
+    async function startScreenShare() {
+        const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        localVideo.srcObject = stream;
+        const videoTrack = stream.getTracks().find(track => track.kind === 'video');
+        const sender = peerConnection.getSenders().find(s => s.track.kind === 'video');
+        if (sender) {
+            sender.replaceTrack(videoTrack);
+        }
+    }
 
-
-
-    //      remoteVideo.play().then(() => {
-    //          viewLiveButton.style.display = 'none';
-    //          console.log('Live streaming has started.');
-    //      }).catch(error => {
-    //          console.error('Error starting live stream:', error);
-    //      });
-    //  });
-    //}
-
-    if (!isTransmitter) {
-        viewLiveButton.addEventListener('click', function () {
-            console.log('Assistir Live button clicked');
+    // Define as ações dos botões dependendo se é transmissor ou receptor
+    if (isTransmitter) {
+        startButton.onclick = startTransmitting;
+        shareScreenButton.onclick = startScreenShare;
+        viewLiveButton.style.display = 'none';
+        console.log('entrei no admin');
+    } else {
+        document.getElementById('viewLiveButton').addEventListener('click', function () {
+            console.log('Espectador solicitando oferta');
             videoCover.style.display = 'none';
             remoteVideo.style.display = 'block';
 
-            remoteVideo.play().then(() => {
-                viewLiveButton.style.display = 'none';
-                console.log('Live streaming has started.');
-            }).catch(error => {
-                console.error('Error starting live stream:', error);
-                // Adicione um tratamento aqui para lidar com bloqueio de autoplay, por exemplo, pedindo ao usuário para clicar novamente.
-            });
+            socket.send(JSON.stringify({ event: "request-offer" }));
         });
     }
 
-    // Transmitter's actions
-    if (isTransmitter) {
-        // Bind start and share screen buttons
-        console.log('trasmissor');
-        startButton.onclick = startTransmitting;
-        shareScreenButton.onclick = startScreenShare;
+    // Conexão WebSocket com o servidor de sinalização
+    const socket = new WebSocket('ws://localhost:6001/app/0?protocol=7&client=js&version=7.0&flash=false');
+
+    socket.onerror = function (event) {
+        console.error('WebSocket error:', event);
+    };
+
+    socket.onclose = function (event) {
+        console.log('WebSocket connection closed:', event);
+    };
+
+    // Mensagens do servidor de sinalização
+    socket.onmessage = async event => {
+        const message = JSON.parse(event.data);
+
+        if (!isTransmitter) {
+            if (message.event === 'offer') {
+                console.log('Oferta Recebida');
+                await peerConnection.setRemoteDescription(new RTCSessionDescription(message.data.offer));
+                const answer = await peerConnection.createAnswer();
+                await peerConnection.setLocalDescription(answer);
+                socket.send(JSON.stringify({
+                    event: "answer",
+                    data: {
+                        type: 'answer',
+                        answer: answer
+                    }
+                }));
+            } else if (message.event === 'ice-candidate') {
+                await peerConnection.addIceCandidate(new RTCIceCandidate(message.candidate));
+            } else {
+                console.log('Unknown message type or message is not for this client:', message.type);
+            }
+        }
+    };
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    console.log("DOM fully loaded and parsed");
+    if (typeof window.initWebRTC === 'function' && !window.webRTCInitialized) {
+        window.initWebRTC(window.isTransmitter);
+        window.webRTCInitialized = true; // Marcar WebRTC como inicializado
     } else {
-        // Hide transmitter buttons for viewers
-        startButton.style.display = 'none';
-        shareScreenButton.style.display = 'none';
-
-        // Setup view live button for viewers
-        viewLiveButton.style.display = 'block';
-        viewLiveButton.onclick = function () {
-            remoteVideo.play().then(() => viewLiveButton.style.display = 'none');
-        };
-    }
-
-    console.log(isTransmitter);
-
-
-
-    async function startTransmitting() {
-        const stream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
-        localVideo.srcObject = stream;
-        stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
-    }
-
-    async function startScreenShare() {
-        const stream = await navigator.mediaDevices.getDisplayMedia({video: true});
-        localVideo.srcObject = stream;
-        const sender = peerConnection.getSenders().find(s => s.track.kind === 'video');
-        if (sender)
-            sender.replaceTrack(stream.getTracks()[0]);
+        console.error('initWebRTC is not a function, check webrtc.js file');
     }
 });

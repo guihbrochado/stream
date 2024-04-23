@@ -17,26 +17,9 @@ use DateTime;
 
 class StoreController extends Controller {
 
-    public function index(Request $request) {
+    public function index() {
 
-        $data = DB::table('store_traders as st')
-                ->join('store_companies as sc', 'sc.id', '=', 'st.store_company_id')
-                ->select('st.*', 'sc.company', 'sc.company_logo_path')
-                ->orderBy('st.trader', 'asc')
-                ->orderBy('sc.company', 'asc')
-                ->get();
-
-        $mediaOperacoes = $this->calcMediaOperacoes($request);
-
-        foreach ($data as $item) {
-            $item->mediaOperacoes = $mediaOperacoes;
-        }
-
-        $message = session('message');
-        return view('apps.store.index')->with([
-                    'data' => $data,
-                    'message' => $message,
-        ]);
+        return view('apps.store.index');
     }
 
     public function checkout(Request $request) {
