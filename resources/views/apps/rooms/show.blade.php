@@ -143,7 +143,7 @@
                                             @endforeach
                                         </ul>
                                         @endif
-                                        <div class="d-flex flex-wrap align-items-center text-white text-detail flex-wrap mb-4">
+                                        <div class="d-flex align-items-center text-white text-detail flex-wrap mb-4">
                                             <span class="badge bg-secondary">Criada</span>
                                             <span class="ms-3 font-Weight-500 genres-info">{{ date("d/m/Y", strtotime($room->created_at)) }}</span>
                                         </div>
@@ -449,9 +449,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 </script>
 <script type="text/javascript">
-    window.isTransmitter =  {!! json_encode(auth()->check() && auth()->user()->can('admin')) !!};
+    window.isTransmitter =  {{ json_encode(auth()->check() && auth()->user()->can('admin')) }};
     console.log('sou admin?', window.isTransmitter);
-    console.log('aqui')
+    console.log('aqui');
 </script>
 
 <script>

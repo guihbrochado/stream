@@ -19,29 +19,32 @@ class CourseController extends Controller {
         $data = Courses::find($id);
 
         $modules = DB::Select("
-        SELECT cm.module, cm.id
-        FROM coursesmodules cm
-        inner join courses c on cm.id_course = c.id
-        where cm.id_course = $data->id
-        order by cm.modulenumber ASC
-        ");
+    SELECT cm.module, cm.id
+    FROM coursesmodules cm
+    INNER JOIN courses c ON cm.id_course = c.id
+    WHERE cm.id_course = $data->id
+    ORDER BY cm.modulenumber ASC
+    ");
 
         $coursesTop10 = DB::Select("
-        SELECT c.id, c.course, c.cover, SUM(ce.rate) AS total_rate
-        FROM coursesevaluation ce
-        inner join courses c on ce.idcourse = c.id
-        GROUP BY (ce.idcourse)
-        order by total_rate DESC
-        limit 10;");
+    SELECT c.id, c.course, c.cover, SUM(ce.rate) AS total_rate
+    FROM coursesevaluation ce
+    INNER JOIN courses c ON ce.idcourse = c.id
+    GROUP BY (ce.idcourse)
+    ORDER BY total_rate DESC
+    LIMIT 10
+    ");
 
-        $firstLesson = DB::Select("
-        select distinct cl.id 
-        from courseslessons cl
-        inner join coursesmodules cm on cl.id_module = cm.id
-        where cm.id_course =  $data->id");
+        $firstLessonQuery = DB::Select("
+    SELECT DISTINCT cl.id 
+    FROM courseslessons cl
+    INNER JOIN coursesmodules cm ON cl.id_module = cm.id
+    WHERE cm.id_course = $data->id
+    ORDER BY cl.id ASC
+    LIMIT 1
+    ");
 
         $firstLessonId = null;
-
         if (!empty($firstLessonQuery)) {
             $firstLessonId = $firstLessonQuery[0]->id;
         }
@@ -49,13 +52,20 @@ class CourseController extends Controller {
         $allCourses = Courses::get();
 
         $courseEvaluation = DB::Select("
-        select ce.rate, ce.comment, u.name
-        from coursesevaluation ce
-        inner join users u on ce.iduser = u.id
-        where ce.idcourse = $data->id");
+    SELECT ce.rate, ce.comment, u.name
+    FROM coursesevaluation ce
+    INNER JOIN users u ON ce.iduser = u.id
+    WHERE ce.idcourse = $data->id
+    ");
 
-        return view('apps.course.detail')->with(['data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'allCourses' => $allCourses,
-                    'courseEvaluation' => $courseEvaluation, 'firstLesson' => $firstLesson]);
+        return view('apps.course.detail', [
+            'data' => $data,
+            'modules' => $modules,
+            'coursesTop10' => $coursesTop10,
+            'allCourses' => $allCourses,
+            'courseEvaluation' => $courseEvaluation,
+            'firstLesson' => $firstLessonId
+        ]);
     }
 
     public function firstLessonRedirect($id) {
