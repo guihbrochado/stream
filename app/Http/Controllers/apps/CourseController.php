@@ -10,6 +10,7 @@ use App\Models\CoursesLessons;
 use App\Models\CoursesModules;
 use App\Models\LessonComment;
 use App\Models\LessonRating;
+use App\Models\UserLessonsOpeneds;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,29 +20,29 @@ class CourseController extends Controller {
         $data = Courses::find($id);
 
         $modules = DB::Select("
-    SELECT cm.module, cm.id
-    FROM coursesmodules cm
-    INNER JOIN courses c ON cm.id_course = c.id
-    WHERE cm.id_course = $data->id
-    ORDER BY cm.modulenumber ASC
+        SELECT cm.module, cm.id
+        FROM coursesmodules cm
+        INNER JOIN courses c ON cm.id_course = c.id
+        WHERE cm.id_course = $data->id
+        ORDER BY cm.modulenumber ASC
     ");
 
         $coursesTop10 = DB::Select("
-    SELECT c.id, c.course, c.cover, SUM(ce.rate) AS total_rate
-    FROM coursesevaluation ce
-    INNER JOIN courses c ON ce.idcourse = c.id
-    GROUP BY (ce.idcourse)
-    ORDER BY total_rate DESC
-    LIMIT 10
+        SELECT c.id, c.course, c.cover, SUM(ce.rate) AS total_rate
+        FROM coursesevaluation ce
+        INNER JOIN courses c ON ce.idcourse = c.id
+        GROUP BY (ce.idcourse)
+        ORDER BY total_rate DESC
+        LIMIT 10
     ");
 
         $firstLessonQuery = DB::Select("
-    SELECT DISTINCT cl.id 
-    FROM courseslessons cl
-    INNER JOIN coursesmodules cm ON cl.id_module = cm.id
-    WHERE cm.id_course = $data->id
-    ORDER BY cl.id ASC
-    LIMIT 1
+        SELECT DISTINCT cl.id 
+        FROM courseslessons cl
+        INNER JOIN coursesmodules cm ON cl.id_module = cm.id
+        WHERE cm.id_course = $data->id
+        ORDER BY cl.id ASC
+        LIMIT 1
     ");
 
         $firstLessonId = null;
@@ -52,10 +53,10 @@ class CourseController extends Controller {
         $allCourses = Courses::get();
 
         $courseEvaluation = DB::Select("
-    SELECT ce.rate, ce.comment, u.name
-    FROM coursesevaluation ce
-    INNER JOIN users u ON ce.iduser = u.id
-    WHERE ce.idcourse = $data->id
+        SELECT ce.rate, ce.comment, u.name
+        FROM coursesevaluation ce
+        INNER JOIN users u ON ce.iduser = u.id
+        WHERE ce.idcourse = $data->id
     ");
 
         return view('apps.course.detail', [
@@ -118,6 +119,75 @@ class CourseController extends Controller {
         }
 
         return view('apps.course.lesson')->with(['data' => $data, 'modules' => $modules, 'coursesTop10' => $coursesTop10, 'rate' => $rate]);
+    }
+
+    function lastLesson($idlesson) {
+        $idUser = Auth::user()->id;
+
+        $countUserLessonsOpeneds = UserLessonsOpeneds::where('id_user', '=', $idUser)->count();
+        // echo $countUserLessonsOpeneds;
+        if ($countUserLessonsOpeneds > 6) {
+            $checkAlreadyInserted = DB::Select("        
+                select * from userlessonsopeneds where id_user = $idUser and id_lesson = $idlesson       
+            ");
+
+            if (!$checkAlreadyInserted) {
+                $checkUserLessonsInserted = DB::Select("        
+                select * from userlessonsopeneds where id_user = $idUser order by id_order asc");
+
+                for ($i = 1; $i < count($checkUserLessonsInserted); $i++) {
+                    $a = $i - 1;
+                    $oneMore = $i + 1;
+                    $checkUserLessonsInsertedId = $checkUserLessonsInserted[$a]->id;
+
+                    if ($i === 6) {
+                        DB::update("update userlessonsopeneds set id_order = 1, id_lesson = $idlesson where id = $checkUserLessonsInsertedId");
+                        // echo "if update userlessonsopeneds set id_order = 1, id_lesson = $idlesson where id = $checkUserLessonsInsertedId";
+                        // echo "<br>";
+                    } else {
+                        DB::update("update userlessonsopeneds set id_order = $oneMore where id = $checkUserLessonsInsertedId");
+                        // echo "else update userlessonsopeneds set id_order = $oneMore where id = $checkUserLessonsInsertedId";
+                        // echo "<br>";
+                    }
+                }
+                // dump($checkUserLessonsInserted);
+            }
+            return;
+        }
+
+        $userOrder = UserLessonsOpeneds::where('id_user', '=', $idUser)->get();
+
+        $idOrder = null;
+        if (!$userOrder) {
+            $idOrder = 1;
+            echo 'if';
+        } else {
+            $lastLesson = DB::Select("        
+                select * from userlessonsopeneds where id_user = $idUser 
+                order by id_order desc
+                limit 1");
+            if ($lastLesson) {
+                $idOrder = $lastLesson[0]->id_order + 1;
+            } else {
+                $idOrder = 1;
+            }
+        }
+
+        $checkAlreadyInserted = DB::Select("        
+        select * from userlessonsopeneds where id_user = $idUser and id_lesson = $idlesson       
+        ");
+
+        if (!$checkAlreadyInserted) {
+            $courses = UserLessonsOpeneds::create(
+                            [
+                                'id_user' => $idUser,
+                                'id_lesson' => $idlesson,
+                                'id_order' => $idOrder,
+                                'created_at' => now(),
+                                'updated_at' => now(),
+                            ]
+            );
+        }
     }
 
     function ajaxCoursesLessons($idcourse, $idmodule) {

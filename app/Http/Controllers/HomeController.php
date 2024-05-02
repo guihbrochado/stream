@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Courses;
 use App\Models\LiveRoom;
@@ -26,6 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $iduser = Auth::user()->id;
+
         $data = Courses::orderBy('created_at', 'desc')->get();
         
         $rooms = LiveRoom::orderBy('created_at', 'desc')->get();
@@ -39,8 +42,12 @@ class HomeController extends Controller
         limit 10;");
         
         $dateOrder = Courses::orderBy('created_at', 'desc')->get();
-        
-        return view('apps.course.index', ['data' => $data, 'coursesTop10' => $coursesTop10, 'rooms' => $rooms,'dateOrder' => $dateOrder]);
+
+        $lastLessons = DB::Select("Select ulo.*, cl.id as idlesson, cl.link as link, cl.lesson from userlessonsopeneds as ulo
+        inner join courseslessons cl on ulo.id_lesson = cl.id
+        where ulo.id_user = $iduser and ulo.id_order < 7 order by ulo.id_order asc");
+      
+        return view('apps.course.index', ['data' => $data, 'lastLessons' => $lastLessons, 'coursesTop10' => $coursesTop10, 'rooms' => $rooms,'dateOrder' => $dateOrder]);
     }
 
     function ajaxCoursesModules($idcourse)
