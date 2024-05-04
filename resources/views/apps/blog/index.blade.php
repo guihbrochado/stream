@@ -64,11 +64,7 @@
                       <div class="modal-body">
                         <div id="comments-{{$row->id}}"></div>
                       </div>
-                      <div class="modal-footer">
-                        <!-- <div class="row">
-                          <input type="text" class="form-control " id="input-comment{{$row->id}}" placeholder="Faça sua postagem">
-                          <button type="button" id="btn-submit-comment{{$row->id}}" class="btn btn-primary">Enviar Mensagem</button>
-                        </div> -->
+                      <div class="modal-footer">                        
                         <div class="input-group input-group-sm mb-3">
                           <input id="input-comment{{$row->id}}" placeholder="Faça sua postagem"
                            type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">

@@ -2,6 +2,7 @@
 <html lang="en" dir="">
 
 @include('components.headdash')
+
 <body class="  ">
     <!-- loader Start -->
     <div id="loading">
@@ -26,7 +27,7 @@
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
-                                    <h4 class="card-title">Cursos</h4>
+                                    <h4 class="card-title">Rooms</h4>
                                 </div>
 
                                 <div>
@@ -40,6 +41,8 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">Sala</th>
+                                                <th class="text-center">Link Admin</th>
+                                                <th class="text-center">Link Client</th>
                                                 <th class="text-center">Descrição</th>
                                                 <th class="text-center">Paga/Gratuira</th>
                                                 <th class="text-center">Preço</th>
@@ -51,6 +54,8 @@
                                             @foreach ($rooms as $row)
                                             <tr>
                                                 <td class="text-center">{{$row->title}}</td>
+                                                <td class="text-center"><button class="copybtn btn-primary btn" data="{{$row->link_admin}}"> Copiar Link </button></td>
+                                                <td class="text-center"><button class="copybtn btn-primary btn" data="{{$row->link_client}}"> Copiar Link </button></td>
                                                 <td class="text-center">{{$row->description}}</td>
                                                 <td class="text-center">{{$row->is_free}}</td>
                                                 <td class="text-center">{{$row->price}}</td>
@@ -62,7 +67,7 @@
                                                 </td>
                                             </tr>
                                             @endforeach
-                                        </tbody>                                    
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -448,6 +453,24 @@
     <script src="assets/dashboard/js/plugins/select2.js?v=1.0.1" defer></script>
 
     <script src="assets/dashboard/js/plugins/flatpickr.js?v=1.0.1" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(".copybtn").click(function(e) {
+            const data = $(this).attr('data');
+
+            navigator.clipboard.writeText(data).then(function() {
+                Swal.fire({
+                    icon: "success",
+                    title: "Link copiado para area de transferência!",
+                    timer: 2000,
+                });
+
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        });
+    </script>
 
 </body>
 

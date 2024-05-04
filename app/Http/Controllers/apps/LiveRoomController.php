@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\LiveRoom;
 use App\Models\LiveRoomTag;
 use App\Models\LiveRoomRating;
+use Illuminate\Support\Facades\Auth;
+
 use Exception;
 
 class LiveRoomController extends Controller {
@@ -32,6 +34,9 @@ class LiveRoomController extends Controller {
         $fileName = '';
         $folder = public_path('assets/images/rooms');
 
+        $authId = Auth::id();
+        $authName = Auth::user()->name;
+
         if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
             $file = $request->file('cover');
             $extension = $file->extension();
@@ -39,15 +44,24 @@ class LiveRoomController extends Controller {
             $file->move($folder, $fileName);
         }
 
+        $api_url = env('API_VIDEO_ROMM');
+        $adminVideoUrl = "$api_url/?username=$authName&room=$request->title&admin=1";
+        $clientVideoUrl = "$api_url/?username=$authName&room=$request->title&admin=0";
+        
+        // dd($adminVideoUrl);
         $price = str_replace(',', '.', $request->price);
+        // $linkAdmin = md5($request->title . '-admin');
+        // $linkClient = md5($request->title . '-client');
 
         try {
             $room = LiveRoom::create([
-                        'title' => $request->title,
-                        'cover' => $fileName,
-                        'description' => $request->description,
-                        'is_free' => $request->is_free,
-                        'price' => $price,
+                'title' => $request->title,
+                'cover' => $fileName,
+                'description' => $request->description,
+                'is_free' => $request->is_free,
+                'price' => $price,
+                'link_admin' => $adminVideoUrl,
+                'link_client' => $clientVideoUrl,
             ]);
 
             $tagNames = $request->input('tags');
