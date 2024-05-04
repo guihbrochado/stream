@@ -76,3 +76,6 @@ CREATE TABLE userlessonsopeneds (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 
+
+ALTER TABLE live_rooms ADD COLUMN link_admin VARCHAR(200) NULL;
+ALTER TABLE live_rooms ADD COLUMN link_client VARCHAR(200) NULL;

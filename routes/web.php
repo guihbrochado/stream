@@ -139,6 +139,11 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
 
 
         Route::get('/my-account', [MyAccountController::class, 'index'])->name('myaccount.index');
+        Route::post('/myaccount/update', [MyAccountController::class, 'update'])->name('myaccount.update');
+        Route::put('/address/update/{id}', [MyAccountController::class, 'updateAddress'])->name('address.update');
+
+
+        
         Route::get('/whishlist', [ShopController::class, 'whishlist'])->name('shop.wishlist');
         Route::get('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
         Route::get('/detail', [ShopController::class, 'detail'])->name('shop.detail');
@@ -172,10 +177,12 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/store/payment', [StoreController::class, 'payment'])->name('store.payment');
 
 
-        Route::get('/cart', [CartController::class, 'viewCart'])->name('view.cart');
-        Route::get('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.to.cart');
+        Route::get('/cart', [CartController::class, 'showCart'])->name('view.cart');
+        Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
         Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
         Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+        Route::post('/apply-coupon', [CartController::class, 'applyCoupon'])->name('apply.coupon');
+
 
         Route::post('/storeOrder', [OrderController::class, 'store'])->name('order.store');
     });

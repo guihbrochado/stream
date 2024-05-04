@@ -8,6 +8,8 @@ window.initWebRTC = function (isTransmitter) {
     const remoteVideo = document.getElementById('remoteVideo');
     const videoCover = document.getElementById('videoCover');
 
+
+
     // Configuração de servidores ICE para ajudar na conexão peer-to-peer
     const servers = {
         iceServers: [
@@ -82,6 +84,7 @@ window.initWebRTC = function (isTransmitter) {
             remoteVideo.style.display = 'block';
 
             socket.send(JSON.stringify({ event: "request-offer" }));
+            console.log('test');
         });
     }
 

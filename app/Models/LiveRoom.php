@@ -11,6 +11,8 @@ class LiveRoom extends Model {
 
     protected $fillable = [
         'title',
+        'link_admin',
+        'link_client',
         'cover',
         'description',
         'is_free',
