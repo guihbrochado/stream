@@ -127,7 +127,17 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/rooms/{room}', [LiveRoomController::class, 'show'])->name('rooms.show');
         Route::get('/room-detail/{id}', [LiveRoomController::class, 'detail'])->name('rooms.detail');
 
+        /**
+         * Shopping 
+         */
         Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+        Route::get('/shop/product-detail/{id}', [ShopController::class, 'productDetail'])->name('product.detail');
+        Route::post('/submit-review/{productId}', [ShopController::class, 'submitReview'])->name('submit.review');
+        Route::get('/review/edit/{review}', [ShopController::class, 'edit'])->name('review.edit');
+        Route::put('/review/{review}', [ShopController::class, 'update'])->name('review.update');
+        Route::delete('/review/{review}', [ShopController::class, 'destroy'])->name('review.destroy');
+
+
         Route::get('/my-account', [MyAccountController::class, 'index'])->name('myaccount.index');
         Route::get('/whishlist', [ShopController::class, 'whishlist'])->name('shop.wishlist');
         Route::get('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');

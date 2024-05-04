@@ -7,6 +7,7 @@
  <script src="{{ URL::asset('/assets/libs/waypoints/waypoints.min.js')}}"></script>
  <script src="{{ URL::asset('/assets/libs/jquery-counterup/jquery-counterup.min.js')}}"></script>
  <script src="{{ URL::asset('/assets/js/custom.js') }}"></script>
+ <script src="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.js"></script>
 
  @yield('script')
 

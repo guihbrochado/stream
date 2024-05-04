@@ -452,8 +452,38 @@
                 }
             }
 
+            localVideo.addEventListener('pause', () => {
+                startButton.style.display = 'block';
+                coverElement.style.display = 'block';
+            });
+        }
+
+        function requestLive() {
+            if (!window.liveRequested) {
+                console.log('Espectador solicitando oferta');
+                socket.send(JSON.stringify({
+                    event: "request-offer"
+                }));
+                window.liveRequested = true;
+            } else {
+                console.log('Oferta já foi solicitada');
+            }
+        }
+
 
         });
+    </script>
+    <script type="text/javascript">
+        window.isTransmitter = {
+            {
+                json_encode(auth() - > check() && auth() - > user() - > can('admin'))
+            }
+        };
+        console.log('sou admin?', window.isTransmitter);
+        console.log('aqui');
+    </script>
+
+    });
     </script>
     <script type="text/javascript">
         window.isTransmitter = {
