@@ -44,9 +44,9 @@ class LiveRoomController extends Controller {
             $file->move($folder, $fileName);
         }
 
-        $api_url = env('API_VIDEO_ROMM');
+        $api_url = env('API_VIDEO_ROOM');
         $adminVideoUrl = "$api_url/?username=$authName&room=$request->title&admin=1";
-        $clientVideoUrl = "$api_url/?username=$authName&room=$request->title&admin=0";
+        $clientVideoUrl = "$api_url/?username=0&room=$request->title&admin=0";
         
         // dd($adminVideoUrl);
         $price = str_replace(',', '.', $request->price);
@@ -90,7 +90,14 @@ class LiveRoomController extends Controller {
 
         $otherRooms = LiveRoom::where('id', '!=', $id)->get();
 
-        return view('apps.rooms.detail', compact('data', 'otherRooms'));
+        $api_url = env('API_VIDEO_ROOM');
+        $authName = Auth::user()->name;
+
+        $room = $otherRooms[0]->title;
+
+        $clientVideoUrl = "$api_url/?username=$authName&room=$room&admin=0";
+
+        return view('apps.rooms.detail', compact('data', 'otherRooms', 'clientVideoUrl'));
     }
 
     public function show(LiveRoom $room) {

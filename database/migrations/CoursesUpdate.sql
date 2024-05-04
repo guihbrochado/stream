@@ -79,3 +79,20 @@ CREATE TABLE userlessonsopeneds (
 
 ALTER TABLE live_rooms ADD COLUMN link_admin VARCHAR(200) NULL;
 ALTER TABLE live_rooms ADD COLUMN link_client VARCHAR(200) NULL;
+
+DROP TABLE live_rooms;
+
+CREATE TABLE `live_rooms` (
+  id int AUTO_INCREMENT PRIMARY KEY,
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `is_free` tinyint(1) NOT NULL,
+  `price` decimal(8,2) DEFAULT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `cover` varchar(255) DEFAULT NULL,
+  `link_client` varchar(200) DEFAULT NULL,
+  `link_admin` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
