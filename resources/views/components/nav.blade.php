@@ -144,13 +144,7 @@
                                         <a class="nav-link " href="{{ route('shop.index') }}"> Shop </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link " href="{{ route('view.cart')}}"> Cart Page </a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a class="nav-link " href="{{ route('shop.wishlist') }}"> Wishlist Page </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link " href="{{ route('shop.checkout') }}"> Checkout Page </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link " href="{{ route('shop.detail') }}"> Order Tracking </a>

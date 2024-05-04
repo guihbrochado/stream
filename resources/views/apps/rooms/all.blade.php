@@ -55,7 +55,7 @@
                                             <tr>
                                                 <td class="text-center">{{$row->title}}</td>
                                                 <td class="text-center"><button class="copybtn btn-primary btn" data="{{$row->link_admin}}"> Copiar Link </button></td>
-                                                <td class="text-center"><button class="copybtn btn-primary btn" data="{{$row->link_client}}"> Copiar Link </button></td>
+                                                <td class="text-center"><button class="copybtn btn-primary btn" data="{{ url('room-detail/'.$row->id);}}"> Copiar Link </button></td>
                                                 <td class="text-center">{{$row->description}}</td>
                                                 <td class="text-center">{{$row->is_free}}</td>
                                                 <td class="text-center">{{$row->price}}</td>

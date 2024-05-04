@@ -36,7 +36,7 @@
                                 <img src="{{ $data->cover ? asset('assets/images/rooms/' . $data->cover) : asset('assets/images/movies/related/01.webp') }}" alt="room-cover" class="img-fluid object-cover w-100 d-block border-0">
                                 <!-- Botão Assistir Agora com estilos do Bootstrap -->
                                 <div class="position-absolute top-50 start-50 translate-middle">
-                                    <a href="{{ route('rooms.show', ['room' => $data->id]) }}" class="btn btn-primary waves-effect waves-light">Assistir Agora</a>
+                                    <a href="http://{{ $clientVideoUrl }}" target="_blank" class="btn btn-primary waves-effect waves-light">Assistir Agora</a>
                                 </div>
 
                                 <ul class="p-0 m-0 list-unstyled widget_social_media position-absolute w-100 text-center">

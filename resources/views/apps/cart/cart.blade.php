@@ -180,7 +180,7 @@
                                     </table>
                                     <div class="button-primary">
                                         <div class="iq-button">
-                                            <a href="checkout.html" class="btn text-uppercase position-relative">
+                                            <a href="{{ route('shop.checkout') }}" class="btn text-uppercase position-relative">
                                                 <span class="button-text">Checkout</span>
                                                 <i class="fa-solid fa-play"></i>
                                             </a>
