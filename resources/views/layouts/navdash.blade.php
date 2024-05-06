@@ -395,18 +395,8 @@
                         <li class="nav-item dropdown">
                            <a class="py-0 nav-link d-flex align-items-center ps-3" href="#" id="profile-setting" role="button"
                               data-bs-toggle="dropdown" aria-expanded="false">
-                              <img src="assets/dashboard/images/user/01.jpg" alt="User-Profile"
+                              <img src="{{ Auth::user()->profile_photo_path ? asset(Auth::user()->profile_photo_path) : './assets/images/user/user1.webp' }}" alt="User-Profile"
                                  class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" loading="lazy">
-                              <img src="assets/dashboard/images/user/01.jpg" alt="User-Profile"
-                                 class="theme-color-purple-img img-fluid avatar avatar-50 avatar-rounded" loading="lazy">
-                              <img src="assets/dashboard/images/user/02.jpg" alt="User-Profile"
-                                 class="theme-color-blue-img img-fluid avatar avatar-50 avatar-rounded" loading="lazy">
-                              <img src="assets/dashboard/images/user/03.jpg" alt="User-Profile"
-                                 class="theme-color-green-img img-fluid avatar avatar-50 avatar-rounded" loading="lazy">
-                              <img src="assets/dashboard/images/user/04.jpg" alt="User-Profile"
-                                 class="theme-color-yellow-img img-fluid avatar avatar-50 avatar-rounded" loading="lazy">
-                              <img src="assets/dashboard/images/user/05.jpg" alt="User-Profile"
-                                 class="theme-color-pink-img img-fluid avatar avatar-50 avatar-rounded" loading="lazy">
                               <div class="caption ms-3 d-none d-md-block ">
                                  {{Str::ucfirst(Auth::user()->name)}}
                               </div>

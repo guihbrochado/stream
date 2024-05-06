@@ -6,45 +6,58 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 
-class ShopController extends Controller
-{
-    public function index()
-    {
+class ShopController extends Controller {
+
+    public function index() {
         $categories = Category::all();
         $products = Product::all();
         return view('apps.shop.index', compact('categories', 'products'));
     }
 
-    public function productDetail($id)
-    {
+    public function productDetail($id) {
         $product = Product::with(['category', 'subcategory', 'reviews.user'])->findOrFail($id);
         $relatedProducts = Product::where('categoria_id', $product->categoria_id)
-            ->where('id', '<>', $id) // Exclui o próprio produto
-            ->take(10) // Vamos assumir que você quer 4 produtos relacionados
-            ->get();
+                ->where('id', '<>', $id) // Exclui o próprio produto
+                ->take(10) // Vamos assumir que você quer 4 produtos relacionados
+                ->get();
 
         return view('apps.shop.product-detail', compact('product', 'relatedProducts'));
     }
 
-    public function whishlist()
-    {
+    public function whishlist() {
         return view('apps.shop.whishlist');
     }
 
-    public function checkout()
-    {
-        return view('apps.shop.checkout');
+    public function checkout() {
+        $user = auth()->user();
+        $cart = Cart::with(['cartItems.product'])->where('user_id', $user->id)->first();
+
+        
+
+        if (!$cart) {
+            return redirect()->route('show.cart')->with('error', 'Seu carrinho está vazio.');
+        }
+
+        $address = $user->address;
+
+        $subtotal = 0;
+        foreach ($cart->cartItems as $item) {
+            $subtotal += $item->price * $item->quantity;
+        }
+
+        $total = $subtotal;
+
+        return view('apps.shop.checkout', compact('user', 'address', 'cart', 'subtotal', 'total'));
     }
 
-    public function detail()
-    {
+    public function detail() {
         return view('apps.shop.detail');
     }
 
-    public function submitReview(Request $request, $productId)
-    {
+    public function submitReview(Request $request, $productId) {
         $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'required|string',
@@ -60,8 +73,7 @@ class ShopController extends Controller
         return back()->with('success', 'Review submitted successfully.');
     }
 
-    public function edit($id)
-    {
+    public function edit($id) {
         $review = Review::findOrFail($id);
 
         // Verifica se o usuário autenticado é o autor do comentário
@@ -72,8 +84,7 @@ class ShopController extends Controller
         return response()->json(['review' => $review], 200);
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $review = Review::findOrFail($id);
 
         // Verifica se o usuário autenticado é o autor do comentário
@@ -94,9 +105,7 @@ class ShopController extends Controller
         return back()->with('success', 'Avaliação atualizada com sucesso.');
     }
 
-
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $review = Review::findOrFail($id);
 
         // Verifica se o usuário autenticado é o autor do comentário
