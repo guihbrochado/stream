@@ -89,13 +89,13 @@
                         <ul class="navbar-nav iq-nav-menu  list-unstyled" id="header-menu">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/') }}">
-                                    <span class="item-name">Home</span>
+                                    <span class="item-name">Inicio</span>
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="collapse" href="#pages" role="button" aria-expanded="false" aria-controls="homePages">
-                                    <span class="item-name">Pages</span>
+                                    <span class="item-name">Paginas</span>
                                     <span class="menu-icon">
                                         <i class="fa fa-caret-down toggledrop-desktop right-icon" aria-hidden="true"></i>
                                         <span class="toggle-menu">
@@ -125,12 +125,12 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link " href="{{ route('blog.index') }}"> Blog </a>
+                                <a class="nav-link " href="{{ route('blog.index') }}"> Comunidade </a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="collapse" href="#shop" role="button" aria-expanded="false" aria-controls="shop">
-                                    <span class="item-name">Shop</span>
+                                    <span class="item-name">Loja</span>
                                     <span class="menu-icon">
                                         <i class="fa fa-caret-down toggledrop-desktop right-icon" aria-hidden="true"></i>
                                         <span class="toggle-menu">
@@ -141,10 +141,10 @@
                                 </a>
                                 <ul class="sub-nav collapse  list-unstyled" id="shop">
                                     <li class="nav-item">
-                                        <a class="nav-link " href="{{ route('shop.index') }}"> Shop </a>
+                                        <a class="nav-link " href="{{ route('shop.index') }}"> Produtos </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link " href="{{ route('shop.wishlist') }}"> Wishlist Page </a>
+                                        <a class="nav-link " href="{{ route('shop.wishlist') }}"> Lista de Desejo </a>
                                     </li>
                                     <!--li class="nav-item">
                                         <a class="nav-link " href="{{ route('shop.detail') }}"> Order Tracking </a>

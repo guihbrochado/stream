@@ -214,7 +214,7 @@
                         <li class="nav-item">
                             <a class="nav-link " href="dashboard/widget/widgetchart.html">
                                 <i class="icon" data-bs-toggle="tooltip" title="Modulos" data-bs-placement="right" aria-label="pages" data-bs-original-title="pages">
-                                    <i class="fas fa-bars"></i>
+                                    <i class="fas fa-mail-bulk"></i>
                                 </i>
                                 <span class="item-name">Contato</span>
                             </a>
@@ -222,28 +222,28 @@
                         <li class="nav-item">
                             <a class="nav-link " href="{{ route('faq.index_admin') }}">
                                 <i class="icon" data-bs-toggle="tooltip" title="Modulos" data-bs-placement="right" aria-label="pages" data-bs-original-title="pages">
-                                    <i class="fas fa-bars"></i>
+                                    <i class="fas fa-question-circle"></i>
                                 </i>
                                 <span class="item-name">Faq</span>
                             </a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link " href="dashboard/widget/widgetchart.html">
+                            <a class="nav-link " href="{{ route('usage_policy.index_admin') }}">
                                 <i class="icon" data-bs-toggle="tooltip" title="Modulos" data-bs-placement="right" aria-label="pages" data-bs-original-title="pages">
-                                    <i class="fas fa-bars"></i>
+                                    <i class="fas fa-lock"></i>
                                 </i>
                                 <span class="item-name">Politicas</span>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!--li class="nav-item">
                             <a class="nav-link " href="dashboard/widget/widgetchart.html">
                                 <i class="icon" data-bs-toggle="tooltip" title="Modulos" data-bs-placement="right" aria-label="pages" data-bs-original-title="pages">
                                     <i class="fas fa-bars"></i>
                                 </i>
                                 <span class="item-name">Planos</span>
                             </a>
-                        </li>
+                        </li-->
                     </ul>
                 </li>
             </ul>

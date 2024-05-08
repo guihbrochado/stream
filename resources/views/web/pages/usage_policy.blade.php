@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" data-bs-theme="dark">
 
-<head>
+    <head>
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         @include('layouts.title-meta')
@@ -11,73 +11,73 @@
         @vite(['resources/js/app.js'])
     </head>
 
-<body class="  ">
-  <span class="screen-darken"></span>
-  <!-- loader Start -->
-   <!-- loader Start -->
-  <div class="loader simple-loader">
-     <div class="loader-body">
-        <img src="./assets/images/loader.gif" alt="loader" class="img-fluid " width="300">
-      </div>
-  </div>
-  <!-- loader END -->  <!-- loader END -->
-  <main class="main-content">
-      <!--Nav Start-->
-      @include('components.nav')       <!--Nav End-->
-
-      <!--bread-crumb-->
-      <div class="iq-breadcrumb" style="background-image: url(./assets/images/pages/01.webp);">
-         <div class="container-fluid">
-            <div class="row align-items-center">
-                  <div class="col-sm-12">
-                      <nav aria-label="breadcrumb" class="text-center">
-                          <h2 class="title">Privacy Policy</h2>
-                          <ol class="breadcrumb justify-content-center">
-                              <li class="breadcrumb-item"><a href="./index.html">Home</a></li> 
-                              <li class="breadcrumb-item active">Privacy Policy</li>
-                          </ol>
-                      </nav>
-                  </div>
-              </div> 
-         </div>
-      </div>      <!--bread-crumb-->
-
-
-<div class="section-padding">
-    <div class="container">
-        <div class="title-box">
-            <h4 class="mb-4">1. What Personal Information About Users Does streamit Collect?</h4>
-            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nisl dignissim, placerat diam ac, egestas ante. Morbi varius quis orci feugiat hendrerit. Morbi ullamcorper consequat justo, in posuere nisi efficitur sed. Vestibulum semper dolor id arcu finibus volutpat. Integer condimentum ex tellus, ac finibus metus sodales in. Proin blandit congue ipsum ac dapibus. Integer blandit eros elit, vel luctus tellus finibus in. Aliquam non urna ut leo vestibulum mattis ac nec dolor. Nulla libero mauris, dapibus non aliquet viverra, elementum eget lorem</p>
+    <body class="  ">
+        <span class="screen-darken"></span>
+        <!-- loader Start -->
+        <!-- loader Start -->
+        <div class="loader simple-loader">
+            <div class="loader-body">
+                <img src="./assets/images/loader.gif" alt="loader" class="img-fluid " width="300">
+            </div>
         </div>
-        <div class="title-box">
-            <h4 class="mb-4">2. Cookies and Web Beacons</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nisl dignissim, placerat diam ac, egestas ante. Morbi varius quis orci feugiat hendrerit. Morbi ullamcorper consequat justo, in posuere nisi efficitur sed.</p>
-            <p class="mb-0">Vestibulum semper dolor id arcu finibus volutpat. Integer condimentum ex tellus, ac finibus metus sodales in. Proin blandit congue ipsum ac dapibus. Integer blandit eros elit, vel luctus tellus finibus in. Aliquam non urna ut leo vestibulum mattis ac nec dolor. Nulla libero mauris, dapibus non aliquet viverra, elementum eget lorem</p>
-        </div>
-        <div class="title-box">
-            <h4 class="mb-4">3. Third Party Payment Gateway – Financial Information</h4>
-            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nisl dignissim, placerat diam ac, egestas ante. Morbi varius quis orci feugiat hendrerit. Morbi ullamcorper consequat justo, in posuere nisi efficitur sed. Vestibulum semper dolor id arcu finibus volutpat. Integer condimentum ex tellus, ac finibus metus sodales in. Proin blandit congue ipsum ac dapibus. Integer blandit eros elit, vel luctus tellus finibus in. Aliquam non urna ut leo vestibulum mattis ac nec dolor. Nulla libero mauris, dapibus non aliquet viverra, elementum eget lorem</p>
-        </div>
-        <div class="title-box">
-            <h4 class="mb-4">4. Disclosure Children’s Privacy</h4>
-            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nisl dignissim, placerat diam ac, egestas ante. Morbi varius quis orci feugiat hendrerit. Morbi ullamcorper consequat justo, in posuere nisi efficitur sed. Vestibulum semper dolor id arcu finibus volutpat. Integer condimentum ex tellus, ac finibus metus sodales in. Proin blandit congue ipsum ac dapibus. Integer blandit eros elit, vel luctus tellus finibus in. Aliquam non urna ut leo vestibulum mattis ac nec dolor. Nulla libero mauris, dapibus non aliquet viverra, elementum eget lorem</p>
-        </div>
-        <div class="title-box">
-            <h4 class="mb-4">5. Data transfer, storage & processing globally</h4>
-            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nisl dignissim, placerat diam ac, egestas ante. Morbi varius quis orci feugiat hendrerit. Morbi ullamcorper consequat justo, in posuere nisi efficitur sed. Vestibulum semper dolor id arcu finibus volutpat. Integer condimentum ex tellus, ac finibus metus sodales in. Proin blandit congue ipsum ac dapibus. Integer blandit eros elit, vel luctus tellus finibus in. Aliquam non urna ut leo vestibulum mattis ac nec dolor. Nulla libero mauris, dapibus non aliquet viverra, elementum eget lorem</p>
-        </div>
-    </div>
-</div>
+        <!-- loader END -->  <!-- loader END -->
+        <main class="main-content">
+            <!--Nav Start-->
+            @include('components.nav')
+            <!--Nav End-->
 
-  </main>
+            <!-- Bread-crumb Start -->
+            <div class="iq-breadcrumb" style="background-image: url(./assets/images/pages/01.webp);">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-sm-12">
+                            <nav aria-label="breadcrumb" class="text-center">
+                                <h2 class="title">Privacy Policy</h2>
+                                <ol class="breadcrumb justify-content-center">
+                                    <li class="breadcrumb-item"><a href="./index.html">Home</a></li> 
+                                    <li class="breadcrumb-item active">Privacy Policy</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bread-crumb End -->
 
-<div id="back-to-top" style="display: none;">
-     <a class="p-0 btn bg-primary btn-sm position-fixed top border-0 rounded-circle" id="top" href="#top">
-        <i class="fa-solid fa-chevron-up"></i>
-     </a>
-  </div>
-            @include('layouts.vendor-scripts')
+            <div class="section-padding">
+                <div class="container">
+                    @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                    @endif
 
-</body>
+                    @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                    @endif
+
+                    @foreach($data as $category_id => $policies)
+                    <div class="title-box">
+                        <h4 class="mb-4">{{ $usage_policy_categories[$category_id]->first()->title }}</h4>
+                        @foreach($policies as $policy)
+                        <p class="mb-0">{{ $policy->question }}: {{ $policy->answer }}</p>
+                        @endforeach
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </main>
+
+
+        <div id="back-to-top" style="display: none;">
+            <a class="p-0 btn bg-primary btn-sm position-fixed top border-0 rounded-circle" id="top" href="#top">
+                <i class="fa-solid fa-chevron-up"></i>
+            </a>
+        </div>
+        @include('layouts.vendor-scripts')
+
+    </body>
 
 </html>
