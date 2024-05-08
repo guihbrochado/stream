@@ -112,7 +112,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="fw-500">${{ number_format($item->product->preco, 2) }}</span>
+                                                <span class="fw-500">R${{ number_format($item->product->preco, 2) }}</span>
                                             </td>
                                             <td>
                                                 <form method="POST" action="{{ route('cart.update', $item->id) }}" class="d-flex align-items-center">
@@ -130,7 +130,7 @@
                                             <td>
                                                 <form method="POST" action="{{ route('cart.remove', $item->id) }}">
                                                     @csrf
-                                                    @method('DELETE')
+                                                    @method('post')
                                                     <button type="submit" class="btn btn-outline-danger btn-sm">
                                                         <i class="fas fa-trash"></i> <!-- Ícone de lixeira -->
                                                     </button>

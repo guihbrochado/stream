@@ -66,7 +66,7 @@
                                                 <path d="M5.22727 0.886364H0.136364V2.13636H5.22727V0.886364Z" fill="currentColor"></path>
                                                 </svg>
                                             </button>
-                                            <input type="text" class="btn btn-sm btn-outline-light input-display border-0" data-qty="input" pattern="^(0|[1-9][0-9]*)$" minlength="1" maxlength="2" value="2" title="Qty">
+                                            <input type="text" class="btn btn-sm btn-outline-light input-display border-0" data-qty="input" pattern="^(0|[1-9][0-9]*)$" minlength="1" maxlength="2" value="1" title="Qty">
                                             <button type="button" class="btn btn-sm btn-outline-light iq-quantity-plus text-white border-0">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="9" height="8" viewBox="0 0 9 8" fill="none">
                                                 <path d="M3.63636 7.70455H4.90909V4.59091H8.02273V3.31818H4.90909V0.204545H3.63636V3.31818H0.522727V4.59091H3.63636V7.70455Z" fill="currentColor"></path>
@@ -74,10 +74,14 @@
                                             </button>
                                         </div>
                                     </li>
-                                    <li class="wish-list">
-                                        <a href="#" class="d-inline-block bg-soft-primary border border-white wishlist-btn">
-                                            <i class="far fa-heart"></i>
-                                        </a>
+                                    <li>
+                                        <form action="{{ route('wishlist.add') }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <button type="submit" class="add_to_wishlist wishlist-btn">
+                                                <i class="fa-solid fa-heart"></i>
+                                            </button>
+                                        </form>
                                     </li>
                                     <li>
                                         <div class="iq-button">

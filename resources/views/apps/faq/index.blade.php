@@ -1,412 +1,177 @@
-@extends('layouts.master')
-@section('title')
-    FAQs
-@endsection
-@section('css')
-    <!-- DataTables -->
-    <link href="{{ URL::asset('/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-@endsection
+<!doctype html>
+<html lang="en" dir="">
 
-@section('content')
-    @component('common-components.breadcrumb')
-        @slot('pagetitle')
-            Administração
-        @endslot
-        @slot('title')
-            FAQs
-        @endslot
-    @endcomponent
+    @include('components.headdash')
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-
-                    @isset($message)
-                        <div class="alert alert-success">
-                            {{ $message }}
-                        </div>
-                    @endisset
-
-                    <table class="invoice-list-table table border-top">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>ID</th>
-                                <th>Categoria</th>
-                                <th>Questão</th>
-                                <th>Editado</th>
-                                <th class="cell-fit">Ações</th>
-                            </tr>
-                        </thead>
-                    </table>
-
+    <body class="  ">
+        <!-- loader Start -->
+        <div id="loading">
+            <div class="loader simple-loader">
+                <div class="loader-body ">
+                    <img src="{{ asset('assets/dashboard/images/loader.gif')}}" alt="loader" class="image-loader img-fluid ">
                 </div>
             </div>
-        </div> <!-- end col -->
-    </div> <!-- end row -->
+        </div>
+        <!-- loader END -->
 
-    @php
-        /*
-        echo URL::to('/');
-        echo route('root');
-        */
-    @endphp
-@endsection
-@section('script')
-    <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
+        @include('components.sidebardash')
+        <main class="main-content">
+            <!-- Nav START -->
+            @include('layouts.navdash')
+            <!--Nav End-->
+        </div>
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
 
-    <script src="{{ URL::asset('/assets/libs/moment/moment.min.js') }}"></script>
+        @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @endif
+        <div class="content-inner container-fluid pb-0" id="page_layout">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <div class="header-title">
+                                    <h4 class="card-title">FAQs</h4>
+                                </div>
+                                <!-- Botão para Adicionar FAQ -->
+                                <div>
+                                    <a href="{{ route('faq.create') }}" class="btn btn-primary">Adicionar FAQ</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive border rounded py-4">
+                                    @foreach ($data->groupBy('faq_categories_id') as $category_id => $faqs)
+                                    <div class="mb-4">
+                                        <h5 class="category-title text-center mb-3">{{ $faqs->first()->title }}</h5>
+                                        <table id="datatable" class="table" data-toggle="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">ID</th>
+                                                    <th class="text-center">Pergunta</th>
+                                                    <th class="text-center">Resposta</th>
+                                                    <th class="text-center">Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($faqs as $faq)
+                                                <tr>
+                                                    <td class="text-center">{{ $faq->id }}</td>
+                                                    <td class="text-center">{{ $faq->question }}</td>
+                                                    <td class="text-center">{{ Str::limit($faq->answer, 100) }}</td>
+                                                    <td class="text-center">
+                                                        <a href="{{ route('faq.edit', $faq->id) }}"> <i class="fas fa-edit me-2 lh-lg"></i> </a>
+                                                        <form action="{{ route('faq.destroy', $faq->id) }}" method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" style="border:none; background:none;"><i class="fas fa-trash me-2 lh-lg"></i></button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <!-- BEGIN: Page JS-->
-    <script>
-        let resdata = {!! $data !!}
-        let baseUrl = "{!! route('root') !!}" + "/"
+        <!-- Footer Section Start -->
+        <footer class="footer">
+            <div class="footer-body">
+                <ul class="left-panel list-inline mb-0 p-0">
+                    <li class="list-inline-item"><a href="javascript:void(0);">Privacy Policy</a></li>
+                    <li class="list-inline-item"><a href="javascript:void(0);">Terms of Use</a></li>
+                </ul>
+                <div class="right-panel">
+                    ©<script>
+                        2022
+                    </script> <span data-setting="app_name">Streamit</span>, Made with
+                    <span class="text-gray">
+                        <svg class="icon-16" width="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.85 2.50065C16.481 2.50065 17.111 2.58965 17.71 2.79065C21.401 3.99065 22.731 8.04065 21.62 11.5806C20.99 13.3896 19.96 15.0406 18.611 16.3896C16.68 18.2596 14.561 19.9196 12.28 21.3496L12.03 21.5006L11.77 21.3396C9.48102 19.9196 7.35002 18.2596 5.40102 16.3796C4.06102 15.0306 3.03002 13.3896 2.39002 11.5806C1.26002 8.04065 2.59002 3.99065 6.32102 2.76965C6.61102 2.66965 6.91002 2.59965 7.21002 2.56065H7.33002C7.61102 2.51965 7.89002 2.50065 8.17002 2.50065H8.28002C8.91002 2.51965 9.52002 2.62965 10.111 2.83065H10.17C10.21 2.84965 10.24 2.87065 10.26 2.88965C10.481 2.96065 10.69 3.04065 10.89 3.15065L11.27 3.32065C11.3618 3.36962 11.4649 3.44445 11.554 3.50912C11.6104 3.55009 11.6612 3.58699 11.7 3.61065C11.7163 3.62028 11.7329 3.62996 11.7496 3.63972C11.8354 3.68977 11.9247 3.74191 12 3.79965C13.111 2.95065 14.46 2.49065 15.85 2.50065ZM18.51 9.70065C18.92 9.68965 19.27 9.36065 19.3 8.93965V8.82065C19.33 7.41965 18.481 6.15065 17.19 5.66065C16.78 5.51965 16.33 5.74065 16.18 6.16065C16.04 6.58065 16.26 7.04065 16.68 7.18965C17.321 7.42965 17.75 8.06065 17.75 8.75965V8.79065C17.731 9.01965 17.8 9.24065 17.94 9.41065C18.08 9.58065 18.29 9.67965 18.51 9.70065Z" fill="currentColor"></path>
+                        </svg>
+                    </span> by <a href="https://iqonic.design/" target="_blank">IQONIC Design</a>.
+                </div>
+            </div>
+        </footer>
+        <!-- Footer Section End -->
+    </main>
+    <!-- Wrapper End-->
 
-        //console.log(moment().format());
-        //console.log(window);
-        //console.log(baseUrl)
+    <!-- Settings sidebar end here -->
 
-        'use strict';
+    <a class="btn btn-fixed-end btn-warning btn-icon btn-setting" id="settingbutton" data-bs-toggle="offcanvas" data-bs-target="#live-customizer" role="button" aria-controls="live-customizer">
+        <svg class="icon-24 animated-rotate" width="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M20.8064 7.62361L20.184 6.54352C19.6574 5.6296 18.4905 5.31432 17.5753 5.83872V5.83872C17.1397 6.09534 16.6198 6.16815 16.1305 6.04109C15.6411 5.91402 15.2224 5.59752 14.9666 5.16137C14.8021 4.88415 14.7137 4.56839 14.7103 4.24604V4.24604C14.7251 3.72922 14.5302 3.2284 14.1698 2.85767C13.8094 2.48694 13.3143 2.27786 12.7973 2.27808H11.5433C11.0367 2.27807 10.5511 2.47991 10.1938 2.83895C9.83644 3.19798 9.63693 3.68459 9.63937 4.19112V4.19112C9.62435 5.23693 8.77224 6.07681 7.72632 6.0767C7.40397 6.07336 7.08821 5.98494 6.81099 5.82041V5.82041C5.89582 5.29601 4.72887 5.61129 4.20229 6.52522L3.5341 7.62361C3.00817 8.53639 3.31916 9.70261 4.22975 10.2323V10.2323C4.82166 10.574 5.18629 11.2056 5.18629 11.8891C5.18629 12.5725 4.82166 13.2041 4.22975 13.5458V13.5458C3.32031 14.0719 3.00898 15.2353 3.5341 16.1454V16.1454L4.16568 17.2346C4.4124 17.6798 4.82636 18.0083 5.31595 18.1474C5.80554 18.2866 6.3304 18.2249 6.77438 17.976V17.976C7.21084 17.7213 7.73094 17.6516 8.2191 17.7822C8.70725 17.9128 9.12299 18.233 9.37392 18.6717C9.53845 18.9489 9.62686 19.2646 9.63021 19.587V19.587C9.63021 20.6435 10.4867 21.5 11.5433 21.5H12.7973C13.8502 21.5001 14.7053 20.6491 14.7103 19.5962V19.5962C14.7079 19.088 14.9086 18.6 15.2679 18.2407C15.6272 17.8814 16.1152 17.6807 16.6233 17.6831C16.9449 17.6917 17.2594 17.7798 17.5387 17.9394V17.9394C18.4515 18.4653 19.6177 18.1544 20.1474 17.2438V17.2438L20.8064 16.1454C21.0615 15.7075 21.1315 15.186 21.001 14.6964C20.8704 14.2067 20.55 13.7894 20.1108 13.5367V13.5367C19.6715 13.284 19.3511 12.8666 19.2206 12.3769C19.09 11.8873 19.16 11.3658 19.4151 10.928C19.581 10.6383 19.8211 10.3982 20.1108 10.2323V10.2323C21.0159 9.70289 21.3262 8.54349 20.8064 7.63277V7.63277V7.62361Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        <circle cx="12.1747" cy="11.8891" r="2.63616" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+        </svg>
+    </a> <!-- Live Customizer end -->
 
-        // Datatable (jquery)
-        $(function() {
-            let borderColor, bodyBg, headingColor;
+    <!-- Library Bundle Script -->
+    <script src="assets/dashboard/js/core/libs.min.js"></script>
+    <!-- Plugin Scripts -->
+    <!-- Tour plugin Start -->
+    <script src="assets/dashboard/vendor/sheperd/dist/js/sheperd.min.js"></script>
+    <script src="assets/dashboard/js/plugins/tour.js" defer></script>
 
-            /*
-            if (isDarkStyle) {
-                borderColor = config.colors_dark.borderColor;
-                bodyBg = config.colors_dark.bodyBg;
-                headingColor = config.colors_dark.headingColor;
-            } else {
-                borderColor = config.colors.borderColor;
-                bodyBg = config.colors.bodyBg;
-                headingColor = config.colors.headingColor;
-            }
-            */
 
-            // Variable declaration for table
-            var dt_table = $('.invoice-list-table');
-            var controler = 'faq'
+    <!-- Flatpickr Script -->
+    <script src="assets/dashboard/vendor/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="assets/dashboard/js/plugins/flatpickr.js" defer></script>
 
-            // Users datatable
-            if (dt_table.length) {
-                var dt_user = dt_table.DataTable({
-                    data: resdata,
-                    columns: [
-                        // columns according to JSON
-                        {
-                            data: 'id'
-                        },
-                        {
-                            data: 'title'
-                        },
-                        {
-                            data: 'question'
-                        },
-                        {
-                            data: 'updated_at'
-                        }
-                    ],
-                    columnDefs: [{
-                            // For Responsive
-                            className: 'control',
-                            responsivePriority: 2,
-                            searchable: false,
-                            orderable: false,
-                            targets: 0,
-                            render: function(data, type, full, meta) {
-                                return '';
-                            }
-                        },
-                        {
-                            // ID
-                            targets: 1,
-                            render: function(data, type, full, meta) {
-                                var $id = full['id'];
-                                // Creates full output for row
-                                var $row_output = '<a href="' + baseUrl + controler + '/show/' +
-                                    $id + ' ">#' + $id + '</a>';
-                                return $row_output;
-                            }
-                        },
-                        {
-                            // Título
-                            targets: 2,
-                            render: function(data, type, full, meta) {
-                                return full['title'];
-                            }
-                        },
-                        {
-                            // Pergunta
-                            targets: 3,
-                            render: function(data, type, full, meta) {
-                                return full['question'];
-                            }
-                        },
-                        {
-                            // Updated at
-                            targets: 4,
-                            render: function(data, type, full, meta) {
-                                var $due_date = new Date(full['updated_at']);
-                                // Creates full output for row
-                                var $row_output =
-                                    '<span class="d-none">' +
-                                    moment($due_date).format('YYYYMMDD, HH:mm:ss a') +
-                                    '</span>' +
-                                    moment($due_date).format('DD/MM/YYYY, HH:mm:ss');
-                                $due_date;
-                                return $row_output;
-                            }
-                        },
-                        {
-                            // Actions
-                            targets: 5,
-                            searchable: false,
-                            orderable: false,
-                            render: function(data, type, full, meta) {
-                                return (
-                                    '<div class="d-flex align-items-center">' +
-                                    '<a href="' + baseUrl + controler + '/show/' + full['id'] +
-                                    '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview">' +
-                                    '<i class="bx bx-show mx-1"></i></a>' +
-                                    '<a href="' + baseUrl + controler + '/edit/' + full['id'] +
-                                    '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Edit">' +
-                                    '<i class="bx bx-edit mx-1"></i></a>' +
-                                    '<a href="' + baseUrl + controler + '/destroy/' + full[
-                                        'id'] +
-                                    '" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Delete">' +
-                                    '<i class="bx bx-trash mx-1"></i></a>' +
-                                    '</div>'
-                                );
-                            }
-                        }
-                    ],
-                    order: [
-                        [2, 'asc'],[3, 'asc']
-                    ],
-                    dom: '<"row mx-2"' +
-                        '<"col-md-2"<"me-3"l>>' +
-                        '<"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"fB>>' +
-                        '>t' +
-                        '<"row mx-2"' +
-                        '<"col-sm-12 col-md-6"i>' +
-                        '<"col-sm-12 col-md-6"p>' +
-                        '>',
-                    language: {
-                        search: '',
-                        searchPlaceholder: 'Pesquisar..',
-                        decimal: "",
-                        emptyTable: "Sem dados para exibir",
-                        info: "Exibindo de _START_ até _END_ de _TOTAL_ registros",
-                        infoEmpty: "Exibindo 0 até 0 de 0 registros",
-                        infoFiltered: "(filtrado do total de _MAX_ registros)",
-                        infoPostFix: "",
-                        thousands: ",",
-                        lengthMenu: "Exibir _MENU_ registros",
-                        loadingRecords: "Carregando...",
-                        processing: "",
-                        zeroRecords: "Sem registros compatíveis com a pesquisa",
-                        paginate: {
-                            first: '«',
-                            previous: '‹',
-                            next: '›',
-                            last: '»'
-                        }
-                    },
-                    // Buttons with Dropdown
-                    buttons: [{
-                            extend: 'collection',
-                            className: 'btn btn-label-secondary dropdown-toggle mx-3',
-                            text: '<i class="bx bx-upload me-2"></i>Exportar',
-                            buttons: [{
-                                    extend: 'print',
-                                    text: '<i class="bx bx-printer me-2" ></i>Print',
-                                    className: 'dropdown-item',
-                                    exportOptions: {
-                                        columns: [1, 2, 3, 4, 5, 6, 7],
-                                        // prevent avatar to be print
-                                        format: {
-                                            body: function(inner, coldex, rowdex) {
-                                                if (inner.length <= 0) return inner;
-                                                var el = $.parseHTML(inner);
-                                                var result = '';
-                                                $.each(el, function(index, item) {
-                                                    if (item.classList !== undefined &&
-                                                        item.classList.contains(
-                                                            'user-name')) {
-                                                        result = result + item.lastChild
-                                                            .firstChild.textContent;
-                                                    } else if (item.innerText ===
-                                                        undefined) {
-                                                        result = result + item
-                                                            .textContent;
-                                                    } else result = result + item
-                                                        .innerText;
-                                                });
-                                                return result;
-                                            }
-                                        }
-                                    },
-                                    /*
-                                    customize: function (win) {
-                                        //customize print view for dark
-                                        $(win.document.body)
-                                            .css('color', headingColor)
-                                            .css('border-color', borderColor)
-                                            .css('background-color', bodyBg);
-                                        $(win.document.body)
-                                            .find('table')
-                                            .addClass('compact')
-                                            .css('color', 'inherit')
-                                            .css('border-color', 'inherit')
-                                            .css('background-color', 'inherit');
-                                    }
-                                    */
-                                },
-                                {
-                                    extend: 'csv',
-                                    text: '<i class="bx bx-file me-2" ></i>Csv',
-                                    className: 'dropdown-item',
-                                    exportOptions: {
-                                        columns: [1, 2, 3, 4, 5, 6, 7],
-                                        // prevent avatar to be display
-                                        format: {
-                                            body: function(inner, coldex, rowdex) {
-                                                if (inner.length <= 0) return inner;
-                                                var el = $.parseHTML(inner);
-                                                var result = '';
-                                                $.each(el, function(index, item) {
-                                                    if (item.classList !== undefined &&
-                                                        item.classList.contains(
-                                                            'user-name')) {
-                                                        result = result + item.lastChild
-                                                            .firstChild.textContent;
-                                                    } else if (item.innerText ===
-                                                        undefined) {
-                                                        result = result + item
-                                                            .textContent;
-                                                    } else result = result + item
-                                                        .innerText;
-                                                });
-                                                return result;
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    extend: 'excel',
-                                    text: '<i class="bx bxs-file me-2"></i>Excel',
-                                    className: 'dropdown-item',
-                                    exportOptions: {
-                                        columns: [1, 2, 3, 4, 5, 6, 7],
-                                        // prevent avatar to be display
-                                        format: {
-                                            body: function(inner, coldex, rowdex) {
-                                                if (inner.length <= 0) return inner;
-                                                var el = $.parseHTML(inner);
-                                                var result = '';
-                                                $.each(el, function(index, item) {
-                                                    if (item.classList !== undefined &&
-                                                        item.classList.contains(
-                                                            'user-name')) {
-                                                        result = result + item.lastChild
-                                                            .firstChild.textContent;
-                                                    } else if (item.innerText ===
-                                                        undefined) {
-                                                        result = result + item
-                                                            .textContent;
-                                                    } else result = result + item
-                                                        .innerText;
-                                                });
-                                                return result;
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    extend: 'pdf',
-                                    text: '<i class="bx bxs-file-pdf me-2"></i>Pdf',
-                                    className: 'dropdown-item',
-                                    exportOptions: {
-                                        columns: [1, 2, 3, 4, 5, 6, 7],
-                                        // prevent avatar to be display
-                                        format: {
-                                            body: function(inner, coldex, rowdex) {
-                                                if (inner.length <= 0) return inner;
-                                                var el = $.parseHTML(inner);
-                                                var result = '';
-                                                $.each(el, function(index, item) {
-                                                    if (item.classList !== undefined &&
-                                                        item.classList.contains(
-                                                            'user-name')) {
-                                                        result = result + item.lastChild
-                                                            .firstChild.textContent;
-                                                    } else if (item.innerText ===
-                                                        undefined) {
-                                                        result = result + item
-                                                            .textContent;
-                                                    } else result = result + item
-                                                        .innerText;
-                                                });
-                                                return result;
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    extend: 'copy',
-                                    text: '<i class="bx bx-copy me-2" ></i>Copy',
-                                    className: 'dropdown-item',
-                                    exportOptions: {
-                                        columns: [1, 2, 3, 4, 5, 6, 7],
-                                        // prevent avatar to be display
-                                        format: {
-                                            body: function(inner, coldex, rowdex) {
-                                                if (inner.length <= 0) return inner;
-                                                var el = $.parseHTML(inner);
-                                                var result = '';
-                                                $.each(el, function(index, item) {
-                                                    if (item.classList !== undefined &&
-                                                        item.classList.contains(
-                                                            'user-name')) {
-                                                        result = result + item.lastChild
-                                                            .firstChild.textContent;
-                                                    } else if (item.innerText ===
-                                                        undefined) {
-                                                        result = result + item
-                                                            .textContent;
-                                                    } else result = result + item
-                                                        .innerText;
-                                                });
-                                                return result;
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            text: '<i class="bx bx-plus me-md-2"></i><span class="d-md-inline-block d-none">Cadastrar</span>',
-                            className: 'btn btn-primary',
-                            action: function(e, dt, button, config) {
-                                window.location = baseUrl + controler + '/create';
-                            }
-                        }
-                    ]
-                });
-            }
 
-            // Filter form control to default size
-            // ? setTimeout used for multilingual table initialization
-            setTimeout(() => {
-                $('.dataTables_filter .form-control').removeClass('form-control-sm');
-                $('.dataTables_length .form-select').removeClass('form-select-sm');
-            }, 300);
-        });
-    </script>
-    <!-- END: Page JS-->
-@endsection
+
+    <!-- Select2 Script -->
+    <script src="assets/dashboard/js/plugins/select2.js" defer></script>
+
+
+
+
+    <!-- Slider-tab Script -->
+    <script src="assets/dashboard/js/plugins/slider-tabs.js"></script>
+
+
+
+
+
+    <!-- SwiperSlider Script -->
+    <script src="assets/dashboard/vendor/swiperSlider/swiper-bundle.min.js"></script>
+    <script src="assets/dashboard/js/plugins/swiper-slider.js" defer></script>
+    <!-- Lodash Utility -->
+    <script src="assets/dashboard/vendor/lodash/lodash.min.js"></script>
+    <!-- Utilities Functions -->
+    <script src="assets/dashboard/js/iqonic-script/utility.min.js"></script>
+    <!-- Settings Script -->
+    <script src="assets/dashboard/js/iqonic-script/setting.min.js"></script>
+    <!-- Settings Init Script -->
+    <script src="assets/dashboard/js/setting-init.js"></script>
+    <!-- External Library Bundle Script -->
+    <script src="assets/dashboard/js/core/external.min.js"></script>
+    <!-- Widgetchart Script -->
+    <script src="assets/dashboard/js/charts/widgetcharts.js?v=1.0.1" defer></script>
+    <!-- Dashboard Script -->
+    <script src="assets/dashboard/js/charts/dashboard.js?v=1.0.1" defer></script>
+    <!-- qompacui Script -->
+    <script src="assets/dashboard/js/streamit.js?v=1.0.1" defer></script>
+    <script src="assets/dashboard/js/sidebar.js?v=1.0.1" defer></script>
+    <script src="assets/dashboard/js/chart-custom.js?v=1.0.1" defer></script>
+
+    <script src="assets/dashboard/js/plugins/select2.js?v=1.0.1" defer></script>
+
+    <script src="assets/dashboard/js/plugins/flatpickr.js?v=1.0.1" defer></script>
+
+</body>
+
+</html>

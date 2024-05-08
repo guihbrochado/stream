@@ -70,13 +70,76 @@ class CourseController extends Controller {
     }
 
     public function firstLessonRedirect($id) {
-        $firstLesson = DB::Select("
-        select distinct cl.id 
+        // Execute a consulta SQL
+        /*$data = DB::select("
+        select distinct cl.id
         from courseslessons cl
         inner join coursesmodules cm on cl.id_module = cm.id
-        where cm.id_course = $id");
-        // echo $firstLesson[0]->id;
-        return redirect('/course-lesson/' . $firstLesson[0]->id);
+        where cm.id_course = ?", [$id]);
+        
+        dd($data);
+        
+        // Verifique se há resultados antes de acessar o índice [0]
+        if (count($data) > 0) {
+            return redirect('/course-lesson/' . $data[0]->id);
+        } else {
+            // Redireciona para uma página ou mostra uma mensagem de erro
+            return view('/apps.course.detail')->with(['data' => $data, 'message'], 'Nenhuma aula encontrada para este curso.');
+        }*/
+        
+        $data = Courses::find($id);
+
+        $modules = DB::Select("
+        SELECT cm.module, cm.id
+        FROM coursesmodules cm
+        INNER JOIN courses c ON cm.id_course = c.id
+        WHERE cm.id_course = $data->id
+        ORDER BY cm.modulenumber ASC
+    ");
+
+        $coursesTop10 = DB::Select("
+        SELECT c.id, c.course, c.cover, SUM(ce.rate) AS total_rate
+        FROM coursesevaluation ce
+        INNER JOIN courses c ON ce.idcourse = c.id
+        GROUP BY (ce.idcourse)
+        ORDER BY total_rate DESC
+        LIMIT 10
+    ");
+
+        $firstLessonQuery = DB::Select("
+        SELECT DISTINCT cl.id 
+        FROM courseslessons cl
+        INNER JOIN coursesmodules cm ON cl.id_module = cm.id
+        WHERE cm.id_course = $data->id
+        ORDER BY cl.id ASC
+        LIMIT 1
+    ");
+
+        $firstLessonId = null;
+        if (!empty($firstLessonQuery)) {
+            $firstLessonId = $firstLessonQuery[0]->id;
+        }
+
+        $allCourses = Courses::get();
+
+        $courseEvaluation = DB::Select("
+        SELECT ce.rate, ce.comment, u.name
+        FROM coursesevaluation ce
+        INNER JOIN users u ON ce.iduser = u.id
+        WHERE ce.idcourse = $data->id
+    ");
+        
+        //dd($data);
+
+        return view('apps.course.detail', [
+            'data' => $data,
+            'modules' => $modules,
+            'coursesTop10' => $coursesTop10,
+            'allCourses' => $allCourses,
+            'courseEvaluation' => $courseEvaluation,
+            'firstLesson' => $firstLessonId
+        ]);
+        
     }
 
     public function lesson($id) {

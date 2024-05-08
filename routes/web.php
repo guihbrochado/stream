@@ -70,6 +70,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
+    
 });
 
 Route::get('/index', function () {
@@ -93,6 +94,14 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
     Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified', 'permission:user|client']], function () {
 
         Route::get('/about', [AboutController::class, 'index'])->name('about.index');
+        Route::get('/about-all', [AboutController::class, 'all'])->name('about.all');
+        Route::get('/about/create', [AboutController::class, 'create'])->name('about.create');
+        Route::post('/about/store', [AboutController::class, 'store'])->name('about.store');
+        Route::get('/about/{id}', [AboutController::class, 'show'])->name('about.show');
+        Route::get('/about/{id}/edit', [AboutController::class, 'edit'])->name('about.edit');
+        Route::put('/about/{id}', [AboutController::class, 'update'])->name('about.update');
+        Route::delete('/about/{id}', [AboutController::class, 'destroy'])->name('about.destroy');
+
         Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
         Route::get('/plans', [PlanController::class, 'index'])->name('plan.index');
         //ROTAS BLOG
@@ -101,7 +110,6 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
 
         Route::get('/blogcomments/{idblog}', [BlogController::class, 'ajaxBlogComments'])->name('blog.ajaxBlogComments');
         Route::get('/bloginsertcomments/{idblog}/{comment}', [BlogController::class, 'ajaxBlogInsertComments'])->name('blog.ajaxBlogInsertComments');
-
 
         // Route::get('/audio', [AudioController::class, 'index'])->name('audio.index');
         // Route::get('/blog-video', [BlogVideoController::class, 'index'])->name('blogvideo.index');
@@ -137,14 +145,13 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::put('/review/{review}', [ShopController::class, 'update'])->name('review.update');
         Route::delete('/review/{review}', [ShopController::class, 'destroy'])->name('review.destroy');
 
-
         Route::get('/my-account', [MyAccountController::class, 'index'])->name('myaccount.index');
         Route::post('/myaccount/update', [MyAccountController::class, 'update'])->name('myaccount.update');
         Route::put('/address/update/{id}', [MyAccountController::class, 'updateAddress'])->name('address.update');
 
-
-        
-        Route::get('/whishlist', [ShopController::class, 'whishlist'])->name('shop.wishlist');
+        Route::get('/wishlist', [ShopController::class, 'wishlist'])->name('shop.wishlist');
+        Route::post('/wishlist', [ShopController::class, 'addToWishlist'])->name('wishlist.add');
+        Route::delete('/wishlist/{id}', [ShopController::class, 'removeFromWishlist'])->name('wishlist.remove');
         Route::get('/checkout', [ShopController::class, 'checkout'])->name('shop.checkout');
         Route::get('/detail', [ShopController::class, 'detail'])->name('shop.detail');
 
@@ -167,7 +174,6 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
         Route::get('/usage_policy', [UsagePolicyController::class, 'index'])->name('usage_policy.index');
 
-
         Route::get('/user/profile', [UserController::class, 'profile'])->name('profile.show');
         Route::get('/user/profile/edit', [UserController::class, 'profile_edit'])->name('profile.edit');
         Route::put('/user/profile/update', [UserController::class, 'profile_update'])->name('profile.update');
@@ -176,13 +182,11 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/store/checkout', [StoreController::class, 'checkout'])->name('store.checkout');
         Route::get('/store/payment', [StoreController::class, 'payment'])->name('store.payment');
 
-
         Route::get('/cart', [CartController::class, 'showCart'])->name('view.cart');
         Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
         Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
         Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
         Route::post('/apply-coupon', [CartController::class, 'applyCoupon'])->name('apply.coupon');
-
 
         Route::post('/storeOrder', [OrderController::class, 'store'])->name('order.store');
     });
@@ -284,7 +288,6 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::put('/subcategory/{id}', [SubcategoryController::class, 'update'])->name('subcategory.update');
     Route::delete('/subcategory/{id}', [SubcategoryController::class, 'destroy'])->name('subcategory.destroy');
     Route::get('/api/subcategorias/{categoria_id}', [SubcategoryController::class, 'getSubcategoriasPorCategoria']);
-
 
     /**
      * Rota Produtos
@@ -397,7 +400,6 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::get('/user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
     Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::get('/user/show/{id}', [UserController::class, 'show'])->name('user.show');
-
 
     // supervisor
     Route::get('/supervisor_group', [SupervisorGroupController::class, 'index'])->name('supervisor_group.index');

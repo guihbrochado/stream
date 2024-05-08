@@ -146,24 +146,14 @@
                                     <li class="nav-item">
                                         <a class="nav-link " href="{{ route('shop.wishlist') }}"> Wishlist Page </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!--li class="nav-item">
                                         <a class="nav-link " href="{{ route('shop.detail') }}"> Order Tracking </a>
-                                    </li>
+                                    </li-->
                                 </ul>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/dashboard') }}">
                                     <span class="item-name">Dashboard</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/deals') }}">
-                                    <span class="item-name">Histórico</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/conta_investimento.index') }}">
-                                    <span class="item-name">Conta Investimento</span>
                                 </a>
                             </li>
                         </ul>

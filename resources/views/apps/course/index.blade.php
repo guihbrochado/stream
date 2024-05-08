@@ -222,7 +222,7 @@
                                     <li class="swiper-slide">
                                         <div class="iq-card card-hover">
                                             <div class="block-images position-relative w-100">
-                                                <div class="img-box w-100">
+                                                <div class="img-box">
                                                     <a href="{{ route('course.detail', ['id' => $row->id]) }}" class="position-absolute top-0 bottom-0 start-0 end-0"></a>
                                                     <img src="{{asset('images/courses/' . $row->cover)}}" alt="movie-card" class="img-fluid object-cover w-100 d-block border-0">
                                                 </div>
@@ -421,238 +421,89 @@
                     </div>
                 </div>
             </div>
-            <section class="tranding-tab-slider section-padding" id="divtrending">
-                <div class="container-fluid">
-                    <div class="row m-0 p-0">
-                        <div id="iq-trending" class="s-margin iq-tvshow-tabs iq-trending-tabs overflow-hidden">
-                            <div class="d-flex align-items-center justify-content-between px-0 px-md-3">
-                                <h5 class="main-title text-capitalize mb-0">Trending</h5>
-                            </div>
-                            <div class="trending-contens position-relative ">
-                                <div id="gallery-top" class="swiper gallery-thumbs" data-swiper="gallery-top">
-                                    <ul class="swiper-wrapper list-inline p-0 m-0 trending-slider-nav align-items-center ">
-                                        @forelse ($data as $row)
-                                        <li class="swiper-slide">
-                                            <a href="javascript:void(0);">
-                                                <div class="movie-swiper position-relative">
-                                                    <img src="{{ asset('images/courses/' . $row->cover) }}" alt="" />
-                                                </div>
-                                            </a>
-                                        </li>
-                                        @empty
-                                        <script>
-                                            document.getElementById('divtrending').style.display = 'none';
-                                        </script>
 
-                                        @endforelse
-                                    </ul>
-                                </div>
-                                <div id="gallery-bottom" class="swiper trending-tab-slider" data-swiper="gallery-bottom">
-                                    <ul class="swiper-wrapper list-inline p-0 m-0 d-flex align-items-center trending-slider">
+            <div class="verticle-slider section-padding-bottom">
+                <div class="slider">
+                    <div class="slider-flex position-relative">
+                        <div class="slider--col position-relative">
+                            <div class="vertical-slider-prev swiper-button"><i class="iconly-Arrow-Up-2 icli"></i></div>
+                            <div class="slider-thumbs" data-swiper="slider-thumbs">
+                                <div class="swiper-container " data-swiper="slider-thumbs-inner">
+                                    <div class="swiper-wrapper top-ten-slider-nav">
                                         @forelse ($data as $row)
-                                        <li class="swiper-slide slider-big-img-2">
-                                            <div class="trending-tab-slider-image">
-                                                <img src="{{asset('images/courses/' . $row->cover)}}" alt="trending-tab-slider-image">
+                                        <div class="swiper-slide swiper-bg">
+                                            <div class="block-images position-relative ">
+                                                <div class="img-box slider--image">
+                                                    <img src="{{ asset('images/courses/' . $row->cover) }}" class="img-fluid" alt="" loading="lazy">
+                                                </div>
+                                                <div class="block-description">
+                                                    <h6 class="iq-title"><a href="tv-show-detail.html">{{ $row->course }}</a></h6>
+                                                    <div class="movie-time d-flex align-items-center my-2">
+                                                        <span class="text-body">{{ $row->duration }}</span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="tranding-block position-relative">
-                                                <div class="trending-custom-tab">
-                                                    <div class="tab-title-info position-relative">
-                                                        <ul class="trending-pills iq-custom-tab d-flex nav nav-pills justify-content-center align-items-center text-center list-inline" id="trending-tab-2" role="tablist">
-                                                            <li class="nav-item" role="presentation">
-                                                                <a class="nav-link active" id="trending-data-tab-5" data-bs-toggle="pill" data-bs-target="#trending-data-5" aria-controls="trending-data-5" role="tab" aria-selected="true">Descrição</a>
-                                                            </li>
-                                                            <li class="nav-item" role="presentation">
-                                                                <a class="nav-link btnaulas" idcourse="{{$row->id}}" id="trending-data-tab-6" data-bs-toggle="pill" data-bs-target="#trending-data-6" aria-controls="trending-data-6" role="tab" aria-selected="false">Aulas</a>
-                                                            </li>
-                                                            <li class="nav-item" role="presentation">
-                                                                <a class="nav-link" id="trending-data-tab-7" data-bs-toggle="pill" data-bs-target="#trending-data-7" aria-controls="trending-data-7" role="tab" aria-selected="false">Trailers</a>
-                                                            </li>
-                                                            <li class="nav-item" role="presentation">
-                                                                <a class="nav-link" id="trending-data-tab-8" data-bs-toggle="pill" data-bs-target="#trending-data-8" aria-controls="trending-data-8" role="tab" aria-selected="false">Similar Like This</a>
+                                        </div>
+                                        @empty
+                                        <div class="swiper-slide">
+                                            <p>No content available</p>
+                                        </div>
+                                        @endforelse
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vertical-slider-next swiper-button"><i class="iconly-Arrow-Down-2 icli"></i></div>
+                        </div>
+                        <div class="slider-images" data-swiper="slider-images">
+                            <div class="swiper-container " data-swiper="slider-images-inner">
+                                <div class="swiper-wrapper">
+                                    @forelse ($data as $row)
+                                    <div class="swiper-slide">
+                                        <div class="slider--image block-images"><img src="{{ asset('images/courses/' . $row->cover) }}" loading="lazy" alt="" /></div>
+                                        <div class="description">
+                                            <div class="block-description">
+                                                <ul class="ps-0 mb-0 mb-1 pb-1 list-inline d-flex flex-wrap align-items-center movie-tag">
+                                                    @foreach (explode(',', $row->tags) as $tag)
+                                                    <li class="position-relative text-capitalize font-size-14 letter-spacing-1">
+                                                        <a href="view-all-movie.html" class="text-white text-decoration-none">{{ $tag }}</a>
+                                                    </li>
+                                                    @endforeach
+                                                </ul>
+                                                <h2 class="iq-title mb-3"><a href="tv-show-detail.html">{{ $row->course }}</a></h2>
+                                                <div class="d-flex align-items-center gap-3 mb-3">
+                                                    <div class="slider-ratting d-flex align-items-center">
+                                                        <ul class="ratting-start p-0 m-0 list-inline text-warning d-flex align-items-center justify-content-left">
+                                                            <li>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
                                                             </li>
                                                         </ul>
+                                                        <span class="text-white ms-2 font-size-14 fw-500">{{ $row->rating }}/5</span>                                     
                                                     </div>
-                                                    <div class="tab-content trending-content" id="trending-tab-2-content">
-                                                        <div id="trending-data-5" class="tab-pane fade show active" role="tabpanel" aria-labelledby="trending-data-tab-5" tabindex="0">
-                                                            <div class=" trending-info align-items-center w-100 animated fadeInUp iq-ltr-direction">
-                                                                <div class="d-flex align-items-center RightAnimate mb-3">
-                                                                    <ul class="p-0 mb-0 list-inline d-flex flex-wrap align-items-center movie-tag">
-                                                                        @foreach (explode(',', $row->tags) as $tag)
-                                                                        <li class="position-relative text-capitalize font-size-14 letter-spacing-1">
-                                                                            <span class="text-decoration-none">{{ $tag }}</span>
-                                                                        </li>
-                                                                        @endforeach
-                                                                    </ul>
-                                                                </div>
-                                                                <h1 class="trending-text big-title text-uppercase texture-text">{{$row->course}}
-                                                                </h1>
-                                                                <p class="trending-dec line-count-3">{{$row->description}}</p>
-                                                                <div class="p-btns">
-                                                                    <div class="iq-button">
-                                                                        <a href="{{ route('firstLessonRedirect', ['id' => $row->id]) }}" class="btn text-uppercase position-relative">
-                                                                            <span class="button-text">Assistir </span>
-                                                                            <i class="fa-solid fa-play"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="trending-list mt-4">
-                                                                    <div class="text-primary title">Tem certificado? <span class="text-body">{{$row->certification == 1 ? 'Sim' : 'Não'}}</span>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div id="trending-data-6" class="tab-pane fade" role="tabpanel" aria-labelledby="trending-data-tab-6" tabindex="0">
-                                                            <div class=" trending-info align-items-center w-100 animated fadeInUp iq-ltr-direction">
-
-                                                                <h1 class="trending-text big-title text-uppercase texture-text">{{$row->course}}
-                                                                </h1>
-
-                                                                <div class="selectmodulesdiv">
-
-                                                                </div>
-
-                                                                <div class="position-relative swiper swiper-card" data-slide="4" data-laptop="3" data-tab="2" data-mobile="2" data-mobile-sm="1" data-autoplay="false" data-loop="false" data-navigation="true" data-pagination="true">
-                                                                    <ul class="p-0 swiper-wrapper m-0  list-inline divCoursesLessons">
-                                                                        <li class="swiper-slide">                                                                      
-                                                                        </li>
-                                                                    </ul>
-                                                                    <div class="swiper-button swiper-button-next"></div>
-                                                                    <div class="swiper-button swiper-button-prev"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div id="trending-data-7" class="tab-pane fade" role="tabpanel" aria-labelledby="trending-data-tab-7" tabindex="0">
-                                                            <div class=" trending-info align-items-center w-100 animated fadeInUp iq-ltr-direction text-center">
-                                                                <h3 class="trending-text big-title text-uppercase texture-text mt-2">Watch
-                                                                    Trailer</h3>
-                                                                <div class="episodes-contens mt-5">
-                                                                    <div class="tab-watch-trailer-container d-inline-block rounded-3 overflow-hidden">
-                                                                        <div class="tab-watch-trailer position-relative rounded-3 overflow-hidden">
-                                                                            <img src="{{asset('images/courses/' . $row->cover)}}" class="trailer-image" alt="trailer-image">
-                                                                            <a href="{{ route('firstLessonRedirect', ['id' => $row->id]) }}" class="video-open playbtn text-decoration-none" tabindex="0">
-                                                                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="80px" height="80px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7" xml:space="preserve">
-                                                                                <polygon class="triangle" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="73.5,62.5 148.5,105.8 73.5,149.1 "></polygon>
-                                                                                <circle class="circle" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3">
-                                                                                </circle>
-                                                                                </svg>
-                                                                                <span class="w-trailor text-uppercase"> Assista a primeira aula </span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <span class="text-body">{{ $row->duration }}</span>
+                                                </div>
+                                                <p class="mt-0 mb-3 line-count-2">{{ $row->description }}</p>
+                                                <div class="iq-button">
+                                                    <a href="{{ route('firstLessonRedirect', ['id' => $row->id]) }}" class="btn text-uppercase position-relative">
+                                                        <span class="button-text">Assistir</span>
+                                                        <i class="fa-solid fa-play"></i>
+                                                    </a>
                                                 </div>
                                             </div>
-                                        </li>
-                                        @empty
-                                        <script>
-                                            document.getElementById('gallery-bottom').style.display = 'none';
-                                        </script>
-
-                                        @endforelse
-                                    </ul>
-                                    <div class="swiper-arrow swiper-button-next">
-                                        <i class="fa-solid fa-chevron-right"></i>
+                                        </div>
                                     </div>
-                                    <div class="swiper-arrow swiper-button-prev">
-                                        <i class="fa-solid fa-chevron-left"></i>
+                                    @empty
+                                    <div class="swiper-slide">
+                                        <p>No content available</p>
                                     </div>
+                                    @endforelse
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-
-
-        <div class="rtl-box">
-            <a class="btn btn-fixed-end btn-icon btn-setting" id="settingbutton" data-bs-toggle="offcanvas" data-bs-target="#live-customizer" role="button" aria-controls="live-customizer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1.875em" height="1.875em" viewBox="0 0 20 20" fill="white">
-                <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
-                </svg>
-            </a>
-            <div class="offcanvas offcanvas-end live-customizer on-rtl end" tabindex="-1" id="live-customizer" data-bs-scroll="true" data-bs-backdrop="false" aria-labelledby="live-customizer-label" aria-modal="true" role="dialog">
-                <div class="offcanvas-header gap-3">
-                    <div class="d-flex align-items-center">
-                        <h5 class="offcanvas-title text-dark" id="live-customizer-label">Live Customizer</h5>
-                    </div>
-                    <div class="d-flex gap-1 align-items-center">
-                        <button class="btn btn-icon text-primary" data-reset="settings" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Reset All Settings" data-bs-original-title="Reset All Settings">
-                            <span class="btn-inner">
-                                <i class="fa-solid fa-arrows-rotate"></i>
-                            </span>
-                        </button>
-                        <button type="button" class="btn btn-icon btn-close px-0 text-reset shadow-none text-dark" data-bs-dismiss="offcanvas" aria-label="Close">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="offcanvas-body pt-0">
-                    <div class="modes row row-cols-2 gx-2">
-                        <div class="col">
-                            <div data-setting="attribute" class="text-center w-100">
-                                <input type="radio" value="ltr" class="btn-check" name="theme_scheme_direction" data-prop="dir" id="theme-scheme-direction-ltr" checked>
-                                <label class="btn dir-btn cutomizer-button w-100" for="theme-scheme-direction-ltr">
-                                    LTR
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div data-setting="attribute" class="text-center w-100">
-                                <input type="radio" value="rtl" class="btn-check" name="theme_scheme_direction" data-prop="dir" id="theme-scheme-direction-rtl">
-                                <label class="btn dir-btn cutomizer-button w-100" for="theme-scheme-direction-rtl">
-                                    RTL
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modes mt-3">
-                        <div class="color-customizer mb-3">
-                            <h6 class="mb-0 title-customizer">Color Customizer</h6>
-                        </div>
-                        <!-- <div class="row row-cols-2 gx-2">
-                                    <div class="col mb-3">
-                                        <div data-setting="attribute" class="text-center w-100">
-                                            <input type="radio" value="dark" class="btn-check" name="theme_style_appearance" data-prop="data-bs-theme" id="theme-scheme-color-netflix" checked>
-                                            <label class="btn dir-btn cutomizer-button w-100" for="theme-scheme-color-netflix">
-                                                Netflix
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col mb-3">
-                                        <div data-setting="attribute" class="text-center w-100">
-                                            <input type="radio" value="hotstar" class="btn-check" name="theme_style_appearance" data-prop="data-bs-theme" id="theme-scheme-color-hotstar">
-                                            <label class="btn dir-btn cutomizer-button w-100" for="theme-scheme-color-hotstar">
-                                                Hotstar
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div data-setting="attribute" class="text-center w-100">
-                                            <input type="radio" value="amazonprime" class="btn-check" name="theme_style_appearance" data-prop="data-bs-theme" id="theme-scheme-color-prime">
-                                            <label class="btn dir-btn cutomizer-button w-100" for="theme-scheme-color-prime">
-                                                Prime
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div data-setting="attribute" class="text-center w-100">
-                                            <input type="radio" value="hulu" class="btn-check" name="theme_style_appearance" data-prop="data-bs-theme" id="theme-scheme-color-hulu">
-                                            <label class="btn dir-btn cutomizer-button w-100" for="theme-scheme-color-hulu">
-                                                Hulu
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div> -->
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
+
         <div id="back-to-top" style="display: none;">
             <a class="p-0 btn bg-primary btn-sm position-fixed top border-0 rounded-circle" id="top" href="#top">
                 <i class="fa-solid fa-chevron-up"></i>

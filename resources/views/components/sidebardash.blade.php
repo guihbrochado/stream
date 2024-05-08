@@ -192,6 +192,60 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-pages" role="button" aria-expanded="false" aria-controls="sidebar-pages">
+                        <i class="fab fa-pagelines"></i>
+                        <span class="item-name">Páginas</span>
+                        <i class="right-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" class="icon-18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </i>
+                    </a>
+                    <ul class="sub-nav collapse" id="sidebar-pages" data-bs-parent="#sidebar-pages">
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('about.all') }}">
+                                <i class="icon" data-bs-toggle="tooltip" title="lives" data-bs-placement="right" aria-label="pages" data-bs-original-title="pages">
+                                    <i class="fas fa-house-user"></i>
+                                </i>
+                                <span class="item-name">Sobre</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="dashboard/widget/widgetchart.html">
+                                <i class="icon" data-bs-toggle="tooltip" title="Modulos" data-bs-placement="right" aria-label="pages" data-bs-original-title="pages">
+                                    <i class="fas fa-bars"></i>
+                                </i>
+                                <span class="item-name">Contato</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('faq.index_admin') }}">
+                                <i class="icon" data-bs-toggle="tooltip" title="Modulos" data-bs-placement="right" aria-label="pages" data-bs-original-title="pages">
+                                    <i class="fas fa-bars"></i>
+                                </i>
+                                <span class="item-name">Faq</span>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link " href="dashboard/widget/widgetchart.html">
+                                <i class="icon" data-bs-toggle="tooltip" title="Modulos" data-bs-placement="right" aria-label="pages" data-bs-original-title="pages">
+                                    <i class="fas fa-bars"></i>
+                                </i>
+                                <span class="item-name">Politicas</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="dashboard/widget/widgetchart.html">
+                                <i class="icon" data-bs-toggle="tooltip" title="Modulos" data-bs-placement="right" aria-label="pages" data-bs-original-title="pages">
+                                    <i class="fas fa-bars"></i>
+                                </i>
+                                <span class="item-name">Planos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
 
             <!-- Sidebar Menu End -->
