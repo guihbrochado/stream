@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="id_course" class="form-label">Nível do Curso</label>
+                                        <label for="id_course" class="form-label">Curso</label>
                                         <select class="form-select" id="id_course" name="id_course" required>
                                             @foreach ($courses as $row)
                                             <option value="<?= $row->id; ?>" <?php // echo $row->id == $id_course ? 'selected' : ''; 

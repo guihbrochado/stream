@@ -7,32 +7,29 @@ use App\Http\Requests\CoursesLessonsFormRequest;
 use App\Models\CoursesLessons;
 use App\Models\CoursesModules;
 use App\Models\Courses;
-
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
-class CoursesLessonsController extends Controller
-{
+class CoursesLessonsController extends Controller {
+
     /**
      * Display a listing of the resource.
      */
-    public function __construct()
-    {
+    public function __construct() {
         // Assigning a value to $controller in the constructor
         $this->controller = "courseslessons.index";
     }
 
-    public function index()
-    {
+    public function index() {
         $message = session('message');
 
         $data = DB::table('courseslessons as cl')
-            ->join('coursesmodules as m', 'm.id', '=', 'cl.id_module')
-            ->select('cl.*', 'm.module as module')
-            ->orderBy('cl.id', 'desc')
-            ->get();
+                ->join('coursesmodules as m', 'm.id', '=', 'cl.id_module')
+                ->select('cl.*', 'm.module as module')
+                ->orderBy('cl.id', 'desc')
+                ->get();
 
         return view('apps.courseslessons.index')->with('data', $data)->with('message', $message);
     }
@@ -40,113 +37,161 @@ class CoursesLessonsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         $coursesLessons = new CoursesLessons;
 
         $modulesandcourses = DB::table('coursesmodules as cm')
-            ->join('courses as c', 'c.id', '=', 'cm.id_course')
-            ->select('cm.*', 'c.course as coursename')
-            ->orderBy('c.id', 'desc')
-            ->get();
+                ->join('courses as c', 'c.id', '=', 'cm.id_course')
+                ->select('cm.*', 'c.course as coursename')
+                ->orderBy('c.id', 'desc')
+                ->get();
 
         return view('apps.courseslessons.create')->with([
-            'coursesLessons' => $coursesLessons, 'controller' => $this->controller,
-            'modulesandcourses' => $modulesandcourses, 'action' => 'create'
+                    'coursesLessons' => $coursesLessons, 'controller' => $this->controller,
+                    'modulesandcourses' => $modulesandcourses, 'action' => 'create'
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CoursesLessonsFormRequest  $request)
-    {
+    /* public function store(CoursesLessonsFormRequest  $request)
+      {
 
-        // function getYouTubeEmbedCode($url)
-        // {
-        //     $video_id = '';
-        //     $parsed_url = parse_url($url);
+      // function getYouTubeEmbedCode($url)
+      // {
+      //     $video_id = '';
+      //     $parsed_url = parse_url($url);
 
-        //     if (isset($parsed_url['query'])) {
-        //         parse_str($parsed_url['query'], $query_params);
+      //     if (isset($parsed_url['query'])) {
+      //         parse_str($parsed_url['query'], $query_params);
 
-        //         if (isset($query_params['v'])) {
-        //             $video_id = $query_params['v'];
-        //         }
-        //     }
+      //         if (isset($query_params['v'])) {
+      //             $video_id = $query_params['v'];
+      //         }
+      //     }
 
-        //     if ($video_id) {
-        //         return "$video_id";
-        //     } else {
-        //         return "O URL do vídeo do YouTube é inválido.";
-        //     }
-        // }
+      //     if ($video_id) {
+      //         return "$video_id";
+      //     } else {
+      //         return "O URL do vídeo do YouTube é inválido.";
+      //     }
+      // }
 
-        $embed = $this->getYouTubeEmbedCode($request->link);
+      $embed = $this->getYouTubeEmbedCode($request->link);
 
+      try {
+      $coursesLessons = CoursesLessons::create(
+      [
+      'id_module' => $request->id_module,
+      'lesson' => $request->lesson,
+      'description' => $request->description,
+      'lessonnumber' => $request->lessonnumber,
+      'author' => $request->author,
+      'materials' => $request->materials,
+      'duration' => $request->duration,
+      'link' => $embed,
+      'tags' => $request->tags,
+      ]
+      );
+      } catch (Exception $e) {
+      $errorInfo = $e->getMessage();
+      return to_route($this->controller)->with('message', $errorInfo);
+      }
+
+      return to_route($this->controller)->with('message', "Dados registrados com sucesso!");
+      } */
+    public function store(CoursesLessonsFormRequest $request) {
+        $videoFolder = public_path('assets/videos/cursos');
+        $coverFolder = public_path('assets/videos/capa');
+
+        // Criar diretórios se não existirem
+        if (!file_exists($videoFolder)) {
+            mkdir($videoFolder, 0777, true);
+        }
+        if (!file_exists($coverFolder)) {
+            mkdir($coverFolder, 0777, true);
+        }
+
+        $videoPath = $coverPath = '';
+
+        // Processar arquivo de vídeo
+        if ($request->hasFile('video_file') && $request->file('video_file')->isValid()) {
+            $videoFile = $request->file('video_file');
+            $videoExtension = $videoFile->extension();
+            $videoFileName = md5($videoFile->getClientOriginalName() . strtotime("now")) . "." . $videoExtension;
+            $videoFile->move($videoFolder, $videoFileName);
+            $videoPath = '/assets/videos/cursos/' . $videoFileName;
+        }
+
+        // Processar arquivo de capa
+        if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
+            $coverFile = $request->file('cover');
+            $coverExtension = $coverFile->extension();
+            $coverFileName = md5($coverFile->getClientOriginalName() . strtotime("now")) . "." . $coverExtension;
+            $coverFile->move($coverFolder, $coverFileName);
+            $coverPath = '/assets/videos/capa/' . $coverFileName;
+        }
+
+        // Criar registro no banco de dados
         try {
-            $coursesLessons = CoursesLessons::create(
-                [
-                    'id_module' => $request->id_module,
-                    'lesson' => $request->lesson,
-                    'description' => $request->description,
-                    'lessonnumber' => $request->lessonnumber,
-                    'author' => $request->author,
-                    'materials' => $request->materials,
-                    'duration' => $request->duration,
-                    'link' => $embed,
-                    'tags' => $request->tags,
-                ]
-            );
+            $coursesLesson = CoursesLessons::create([
+                        'id_module' => $request->id_module,
+                        'lesson' => $request->lesson,
+                        'description' => $request->description,
+                        'lessonnumber' => $request->lessonnumber,
+                        'author' => $request->author,
+                        'materials' => $request->materials,
+                        'duration' => $request->duration,
+                        'link' => $videoPath,
+                        'cover_image' => $coverPath,
+                        'tags' => $request->tags,
+            ]);
+            return to_route($this->controller)->with('message', "Dados registrados com sucesso!");
         } catch (Exception $e) {
             $errorInfo = $e->getMessage();
             return to_route($this->controller)->with('message', $errorInfo);
         }
-
-        return to_route($this->controller)->with('message', "Dados registrados com sucesso!");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
-    {
+    public function show($id) {
         $coursesLessons = CoursesLessons::find($id);
         $modulesandcourses = DB::table('coursesmodules as cm')
-            ->join('courses as c', 'c.id', '=', 'cm.id_course')
-            ->select('cm.*', 'c.course as coursename')
-            ->orderBy('c.id', 'desc')
-            ->get();
+                ->join('courses as c', 'c.id', '=', 'cm.id_course')
+                ->select('cm.*', 'c.course as coursename')
+                ->orderBy('c.id', 'desc')
+                ->get();
 
-            return view('apps.courseslessons.show')->with([
-            'data' => $coursesLessons, 'controller' => $this->controller,
-            'modulesandcourses' => $modulesandcourses,  'action' => 'show'
+        return view('apps.courseslessons.show')->with([
+                    'data' => $coursesLessons, 'controller' => $this->controller,
+                    'modulesandcourses' => $modulesandcourses, 'action' => 'show'
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         $coursesLessons = CoursesLessons::find($id);
         $modulesandcourses = DB::table('coursesmodules as cm')
-            ->join('courses as c', 'c.id', '=', 'cm.id_course')
-            ->select('cm.*', 'c.course as coursename')
-            ->orderBy('c.id', 'desc')
-            ->get();
+                ->join('courses as c', 'c.id', '=', 'cm.id_course')
+                ->select('cm.*', 'c.course as coursename')
+                ->orderBy('c.id', 'desc')
+                ->get();
 
         return view('apps.courseslessons.edit')->with([
-            'data' => $coursesLessons, 'controller' => $this->controller,
-            'modulesandcourses' => $modulesandcourses,  'action' => 'edit'
+                    'data' => $coursesLessons, 'controller' => $this->controller,
+                    'modulesandcourses' => $modulesandcourses, 'action' => 'edit'
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CoursesLessonsFormRequest $request, $id)
-    {
+    public function update(CoursesLessonsFormRequest $request, $id) {
         $coursesLessons = CoursesLessons::find($id);
 
         if ($coursesLessons === null) {
@@ -154,7 +199,7 @@ class CoursesLessonsController extends Controller
         }
 
         $coursesLessons->fill($request->all());
-  
+
         $coursesLessons->link = $this->getYouTubeEmbedCode($request->link);
 
         try {
@@ -170,12 +215,11 @@ class CoursesLessonsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $coursesLessons = CoursesLessons::find($id);
         if ($coursesLessons === null) {
             return to_route($this->controller)
-                ->with('message', "Dados inválidos");
+                            ->with('message', "Dados inválidos");
         }
         try {
             $coursesLessons->delete();
@@ -188,8 +232,7 @@ class CoursesLessonsController extends Controller
         return to_route($this->controller)->with('message', "'{$coursesLessons->name}' deleted");
     }
 
-     function getYouTubeEmbedCode($url)
-    {
+    function getYouTubeEmbedCode($url) {
         $video_id = '';
         $parsed_url = parse_url($url);
 

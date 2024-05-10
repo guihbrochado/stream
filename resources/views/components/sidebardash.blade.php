@@ -145,14 +145,6 @@
                                 <span class="item-name">Sala ao vivo</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="dashboard/widget/widgetchart.html">
-                                <i class="icon" data-bs-toggle="tooltip" title="Modulos" data-bs-placement="right" aria-label="Modulos" data-bs-original-title="Modulos">
-                                    <i class="fas fa-bars"></i>
-                                </i>
-                                <span class="item-name">Categoria</span>
-                            </a>
-                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">

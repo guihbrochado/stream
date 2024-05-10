@@ -126,7 +126,13 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::get('/lesson-rating/ratingstore/{idlesson}/{rate}', [CourseController::class, 'lessonratingstore'])->name('lesson.ratingstore');
 
         Route::get('/lesson-comment/{idlesson}', [CourseController::class, 'lessoncomment'])->name('lessoncomment');
-        Route::get('/lesson-comment/commentstore/{idlesson}/{comment}', [CourseController::class, 'lessoncommentstore'])->name('lesson.commentstore');
+        //Route::get('/lesson-comment/commentstore/{idlesson}/{comment}', [CourseController::class, 'lessoncommentstore'])->name('lesson.commentstore');
+        Route::post('/lesson-comment/commentstore', [CourseController::class, 'lessoncommentstore'])->name('lesson.commentstore');
+        Route::post('/lesson-comment/update', [CourseController::class, 'lessoncommentupdate'])->name('lesson.commentupdate');
+        Route::delete('/lesson-comment/delete', [CourseController::class, 'lessoncommentdelete'])->name('lesson.commentdelete');
+
+
+        
 
         Route::get('/course-redirecttolesson/{id}', [CourseController::class, 'firstLessonRedirect'])->name('firstLessonRedirect');
 

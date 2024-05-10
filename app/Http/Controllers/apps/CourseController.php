@@ -71,22 +71,22 @@ class CourseController extends Controller {
 
     public function firstLessonRedirect($id) {
         // Execute a consulta SQL
-        /*$data = DB::select("
-        select distinct cl.id
-        from courseslessons cl
-        inner join coursesmodules cm on cl.id_module = cm.id
-        where cm.id_course = ?", [$id]);
-        
-        dd($data);
-        
-        // Verifique se há resultados antes de acessar o índice [0]
-        if (count($data) > 0) {
-            return redirect('/course-lesson/' . $data[0]->id);
-        } else {
-            // Redireciona para uma página ou mostra uma mensagem de erro
-            return view('/apps.course.detail')->with(['data' => $data, 'message'], 'Nenhuma aula encontrada para este curso.');
-        }*/
-        
+        /* $data = DB::select("
+          select distinct cl.id
+          from courseslessons cl
+          inner join coursesmodules cm on cl.id_module = cm.id
+          where cm.id_course = ?", [$id]);
+
+          dd($data);
+
+          // Verifique se há resultados antes de acessar o índice [0]
+          if (count($data) > 0) {
+          return redirect('/course-lesson/' . $data[0]->id);
+          } else {
+          // Redireciona para uma página ou mostra uma mensagem de erro
+          return view('/apps.course.detail')->with(['data' => $data, 'message'], 'Nenhuma aula encontrada para este curso.');
+          } */
+
         $data = Courses::find($id);
 
         $modules = DB::Select("
@@ -128,7 +128,7 @@ class CourseController extends Controller {
         INNER JOIN users u ON ce.iduser = u.id
         WHERE ce.idcourse = $data->id
     ");
-        
+
         //dd($data);
 
         return view('apps.course.detail', [
@@ -139,7 +139,6 @@ class CourseController extends Controller {
             'courseEvaluation' => $courseEvaluation,
             'firstLesson' => $firstLessonId
         ]);
-        
     }
 
     public function lesson($id) {
@@ -302,6 +301,9 @@ class CourseController extends Controller {
         }
     }
 
+    /**
+     *  ROTAS PARA COMENTÁRIOS DAS AULAS
+     * */
     function lessoncomment($idlesson) {
         $data = DB::select("select u.name as username, lc.comment as comment from lessoncomments lc
         inner join users u on lc.id_user = u.id
@@ -311,37 +313,67 @@ class CourseController extends Controller {
         return view('apps.course.lessoncomment')->with(['data' => $data]);
     }
 
-    public function lessoncommentstore($idlesson, $comment) {
+    public function lessoncommentstore(Request $request) {
+        $idlesson = $request->input('idlesson');
         $iduser = Auth::user()->id;
+        $comment = $request->input('comment');
 
-        echo $idlesson;
+        // Verificar se o comentário está vazio
+        if (empty($comment)) {
+            return response()->json(['message' => 'Comentário vazio.'], 400);
+        }
 
-        $lessonRating = LessonComment::where('id_lesson', $idlesson)->where('id_user', $iduser)->get();
+        try {
+            // Atualizar ou criar novo comentário
+            LessonComment::updateOrCreate(
+                    ['id_lesson' => $idlesson, 'id_user' => $iduser],
+                    ['comment' => $comment]
+            );
 
-        if ($lessonRating->isEmpty()) {
-            echo 'if';
-            try {
-                $resCreate = LessonComment::create(
-                                [
-                                    'id_lesson' => $idlesson,
-                                    'id_user' => $iduser,
-                                    'comment' => $comment,
-                                ]
-                );
-            } catch (Exception $e) {
-                $errorInfo = $e->getMessage();
-                var_dump($errorInfo);
+            return response()->json(['message' => 'Comentário salvo com sucesso!'], 200);
+        } catch (Exception $e) {
+            $errorInfo = $e->getMessage();
+            return response()->json(['message' => $errorInfo], 500);
+        }
+    }
+
+    public function lessoncommentupdate(Request $request) {
+        $idcomment = $request->input('idcomment');
+        $comment = $request->input('comment');
+
+        if (empty($comment)) {
+            return response()->json(['message' => 'Comentário vazio.'], 400);
+        }
+
+        try {
+            $existingComment = LessonComment::find($idcomment);
+            if ($existingComment) {
+                $existingComment->update(['comment' => $comment]);
+                return response()->json(['message' => 'Comentário atualizado com sucesso!'], 200);
+            } else {
+                return response()->json(['message' => 'Comentário não encontrado.'], 404);
             }
-            $successMessage = "Registro salvo com sucesso.";
-        } else {
+        } catch (Exception $e) {
+            $errorInfo = $e->getMessage();
+            return response()->json(['message' => $errorInfo], 500);
+        }
+    }
 
-            try {
-                LessonComment::where('id_lesson', $idlesson)->where('id_user', $iduser)->update(['comment' => $comment]);
-            } catch (Exception $e) {
-                $errorInfo = $e->getMessage();
-                var_dump($errorInfo);
+// Remove um comentário existente
+    public function lessoncommentdelete(Request $request) {
+        $idcomment = $request->input('idcomment');
+
+        try {
+            $comment = LessonComment::find($idcomment);
+            if ($comment) {
+                $comment->delete();
+                return response()->json(['message' => 'Comentário excluído com sucesso!'], 200);
+            } else {
+                return response()->json(['message' => 'Comentário não encontrado.'], 404);
             }
-            $successMessage = "Registro salvo com sucesso.";
+        } catch (Exception $e) {
+            $errorInfo = $e->getMessage();
+            return response()->json(['message' => $errorInfo], 500);
         }
     }
 
