@@ -11,7 +11,7 @@ class AboutController extends Controller {
     public function index() {
         // Listar todas as entradas
         $abouts = About::all();
- 
+
         return view('apps.about.index', compact('abouts'));
     }
 
@@ -28,14 +28,34 @@ class AboutController extends Controller {
     }
 
     public function store(Request $request) {
-        // Validar e salvar os dados do formulário
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'contact_email' => 'required|email|max:255',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        About::create($validated);
+        if ($request->hasFile('cover_image')) {
+            $imageName = time() . '.' . $request->cover_image->extension();
+            $request->cover_image->move(public_path('images'), $imageName);
+            $validated['cover_image'] = 'images/' . $imageName;
+        }
+
+        $about = About::create($validated);
+
+        // Processar dados de equipe, se fornecidos
+        if ($request->has('team')) {
+            $teamMembers = json_decode($request->team, true); // Supõe JSON
+            foreach ($teamMembers as $member) {
+                TeamMember::create([
+                    'about_id' => $about->id,
+                    'name' => $member['name'],
+                    'role' => $member['role'],
+                    'image_path' => $member['image_path'],
+                    'description' => $member['description'] ?? null,
+                ]);
+            }
+        }
 
         return redirect()->route('about.all')->with('success', 'About Us created successfully!');
     }
@@ -43,18 +63,25 @@ class AboutController extends Controller {
     public function edit($id) {
         // Buscar o item para edição
         $about = About::findOrFail($id);
-        return view('apps.about.form', compact('about'));
+        return view('apps.about.form')->with(['about' => $about, 'action' => 'edit']);;
     }
 
     public function update(Request $request, $id) {
-        // Validar e atualizar os dados do formulário
+        $about = About::findOrFail($id);
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'contact_email' => 'required|email|max:255',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $about = About::findOrFail($id);
+        if ($request->hasFile('cover_image')) {
+            $filename = time() . '.' . $request->cover_image->extension();
+            $request->cover_image->move(public_path('images'), $filename);
+            $validated['cover_image'] = 'images/' . $filename;
+        }
+
         $about->update($validated);
 
         return redirect()->route('about.all')->with('success', 'About Us updated successfully!');

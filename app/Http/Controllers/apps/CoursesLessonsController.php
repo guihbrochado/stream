@@ -193,23 +193,32 @@ class CoursesLessonsController extends Controller {
      */
     public function update(CoursesLessonsFormRequest $request, $id) {
         $coursesLessons = CoursesLessons::find($id);
-
-        if ($coursesLessons === null) {
-            return to_route('coursesLessons.index')->with('message', "Dados inválidos");
+        if (!$coursesLessons) {
+            return redirect()->route('coursesLessons.index')->with('error', "Aula não encontrada.");
         }
 
-        $coursesLessons->fill($request->all());
+        $data = $request->except(['video_file', 'cover_image']);
 
-        $coursesLessons->link = $this->getYouTubeEmbedCode($request->link);
+        // Tratar o upload do vídeo
+        if ($request->hasFile('video_file') && $request->file('video_file')->isValid()) {
+            $videoPath = $request->video_file->store('videos/cursos', 'public');
+            $data['link'] = $videoPath;
+        }
 
+        // Tratar o upload da capa
+        if ($request->hasFile('cover_image') && $request->file('cover_image')->isValid()) {
+            $coverPath = $request->cover_image->store('videos/capas', 'public');
+            $data['cover_image'] = $coverPath;
+        }
+
+        // Atualizar os dados da aula
         try {
-            $coursesLessons->save();
-        } catch (Exception $e) {
-            $errorInfo = $e->getMessage();
-            return to_route($this->controller)->with('message', $errorInfo);
+            $coursesLessons->update($data);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erro ao atualizar a aula: ' . $e->getMessage());
         }
 
-        return to_route($this->controller)->with('message', "Dados registrados com sucesso!");
+        return redirect()->route('courseslessons.index')->with('message', 'Aula atualizada com sucesso!');
     }
 
     /**
