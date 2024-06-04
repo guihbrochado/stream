@@ -196,6 +196,14 @@
                     </a>
                     <ul class="sub-nav collapse" id="sidebar-pages" data-bs-parent="#sidebar-pages">
                         <li class="nav-item">
+                            <a class="nav-link " href="{{ route('inicio.index') }}">
+                                <i class="icon" data-bs-toggle="tooltip" title="lives" data-bs-placement="right" aria-label="pages" data-bs-original-title="pages">
+                                    <i class="fas fa-house-user"></i>
+                                </i>
+                                <span class="item-name">Inicio</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link " href="{{ route('about.all') }}">
                                 <i class="icon" data-bs-toggle="tooltip" title="lives" data-bs-placement="right" aria-label="pages" data-bs-original-title="pages">
                                     <i class="fas fa-house-user"></i>

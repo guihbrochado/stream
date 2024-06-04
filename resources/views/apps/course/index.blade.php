@@ -479,7 +479,7 @@
                                                         </ul>
                                                         <span class="text-white ms-2 font-size-14 fw-500">{{ $row->rating }}/5</span>                                     
                                                     </div>
-                                                    <span class="text-body">{{ $row->duration }}</span>
+                                                    <span class="text-body">{{ $row->duration }} minutos</span>
                                                 </div>
                                                 <p class="mt-0 mb-3 line-count-2">{{ $row->description }}</p>
                                                 <div class="iq-button">

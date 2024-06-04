@@ -96,7 +96,7 @@
                             <div class="product-meta-wrapper">
                                 <ul class="list-inline m-0 p-0">
                                     <li class="mb-2">
-                                        <span class="text-white fw-semibold">SKU :</span>
+                                        <span class="text-white fw-semibold">ID Produto :</span>
                                         <h6 class="d-inline">{{ $product->id }}</h6>
                                     </li>
                                     <li class="mb-2">
@@ -105,14 +105,6 @@
                                         <h6 class="d-inline text-primary">{{ $product->category->nome }}</h6>
                                         @else
                                         <h6 class="d-inline text-primary">No Category</h6>
-                                        @endif
-                                    </li>
-                                    <li>
-                                        <span class="text-white fw-semibold">Tag :</span>
-                                        @if ($product->tags)
-                                        <h6 class="d-inline text-primary">{{ implode(', ', $product->tags->pluck('name')->toArray()) }}</h6>
-                                        @else
-                                        <h6 class="d-inline text-primary">No Tags</h6>
                                         @endif
                                     </li>
                                 </ul>
@@ -244,6 +236,7 @@
                                             </div>
                                         </form>
                                     </div>
+                                    @if($review)
                                     <div class="modal fade" id="editReviewModal" tabindex="-1" aria-labelledby="editReviewModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -258,16 +251,16 @@
                                                         <div class="mb-3">
                                                             <label for="reviewRating" class="form-label">Sua Avaliação</label>
                                                             <select id="reviewRating" name="rating" class="form-select">
-                                                                <option value="1">1 Estrela</option>
-                                                                <option value="2">2 Estrelas</option>
-                                                                <option value="3">3 Estrelas</option>
-                                                                <option value="4">4 Estrelas</option>
-                                                                <option value="5">5 Estrelas</option>
+                                                                <option value="1" {{ $review->rating == 1 ? 'selected' : '' }}>1 Estrela</option>
+                                                                <option value="2" {{ $review->rating == 2 ? 'selected' : '' }}>2 Estrelas</option>
+                                                                <option value="3" {{ $review->rating == 3 ? 'selected' : '' }}>3 Estrelas</option>
+                                                                <option value="4" {{ $review->rating == 4 ? 'selected' : '' }}>4 Estrelas</option>
+                                                                <option value="5" {{ $review->rating == 5 ? 'selected' : '' }}>5 Estrelas</option>
                                                             </select>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="reviewComment" class="form-label">Seu Comentário</label>
-                                                            <textarea id="reviewComment" name="comment" class="form-control" required></textarea>
+                                                            <textarea id="reviewComment" name="comment" class="form-control" required>{{ $review->comment }}</textarea>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -278,482 +271,230 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                </div>
-                <div class="related-product-block section-padding-top">
-                    <div class="container p-0">
-                        <div class="overflow-hidden">
-                            <div class="d-flex align-items-center justify-content-between px-3 my-4">
-                                <h5 class="main-title text-capitalize mb-0">Related Products</h5>
-                                <a href="shop/view-all-product.html" class="text-primary iq-view-all text-decoration-none flex-none">Want More?</a>
-                            </div>
-                            <div class="card-style-slider">
-                                <div class="position-relative swiper swiper-card" data-slide="4" data-laptop="4" data-tab="3" data-mobile="2" data-mobile-sm="2" data-autoplay="true" data-loop="true" data-navigation="true" data-pagination="true">
-                                    <ul class="p-0 swiper-wrapper m-0  list-inline">
-                                        <li class="swiper-slide">
-                                            <div class="product-block">
-                                                <span class="onsale bg-primary">
-                                                    Sale!
-                                                </span>
-                                                <div class="image-wrap">
-                                                    <a href="../shop/product-detail.html">
-                                                        <div class="product-image">
-                                                            <img src="" class="img-fluid w-100" alt="productImg-01" loading="lazy" />
-                                                        </div>
-                                                    </a>
-                                                    <div class="buttons-holder">
-                                                        <ul class="list-unstyled m-0 p-0">
-                                                            <li>
-                                                                <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#woosq-popup">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="add_to_wishlist wishlist-btn"><i class="fa-solid fa-heart"></i></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="added_to_cart cart-btn d-flex align-items-center">
-                                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-caption">
-                                                    <h5 class="product__title">
-                                                        <a href="../shop/product-detail.html" class="title-link">
-                                                            Black Bow</a>
-                                                    </h5>
-                                                    <div class="price-detail">
-                                                        <div class="price">
-                                                            <del>$48.00</del>$28.00
+                    <div class="related-product-block section-padding-top">
+                        <div class="container p-0">
+                            <div class="overflow-hidden">
+                                <div class="d-flex align-items-center justify-content-between px-3 my-4">
+                                    <h5 class="main-title text-capitalize mb-0">Related Products</h5>
+                                    <a href="shop/view-all-product.html" class="text-primary iq-view-all text-decoration-none flex-none">Want More?</a>
+                                </div>
+                                <div class="card-style-slider">
+                                    <div class="position-relative swiper swiper-card" data-slide="4" data-laptop="4" data-tab="3" data-mobile="2" data-mobile-sm="2" data-autoplay="true" data-loop="true" data-navigation="true" data-pagination="true">
+                                        <ul class="p-0 swiper-wrapper m-0 list-inline">
+                                            @foreach($relatedProducts as $relatedProduct)
+                                            <li class="swiper-slide">
+                                                <div class="product-block">
+                                                    @if($relatedProduct->is_on_sale)
+                                                    <span class="onsale bg-primary">Sale!</span>
+                                                    @endif
+                                                    <div class="image-wrap">
+                                                        <a href="{{ route('product.detail', $relatedProduct->id) }}">
+                                                            <div class="product-image">
+                                                                <img src="{{ asset($relatedProduct->imagem) }}" class="img-fluid w-100" alt="{{ $relatedProduct->nome }}" loading="lazy" />
+                                                            </div>
+                                                        </a>
+                                                        <div class="buttons-holder">
+                                                            <ul class="list-unstyled m-0 p-0">
+                                                                <li>
+                                                                    <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#woosq-popup">
+                                                                        <i class="fa-solid fa-eye"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" class="add_to_wishlist wishlist-btn">
+                                                                        <i class="fa-solid fa-heart"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" class="added_to_cart cart-btn d-flex align-items-center">
+                                                                        <i class="fa-solid fa-basket-shopping"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="container-rating">
-                                                        <div class="star-rating text-primary">
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star-half text-warning" aria-hidden="true"></i>
-                                                            </span>
+                                                    <div class="product-caption">
+                                                        <h5 class="product__title">
+                                                            <a href="{{ route('product.detail', $relatedProduct->id) }}" class="title-link">{{ $relatedProduct->nome }}</a>
+                                                        </h5>
+                                                        <div class="price-detail">
+                                                            <div class="price">
+                                                                ${{ number_format($relatedProduct->preco, 2) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="container-rating">
+                                                            <div class="star-rating text-primary">
+                                                                @for($i = 0; $i < 5; $i++)
+                                                                <span>
+                                                                    <i class="fa fa-star{{ $i < $relatedProduct->rating ? ' text-warning' : '-o' }}" aria-hidden="true"></i>
+                                                                </span>
+                                                                @endfor
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide">
-                                            <div class="product-block">
-                                                <div class="image-wrap">
-                                                    <a href="../shop/product-detail.html">
-                                                        <div class="product-image">
-                                                            <img src="" class="img-fluid w-100" alt="productImg-02" loading="lazy" />
-                                                        </div>
-                                                    </a>
-                                                    <div class="buttons-holder">
-                                                        <ul class="list-unstyled m-0 p-0">
-                                                            <li>
-                                                                <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#woosq-popup">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="add_to_wishlist wishlist-btn"><i class="fa-solid fa-heart"></i></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="added_to_cart cart-btn d-flex align-items-center">
-                                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-caption">
-                                                    <h5 class="product__title">
-                                                        <a href="../shop/product-detail.html" class="title-link">
-                                                            Believe Mask</a>
-                                                    </h5>
-                                                    <div class="price-detail">
-                                                        <div class="price">
-                                                            <del></del>$13.00
-                                                        </div>
-                                                    </div>
-                                                    <div class="container-rating">
-                                                        <div class="star-rating text-primary">
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide">
-                                            <div class="product-block">
-                                                <span class="onsale bg-primary">
-                                                    Sale!
-                                                </span>
-                                                <div class="image-wrap">
-                                                    <a href="../shop/product-detail.html">
-                                                        <div class="product-image">
-                                                            <img src="" class="img-fluid w-100" alt="productImg-03" loading="lazy" />
-                                                        </div>
-                                                    </a>
-                                                    <div class="buttons-holder">
-                                                        <ul class="list-unstyled m-0 p-0">
-                                                            <li>
-                                                                <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#woosq-popup">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="add_to_wishlist wishlist-btn"><i class="fa-solid fa-heart"></i></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="added_to_cart cart-btn d-flex align-items-center">
-                                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-caption">
-                                                    <h5 class="product__title">
-                                                        <a href="../shop/product-detail.html" class="title-link">
-                                                            Black Bow</a>
-                                                    </h5>
-                                                    <div class="price-detail">
-                                                        <div class="price">
-                                                            <del></del>$18.00 - $45.00
-                                                        </div>
-                                                    </div>
-                                                    <div class="container-rating">
-                                                        <div class="star-rating text-primary">
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide">
-                                            <div class="product-block">
-                                                <span class="onsale bg-primary">
-                                                    New!
-                                                </span>
-                                                <div class="image-wrap">
-                                                    <a href="../shop/product-detail.html">
-                                                        <div class="product-image">
-                                                            <img src="" class="img-fluid w-100" alt="productImg-04" loading="lazy" />
-                                                        </div>
-                                                    </a>
-                                                    <div class="buttons-holder">
-                                                        <ul class="list-unstyled m-0 p-0">
-                                                            <li>
-                                                                <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#woosq-popup">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="add_to_wishlist wishlist-btn"><i class="fa-solid fa-heart"></i></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="added_to_cart cart-btn d-flex align-items-center">
-                                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-caption">
-                                                    <h5 class="product__title">
-                                                        <a href="../shop/product-detail.html" class="title-link">
-                                                            Black Cap</a>
-                                                    </h5>
-                                                    <div class="price-detail">
-                                                        <div class="price">
-                                                            <del>$20.00</del>$18.00
-                                                        </div>
-                                                    </div>
-                                                    <div class="container-rating">
-                                                        <div class="star-rating text-primary">
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide">
-                                            <div class="product-block">
-                                                <div class="image-wrap">
-                                                    <a href="../shop/product-detail.html">
-                                                        <div class="product-image">
-                                                            <img src="" class="img-fluid w-100" alt="productImg-05" loading="lazy" />
-                                                        </div>
-                                                    </a>
-                                                    <div class="buttons-holder">
-                                                        <ul class="list-unstyled m-0 p-0">
-                                                            <li>
-                                                                <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#woosq-popup">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="add_to_wishlist wishlist-btn"><i class="fa-solid fa-heart"></i></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="added_to_cart cart-btn d-flex align-items-center">
-                                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-caption">
-                                                    <h5 class="product__title">
-                                                        <a href="../shop/product-detail.html" class="title-link">
-                                                            Boxing Gloves</a>
-                                                    </h5>
-                                                    <div class="price-detail">
-                                                        <div class="price">
-                                                            <del>$20.00</del>$18.00
-                                                        </div>
-                                                    </div>
-                                                    <div class="container-rating">
-                                                        <div class="star-rating text-primary">
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span>
-                                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="modal fade" id="woosq-popup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered positon-relative">
-                    <div class="modal-content rounded-0 border-0">
-                        <div class="modal-body p-0">
-                            <button type="button" class="btn-close position-absolute end-0" data-bs-dismiss="modal" aria-label="Close"></button>
-                            <div class="row align-items-center">
-                                <div class="col-md-6">
-                                    <img src="" class="object-cover" alt="shop-img">
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="entry-summary p-md-4">
-                                        <h3>Bag Pack</h3>
-                                        <div class="review">
-                                            <span>
-                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-                                            </span>
+                    <div class="modal fade" id="woosq-popup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered positon-relative">
+                            <div class="modal-content rounded-0 border-0">
+                                <div class="modal-body p-0">
+                                    <button type="button" class="btn-close position-absolute end-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-6">
+                                            <img src="" class="object-cover" alt="shop-img">
                                         </div>
-                                        <h4 class="price text-white mt-3"><del class="text-body fw-normal me-1">$48.00</del>$28.00 </h4>
-                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t look even slightly believable.
-                                        </p>
-                                        <ul class="list-inline m-0 p-0 d-flex align-items-center gap-3 flex-wrap pt-0 pt-md-4 pb-5">
-                                            <li>
-                                                <div class="btn-group iq-qty-btn border border-white rounded-0" data-qty="btn" role="group">
-                                                    <button type="button" class="btn btn-sm btn-outline-light iq-quantity-minus text-white border-0">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="3" viewBox="0 0 6 3" fill="none">
-                                                        <path d="M5.22727 0.886364H0.136364V2.13636H5.22727V0.886364Z" fill="currentColor"></path>
-                                                        </svg>
-                                                    </button>
-                                                    <input type="text" class="btn btn-sm btn-outline-light input-display border-0" data-qty="input" pattern="^(0|[1-9][0-9]*)$" minlength="1" maxlength="2" value="2" title="Qty">
-                                                    <button type="button" class="btn btn-sm btn-outline-light iq-quantity-plus text-white border-0">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="8" viewBox="0 0 9 8" fill="none">
-                                                        <path d="M3.63636 7.70455H4.90909V4.59091H8.02273V3.31818H4.90909V0.204545H3.63636V3.31818H0.522727V4.59091H3.63636V7.70455Z" fill="currentColor"></path>
-                                                        </svg>
-                                                    </button>
+                                        <div class="col-md-6">
+                                            <div class="entry-summary p-md-4">
+                                                <h3>Bag Pack</h3>
+                                                <div class="review">
+                                                    <span>
+                                                        <i class="fa fa-star text-warning" aria-hidden="true"></i>
+                                                    </span>
+                                                    <span>
+                                                        <i class="fa fa-star text-warning" aria-hidden="true"></i>
+                                                    </span>
+                                                    <span>
+                                                        <i class="fa fa-star text-warning" aria-hidden="true"></i>
+                                                    </span>
+                                                    <span>
+                                                        <i class="fa fa-star text-warning" aria-hidden="true"></i>
+                                                    </span>
+                                                    <span>
+                                                        <i class="fa fa-star text-warning" aria-hidden="true"></i>
+                                                    </span>
                                                 </div>
-                                            </li>
-                                            <li>
-                                                <div class="iq-button">
-                                                    <a href="#" class="btn btn-sm text-uppercase position-relative cart-btn">
-                                                        <span class="button-text">add to cart</span>
-                                                        <i class="fa-solid fa-play"></i>
-                                                    </a>
+                                                <h4 class="price text-white mt-3"><del class="text-body fw-normal me-1">$48.00</del>$28.00 </h4>
+                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t look even slightly believable.
+                                                </p>
+                                                <ul class="list-inline m-0 p-0 d-flex align-items-center gap-3 flex-wrap pt-0 pt-md-4 pb-5">
+                                                    <li>
+                                                        <div class="btn-group iq-qty-btn border border-white rounded-0" data-qty="btn" role="group">
+                                                            <button type="button" class="btn btn-sm btn-outline-light iq-quantity-minus text-white border-0">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="3" viewBox="0 0 6 3" fill="none">
+                                                                <path d="M5.22727 0.886364H0.136364V2.13636H5.22727V0.886364Z" fill="currentColor"></path>
+                                                                </svg>
+                                                            </button>
+                                                            <input type="text" class="btn btn-sm btn-outline-light input-display border-0" data-qty="input" pattern="^(0|[1-9][0-9]*)$" minlength="1" maxlength="2" value="2" title="Qty">
+                                                            <button type="button" class="btn btn-sm btn-outline-light iq-quantity-plus text-white border-0">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="8" viewBox="0 0 9 8" fill="none">
+                                                                <path d="M3.63636 7.70455H4.90909V4.59091H8.02273V3.31818H4.90909V0.204545H3.63636V3.31818H0.522727V4.59091H3.63636V7.70455Z" fill="currentColor"></path>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="iq-button">
+                                                            <a href="#" class="btn btn-sm text-uppercase position-relative cart-btn">
+                                                                <span class="button-text">add to cart</span>
+                                                                <i class="fa-solid fa-play"></i>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <span class="fw-semibold text-white">SKU :</span>
+                                                    <span>Bag Pack</span>
                                                 </div>
-                                            </li>
-                                        </ul>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <span class="fw-semibold text-white">SKU :</span>
-                                            <span>Bag Pack</span>
-                                        </div>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <span class="fw-semibold text-white">Category :</span>
-                                            <span class="text-primary">Uptight Birds</span>
-                                        </div>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <span class="fw-semibold text-white">Tags :</span>
-                                            <span class="text-primary">Costume,</span>
-                                            <span class="text-primary">Lighting</span>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <span class="fw-semibold text-white">Category :</span>
+                                                    <span class="text-primary">Uptight Birds</span>
+                                                </div>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <span class="fw-semibold text-white">Tags :</span>
+                                                    <span class="text-primary">Costume,</span>
+                                                    <span class="text-primary">Lighting</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
 
-        </main>
+                    </main>
 
-        <div id="back-to-top" style="display: none;">
-            <a class="p-0 btn bg-primary btn-sm position-fixed top border-0 rounded-circle" id="top" href="#top">
-                <i class="fa-solid fa-chevron-up"></i>
-            </a>
-        </div>
-        @include('layouts.vendor-scripts')
-        <script>
-            document.querySelectorAll('.star-rating-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const rating = button.getAttribute('data-rating');
-                    document.querySelector('input[name="rating"]').value = rating;
-                    updateStarRating(rating);
-                });
-            });
+                    <div id="back-to-top" style="display: none;">
+                        <a class="p-0 btn bg-primary btn-sm position-fixed top border-0 rounded-circle" id="top" href="#top">
+                            <i class="fa-solid fa-chevron-up"></i>
+                        </a>
+                    </div>
+                    @include('layouts.vendor-scripts')
+                    <script>
+                        document.querySelectorAll('.star-rating-btn').forEach(button => {
+                            button.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                const rating = button.getAttribute('data-rating');
+                                document.querySelector('input[name="rating"]').value = rating;
+                                updateStarRating(rating);
+                            });
+                        });
 
-            function updateStarRating(rating) {
-                document.querySelectorAll('.star-rating-btn').forEach(button => {
-                    const star = button.querySelector('i');
-                    if (parseInt(button.getAttribute('data-rating')) <= rating) {
-                        star.classList.add('text-warning');
-                    } else {
-                        star.classList.remove('text-warning');
-                    }
-                });
-            }
-
-            document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', function () {
-                    const productId = this.getAttribute('data-productid');
-                    const productName = this.getAttribute('data-productname');
-                    const productPrice = this.getAttribute('data-productprice');
-
-                    // Aqui você poderia adicionar uma chamada AJAX para adicionar ao carrinho
-                    fetch('/stream/public/add-to-cart', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json', // Certifique-se de que está aceitando JSON
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({
-                            id: productId,
-                            name: productName,
-                            price: productPrice,
-                            quantity: 1  // ou outro valor se sua página permitir especificar quantidade
-                        })
-                    })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
+                        function updateStarRating(rating) {
+                            document.querySelectorAll('.star-rating-btn').forEach(button => {
+                                const star = button.querySelector('i');
+                                if (parseInt(button.getAttribute('data-rating')) <= rating) {
+                                    star.classList.add('text-warning');
+                                } else {
+                                    star.classList.remove('text-warning');
                                 }
-                                return response.json();
-                            })
-                            .then(data => {
-                                console.log('Item adicionado ao carrinho:', data);
-                            })
-                            .catch(error => console.error('Erro ao adicionar ao carrinho:', error));
+                            });
+                        }
 
-                });
-            });
+                        document.querySelectorAll('.add-to-cart').forEach(button => {
+                            button.addEventListener('click', function () {
+                                const productId = this.getAttribute('data-productid');
+                                const productName = this.getAttribute('data-productname');
+                                const productPrice = this.getAttribute('data-productprice');
 
-        </script>
+                                fetch('/stream/public/add-to-cart', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'application/json',
+                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                                    },
+                                    body: JSON.stringify({
+                                        id: productId,
+                                        name: productName,
+                                        price: productPrice,
+                                        quantity: 1
+                                    })
+                                })
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error('Network response was not ok');
+                                            }
+                                            return response.json();
+                                        })
+                                        .then(data => {
+                                            console.log('Item adicionado ao carrinho:', data);
+                                        })
+                                        .catch(error => console.error('Erro ao adicionar ao carrinho:', error));
+                            });
+                        });
 
-        <script>
-            $('#editReviewModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget); // Botão que acionou o modal
-                var reviewId = button.data('review-id'); // Extrai informações dos atributos data-*
-                // Supondo que você tenha um campo escondido para armazenar o id do review
-                var modal = $(this);
-                modal.find('#reviewId').val(reviewId); // Atualiza o campo escondido com o id do review
-            });
-        </script>
-    </body>
+                        $('#editReviewModal').on('show.bs.modal', function (event) {
+                            var button = $(event.relatedTarget);
+                            var reviewId = button.data('review-id');
+                            var modal = $(this);
+                            modal.find('#reviewId').val(reviewId);
+                        });
+                    </script>
+                    </body>
 
-</html>
+                    </html>

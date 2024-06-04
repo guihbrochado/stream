@@ -22,10 +22,13 @@ class ShopController extends Controller {
         $product = Product::with(['category', 'subcategory', 'reviews.user'])->findOrFail($id);
         $relatedProducts = Product::where('categoria_id', $product->categoria_id)
                 ->where('id', '<>', $id) // Exclui o próprio produto
-                ->take(10) // Vamos assumir que você quer 4 produtos relacionados
+                ->take(10) // Vamos assumir que você quer 10 produtos relacionados
                 ->get();
 
-        return view('apps.shop.product-detail', compact('product', 'relatedProducts'));
+        // Obtém a avaliação do usuário autenticado para este produto
+        $review = auth()->check() ? Review::where('user_id', auth()->id())->where('product_id', $id)->first() : null;
+
+        return view('apps.shop.product-detail', compact('product', 'relatedProducts', 'review'));
     }
 
     public function wishlist() {

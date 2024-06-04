@@ -30,10 +30,6 @@ use App\Http\Controllers\apps\AboutController;
 use App\Http\Controllers\apps\ContactController;
 use App\Http\Controllers\apps\PlanController;
 use App\Http\Controllers\apps\BlogController;
-use App\Http\Controllers\apps\AudioController;
-use App\Http\Controllers\apps\BlogVideoController;
-use App\Http\Controllers\apps\LinkController;
-use App\Http\Controllers\apps\QuoteController;
 use App\Http\Controllers\apps\ShopController;
 use App\Http\Controllers\apps\MyAccountController;
 use App\Http\Controllers\apps\ManageController;
@@ -48,6 +44,7 @@ use App\Http\Controllers\apps\BlogImageController;
 use App\Http\Controllers\apps\CategoryController;
 use App\Http\Controllers\apps\ProductController;
 use App\Http\Controllers\apps\SubcategoryController;
+use App\Http\Controllers\apps\InicioController;
 
 /*
   |--------------------------------------------------------------------------
@@ -102,6 +99,13 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::put('/about/{id}', [AboutController::class, 'update'])->name('about.update');
         Route::delete('/about/{id}', [AboutController::class, 'destroy'])->name('about.destroy');
 
+        Route::get('/home', [InicioController::class, 'index'])->name('inicio.index');
+        Route::get('/home/create', [InicioController::class, 'create'])->name('inicio.create');
+        Route::post('/home/store', [InicioController::class, 'store'])->name('inicio.store');
+        Route::get('/home/{id}/edit', [InicioController::class, 'edit'])->name('inicio.edit');
+        Route::put('/home/{id}', [InicioController::class, 'update'])->name('inicio.update');
+        Route::delete('/home/{id}', [InicioController::class, 'destroy'])->name('inicio.destroy');
+
         Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
         Route::get('/plans', [PlanController::class, 'index'])->name('plan.index');
         //ROTAS BLOG
@@ -131,15 +135,13 @@ Route::middleware(['checkTermsAccepted'])->group(function () {
         Route::post('/lesson-comment/update', [CourseController::class, 'lessoncommentupdate'])->name('lesson.commentupdate');
         Route::delete('/lesson-comment/delete', [CourseController::class, 'lessoncommentdelete'])->name('lesson.commentdelete');
 
-
-        
-
         Route::get('/course-redirecttolesson/{id}', [CourseController::class, 'firstLessonRedirect'])->name('firstLessonRedirect');
 
         //LIVE ROOM
         Route::get('/rooms', [LiveRoomController::class, 'index'])->name('rooms.index');
         Route::get('/rooms/{room}', [LiveRoomController::class, 'show'])->name('rooms.show');
         Route::get('/room-detail/{id}', [LiveRoomController::class, 'detail'])->name('rooms.detail');
+        Route::delete('/rooms/{id}', [LiveRoomController::class, 'destroy'])->name('rooms.destroy');
 
         /**
          * Shopping 

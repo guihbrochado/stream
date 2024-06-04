@@ -38,10 +38,15 @@
                     <!--Logo -->
                     <div class="logo-default">
                         <a class="navbar-brand text-primary" href="{{ url('/') }}">
-                            <img class="img-fluid logo" src="{{ asset('assets/images/logo.webp')}}" loading="lazy" alt="streamit" />
+                            @if(isset($inicio) && $inicio->logo_path)
+                            <img class="img-fluid logo" src="{{ asset($inicio->logo_path) }}" loading="lazy" alt="Logo" />
+                            @else
+                            <!-- Se não houver logo definido, use um padrão -->
+                            <img class="img-fluid logo" src="{{ asset('assets/images/logo.webp') }}" loading="lazy" alt="streamit" />
+                            @endif
                         </a>
                     </div>
-                    <div class="logo-hotstar">
+                    <!--div class="logo-hotstar">
                         <a class="navbar-brand text-primary" href="./index.html">
                             <img class="img-fluid logo" src="{{ asset('assets/images/logo-hotstar.webp')}}" loading="lazy" alt="streamit" />
                         </a>
@@ -55,7 +60,7 @@
                         <a class="navbar-brand text-primary" href="./index.html">
                             <img class="img-fluid logo" src="{{ asset('assets/images/logo-hulu.webp')}}" loading="lazy" alt="streamit" />
                         </a>
-                    </div>
+                    </div-->
 
                 </div>
                 <nav id="navbar_main" class="offcanvas mobile-offcanvas nav navbar navbar-expand-xl hover-nav horizontal-nav mega-menu-content py-xl-0">

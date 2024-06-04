@@ -106,4 +106,16 @@ class LiveRoomController extends Controller {
 
         return view('apps.rooms.show', compact('room', 'otherRooms'));
     }
+    
+    public function destroy($id) {
+    try {
+        $room = LiveRoom::findOrFail($id);
+        $room->tags()->detach(); // Remove todas as relações de tags se necessário.
+        $room->delete(); // Exclui a sala do banco de dados.
+
+        return redirect()->route('rooms.all')->with('success', 'Sala excluída com sucesso.');
+    } catch (Exception $e) {
+        return redirect()->route('rooms.all')->with('error', 'Erro ao excluir a sala: ' . $e->getMessage());
+    }
+}
 }
