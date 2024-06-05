@@ -4,11 +4,11 @@ namespace App\Http\Controllers\apps;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogstreamFormRequest;
-use App\Models\Blogstream;
 use App\Models\BlogCategory;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Models\BlogStream;
 
 class BlogStreamController extends Controller
 {

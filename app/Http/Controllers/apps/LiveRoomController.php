@@ -8,7 +8,6 @@ use App\Models\LiveRoom;
 use App\Models\LiveRoomTag;
 use App\Models\LiveRoomRating;
 use Illuminate\Support\Facades\Auth;
-
 use Exception;
 
 class LiveRoomController extends Controller {
@@ -35,8 +34,10 @@ class LiveRoomController extends Controller {
         $folder = public_path('assets/images/rooms');
 
         $authId = Auth::id();
-        $authName = Auth::user()->name;
+        $authName = urlencode(Auth::user()->name);
+        $title = urlencode($request->title);
 
+        // Salva a imagem de capa se ela estiver presente e for válida
         if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
             $file = $request->file('cover');
             $extension = $file->extension();
@@ -44,28 +45,25 @@ class LiveRoomController extends Controller {
             $file->move($folder, $fileName);
         }
 
+        // Cria URLs corretamente codificadas para admin e cliente
         $api_url = env('API_VIDEO_ROOM');
-        $adminVideoUrl = "$api_url/?username=$authName&room=$request->title&admin=1";
-        $clientVideoUrl = "$api_url/?username=0&room=$request->title&admin=0";
-        
-        // dd($adminVideoUrl);
-        $price = str_replace(',', '.', $request->price);
-        // $linkAdmin = md5($request->title . '-admin');
-        // $linkClient = md5($request->title . '-client');
+        $adminVideoUrl = "$api_url/?username=$authName&room=$title&admin=1";
+        $clientVideoUrl = "$api_url/?username=$authName&room=$title&admin=0";
 
+        // Tenta salvar os dados e as tags relacionadas
         try {
             $room = LiveRoom::create([
-                'title' => $request->title,
-                'cover' => $fileName,
-                'description' => $request->description,
-                'is_free' => $request->is_free,
-                'price' => $price,
-                'link_admin' => $adminVideoUrl,
-                'link_client' => $clientVideoUrl,
+                        'title' => $request->title,
+                        'cover' => $fileName,
+                        'description' => $request->description,
+                        'is_free' => $request->is_free,
+                        'price' => str_replace(',', '.', $request->price),
+                        'link_admin' => $adminVideoUrl,
+                        'link_client' => $clientVideoUrl,
             ]);
 
+            // Processa as tags
             $tagNames = $request->input('tags');
-
             if ($tagNames) {
                 if (is_string($tagNames)) {
                     $tagNames = explode(',', $tagNames);
@@ -82,6 +80,7 @@ class LiveRoomController extends Controller {
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
+
         return redirect()->route('rooms.all')->with('message', "Sala '{$room->title}' criada com sucesso.");
     }
 
@@ -107,4 +106,16 @@ class LiveRoomController extends Controller {
 
         return view('apps.rooms.show', compact('room', 'otherRooms'));
     }
+    
+    public function destroy($id) {
+    try {
+        $room = LiveRoom::findOrFail($id);
+        $room->tags()->detach(); // Remove todas as relações de tags se necessário.
+        $room->delete(); // Exclui a sala do banco de dados.
+
+        return redirect()->route('rooms.all')->with('success', 'Sala excluída com sucesso.');
+    } catch (Exception $e) {
+        return redirect()->route('rooms.all')->with('error', 'Erro ao excluir a sala: ' . $e->getMessage());
+    }
+}
 }

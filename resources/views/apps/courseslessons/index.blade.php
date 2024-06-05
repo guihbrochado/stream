@@ -40,7 +40,7 @@
                                     <table id="datatable" class="table " data-toggle="data-table">
                                         <thead>
                                             <tr>
-                                                <th class="text-center">Ordem do Aula</th>
+                                                <th class="text-center">Aula</th>
                                                 <th class="text-center">Modulo</th>
                                                 <th class="text-center">Aula</th>
                                                 <th class="text-center">Atualizado</th>

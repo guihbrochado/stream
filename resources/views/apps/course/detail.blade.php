@@ -40,7 +40,7 @@
                                     @if($firstLesson)
                                     <a href="{{ route('course.lesson', ['id' => $firstLesson]) }}" class="btn btn-primary waves-effect waves-light">Assistir Agora</a>
                                     @else
-                                    <h3 class="text-primary">Primeira aula não disponível.</h3>
+                                    <a href="#" class="btn btn-primary waves-effect waves-light">Não Disponível</a>
                                     @endif                                </div>
 
                                 <ul class="p-0 m-0 list-unstyled widget_social_media position-absolute w-100 text-center">

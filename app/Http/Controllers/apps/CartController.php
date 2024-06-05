@@ -37,34 +37,26 @@ class CartController extends Controller {
     }
 
     public function addToCart(Request $request) {
-        // Recupera o carrinho do banco de dados ou cria um novo se não existir
-        $cart = Cart::firstOrCreate([
-                    'user_id' => auth()->id()  // assume que o usuário está autenticado
-        ]);
+        $cart = Cart::firstOrCreate(['user_id' => auth()->id()]);
+        $product = Product::find($request->product_id);
 
-        // Encontra o produto que será adicionado ao carrinho
-        $product = Product::find($request->id);
         if (!$product) {
             return response()->json(['message' => 'Produto não encontrado!'], 404);
         }
 
-        // Verifica se o item já existe no carrinho
         $cartItem = $cart->cartItems()->where('product_id', $product->id)->first();
         if ($cartItem) {
-            // Se o item já existe, incrementa a quantidade
-            $cartItem->quantity += 1;
+            $cartItem->quantity += $request->quantity; // Use a quantidade do request
         } else {
-            // Se não existe, cria um novo CartItem
             $cartItem = new CartItem([
                 'product_id' => $product->id,
-                'quantity' => 1,
-                'price' => $product->preco  // Certifique-se que o nome da coluna de preço está correto
+                'quantity' => $request->quantity,
+                'price' => $product->preco
             ]);
             $cart->cartItems()->save($cartItem);
         }
 
         $cartItem->save();
-
         return response()->json(['message' => 'Produto adicionado ao carrinho com sucesso!']);
     }
 
@@ -106,14 +98,20 @@ class CartController extends Controller {
     }
 
     public function remove($id) {
-        $cart = session()->get('cart');
+        $cart = Cart::where('user_id', auth()->id())->first();
 
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
-            session()->put('cart', $cart);
+        if (!$cart) {
+            return redirect()->back()->with('error', 'Carrinho não encontrado!');
         }
 
-        return redirect()->route('view.cart')->with('success', 'Item removido do carrinho com sucesso!');
+        $cartItem = $cart->cartItems()->where('id', $id)->first();
+
+        if ($cartItem) {
+            $cartItem->delete(); // Exclui o item do banco de dados
+            return redirect()->route('view.cart')->with('success', 'Item removido do carrinho com sucesso!');
+        } else {
+            return redirect()->route('view.cart')->with('error', 'Item não encontrado no carrinho.');
+        }
     }
 
     public function applyCoupon(Request $request) {

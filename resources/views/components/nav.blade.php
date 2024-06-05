@@ -38,10 +38,15 @@
                     <!--Logo -->
                     <div class="logo-default">
                         <a class="navbar-brand text-primary" href="{{ url('/') }}">
-                            <img class="img-fluid logo" src="{{ asset('assets/images/logo.webp')}}" loading="lazy" alt="streamit" />
+                            @if(isset($inicio) && $inicio->logo_path)
+                            <img class="img-fluid logo" src="{{ asset($inicio->logo_path) }}" loading="lazy" alt="Logo" />
+                            @else
+                            <!-- Se não houver logo definido, use um padrão -->
+                            <img class="img-fluid logo" src="{{ asset('assets/images/logo.webp') }}" loading="lazy" alt="streamit" />
+                            @endif
                         </a>
                     </div>
-                    <div class="logo-hotstar">
+                    <!--div class="logo-hotstar">
                         <a class="navbar-brand text-primary" href="./index.html">
                             <img class="img-fluid logo" src="{{ asset('assets/images/logo-hotstar.webp')}}" loading="lazy" alt="streamit" />
                         </a>
@@ -55,7 +60,7 @@
                         <a class="navbar-brand text-primary" href="./index.html">
                             <img class="img-fluid logo" src="{{ asset('assets/images/logo-hulu.webp')}}" loading="lazy" alt="streamit" />
                         </a>
-                    </div>
+                    </div-->
 
                 </div>
                 <nav id="navbar_main" class="offcanvas mobile-offcanvas nav navbar navbar-expand-xl hover-nav horizontal-nav mega-menu-content py-xl-0">
@@ -89,13 +94,13 @@
                         <ul class="navbar-nav iq-nav-menu  list-unstyled" id="header-menu">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/') }}">
-                                    <span class="item-name">Home</span>
+                                    <span class="item-name">Inicio</span>
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="collapse" href="#pages" role="button" aria-expanded="false" aria-controls="homePages">
-                                    <span class="item-name">Pages</span>
+                                    <span class="item-name">Paginas</span>
                                     <span class="menu-icon">
                                         <i class="fa fa-caret-down toggledrop-desktop right-icon" aria-hidden="true"></i>
                                         <span class="toggle-menu">
@@ -125,12 +130,12 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link " href="{{ route('blog.index') }}"> Blog </a>
+                                <a class="nav-link " href="{{ route('blog.index') }}"> Comunidade </a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="collapse" href="#shop" role="button" aria-expanded="false" aria-controls="shop">
-                                    <span class="item-name">Shop</span>
+                                    <span class="item-name">Loja</span>
                                     <span class="menu-icon">
                                         <i class="fa fa-caret-down toggledrop-desktop right-icon" aria-hidden="true"></i>
                                         <span class="toggle-menu">
@@ -141,29 +146,19 @@
                                 </a>
                                 <ul class="sub-nav collapse  list-unstyled" id="shop">
                                     <li class="nav-item">
-                                        <a class="nav-link " href="{{ route('shop.index') }}"> Shop </a>
+                                        <a class="nav-link " href="{{ route('shop.index') }}"> Produtos </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link " href="{{ route('shop.wishlist') }}"> Wishlist Page </a>
+                                        <a class="nav-link " href="{{ route('shop.wishlist') }}"> Lista de Desejo </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!--li class="nav-item">
                                         <a class="nav-link " href="{{ route('shop.detail') }}"> Order Tracking </a>
-                                    </li>
+                                    </li-->
                                 </ul>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/dashboard') }}">
                                     <span class="item-name">Dashboard</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/deals') }}">
-                                    <span class="item-name">Histórico</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/conta_investimento.index') }}">
-                                    <span class="item-name">Conta Investimento</span>
                                 </a>
                             </li>
                         </ul>

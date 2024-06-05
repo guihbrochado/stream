@@ -1,186 +1,125 @@
-@extends('layouts.master')
-@section('title')
-Política de Uso - Tópicos
-@endsection
-@section('content')
-    @component('common-components.breadcrumb')
-        @slot('pagetitle')
-            Administração
-        @endslot
-        @slot('title')
-            <a href="{{ route('usage_policy.index_admin') }}">Política de Uso - Tópicos</a>
-        @endslot
-    @endcomponent
+<!doctype html>
+<html lang="en" dir="ltr">
 
-    @php
-        $disabled = '';
-        
-        // fields
-        $id = old('id') !== null ? old('id') : $usage_policy->id;
-        $usage_policy_category_id = old('usage_policy_category_id') !== null ? old('usage_policy_category_id') : $usage_policy->usage_policy_category_id;
-        $icon = old('icon') !== null ? old('icon') : $usage_policy->icon;
-        $question = old('question') !== null ? old('question') : $usage_policy->question;
-        $answer = old('answer') !== null ? old('answer') : $usage_policy->answer;
-        
-        if ($action == 'create') {
-            $route = route('usage_policy.store');
-            $title = 'Cadastrar';
-            $card_title = 'Adicionar novo';
-            $button = 'Cadastrar';
-        } elseif ($action == 'edit') {
-            $route = route('usage_policy.update', $usage_policy->id);
-            $title = 'Editar';
-            $card_title = 'Editar';
-            $button = 'Atualizar';
-        } else {
-            $route = '';
-            $title = 'Visualização';
-            $card_title = 'Visualização';
-            $disabled = 'disabled';
-        }
-    @endphp
+@include('components.headdash')
 
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+<body class="  ">
+    <!-- loader Start -->
+    <div id="loading">
+        <div class="loader simple-loader">
+            <div class="loader-body ">
+                <img src="{{ asset('assets/images/loader.gif') }}" alt="loader" class="image-loader img-fluid ">
+            </div>
         </div>
-    @endif
+    </div>
+    <!-- loader END -->
+    @include('components.sidebardash')
+    <main class="main-content">
+        <div class="position-relative ">
+            <!--Nav Start-->
+            @include('layouts.navdash')
+            <!--Nav End-->
+        </div>
+        <div class="content-inner container-fluid pb-0" id="page_layout">
+            <div>
+                <div class="row">
+                    <div class="col-xl-9 col-lg-8">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <div class="header-title">
+                                    <h4 class="card-title">
+                                        {{ $action == 'create' ? 'Adicionar Política de Uso' : 'Editar Política de Uso' }}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                @if(session('message'))
+                                <div class="alert alert-success">{{ session('message') }}</div>
+                                @endif
+                                @if(session('error'))
+                                <div class="alert alert-danger">{{ session('error') }}</div>
+                                @endif
 
-    <div class="card mb-4">
-        <h5 class="card-header">{{ $card_title }}</h5>
-        <form action="{{ $route }}" method="post" class="card-body">
-            @csrf
-            @if ($action == 'edit')
-                @method('PATCH')
-            @endif
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <input id="id" name="id" type="hidden" value="{{ $id }} ">
-                    <label class="form-label" for="usage_policy_category_id">Categoria</label>
-                    <select id="usage_policy_category_id" name="usage_policy_category_id" required
-                        class="form-control @error('usage_policy_category_id') is-invalid @enderror" {{ $disabled }}>
-                        <option value="">Selecione a categoria</option>
-                        @foreach ($usage_policy_categories as $usage_policy_category)
-                            @if ($usage_policy_category_id == $usage_policy_category->id)
-                                <option value="{{ $usage_policy_category->id }}" selected>{{ $usage_policy_category->title }}</option>
-                            @else
-                                <option value="{{ $usage_policy_category->id }}">{{ $usage_policy_category->title }}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                    @error('usage_policy_category_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="icon">Ícone</label>
-                    <input id="icon" name="icon" type="text"
-                        class="form-control @error('icon') is-invalid @enderror"placeholder="Ícone"
-                        value="{{ $icon }}" {{ $disabled }} maxlength="100" />
-                    @error('usage_policy_category')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="col-md-12">
-                    <label class="form-label" for="question">Questão</label>
-                    <input id="question" name="question" type="text"
-                        class="form-control @error('question') is-invalid @enderror"placeholder="Questão"
-                        value="{{ $question }}" {{ $disabled }} required maxlength="500" />
-                    @error('usage_policy_category')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="col-md-12">
-                    <label for="answer" class="form-label">Descrição</label>
-                    <textarea id="answer" name="answer" class="form-control @error('answer') is-invalid @enderror"
-                        placeholder="Descrição" {{ $disabled }}>{{ $answer }}</textarea>
-                    @error('answer')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                                <form action="{{ $action == 'create' ? route('usage_policy.store') : route('usage_policy.update', $usage_policy->id) }}" method="POST">
+                                    @csrf
+                                    @if($action == 'edit')
+                                    @method('PATCH')
+                                    @endif
+
+                                    <div class="row">
+                                        <!-- Campo Categoria -->
+                                        <div class="form-group col-md-6">
+                                            <label for="usage_policy_category_id">Categoria:</label>
+                                            <select class="form-control" id="usage_policy_category_id" name="usage_policy_category_id" required>
+                                                @foreach ($usage_policy_categories as $category)
+                                                <option value="{{ $category->id }}" {{ $category->id == $usage_policy->usage_policy_category_id ? 'selected' : '' }}>{{ $category->title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <!-- Campo Ícone -->
+                                        <div class="form-group col-md-6">
+                                            <label for="icon">Ícone:</label>
+                                            <input type="text" class="form-control" id="icon" name="icon" value="{{ $usage_policy->icon }}" placeholder="Ícone (opcional)">
+                                        </div>
+
+                                        <!-- Campo Pergunta -->
+                                        <div class="form-group col-md-12">
+                                            <label for="question">Pergunta:</label>
+                                            <input type="text" class="form-control" id="question" name="question" value="{{ $usage_policy->question }}" placeholder="Digite a pergunta" required>
+                                        </div>
+
+                                        <!-- Campo Resposta -->
+                                        <div class="form-group col-md-12">
+                                            <label for="answer">Resposta:</label>
+                                            <textarea class="form-control" id="answer" name="answer" rows="4" placeholder="Digite a resposta" required>{{ $usage_policy->answer }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            @if ($action != 'show')
-                <div class="pt-4">
-                    <button type="submit" class="btn btn-primary me-sm-3 me-1">{{ $button }}</button>
+        </div>
+            <!-- Footer Section Start -->
+            <footer class="footer">
+                <div class="footer-body">
+                    <ul class="left-panel list-inline mb-0 p-0">
+                        <li class="list-inline-item"><a href="javascript:void(0);">Privacy Policy</a></li>
+                        <li class="list-inline-item"><a href="javascript:void(0);">Terms of Use</a></li>
+                    </ul>
+                    <div class="right-panel">
+                        ©<script>
+                            2022
+                        </script> <span data-setting="app_name">Streamit</span>, Made with
+                        <span class="text-gray">
+                            <svg class="icon-16" width="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M15.85 2.50065C16.481 2.50065 17.111 2.58965 17.71 2.79065C21.401 3.99065 22.731 8.04065 21.62 11.5806C20.99 13.3896 19.96 15.0406 18.611 16.3896C16.68 18.2596 14.561 19.9196 12.28 21.3496L12.03 21.5006L11.77 21.3396C9.48102 19.9196 7.35002 18.2596 5.40102 16.3796C4.06102 15.0306 3.03002 13.3896 2.39002 11.5806C1.26002 8.04065 2.59002 3.99065 6.32102 2.76965C6.61102 2.66965 6.91002 2.59965 7.21002 2.56065H7.33002C7.61102 2.51965 7.89002 2.50065 8.17002 2.50065H8.28002C8.91002 2.51965 9.52002 2.62965 10.111 2.83065H10.17C10.21 2.84965 10.24 2.87065 10.26 2.88965C10.481 2.96065 10.69 3.04065 10.89 3.15065L11.27 3.32065C11.3618 3.36962 11.4649 3.44445 11.554 3.50912C11.6104 3.55009 11.6612 3.58699 11.7 3.61065C11.7163 3.62028 11.7329 3.62996 11.7496 3.63972C11.8354 3.68977 11.9247 3.74191 12 3.79965C13.111 2.95065 14.46 2.49065 15.85 2.50065ZM18.51 9.70065C18.92 9.68965 19.27 9.36065 19.3 8.93965V8.82065C19.33 7.41965 18.481 6.15065 17.19 5.66065C16.78 5.51965 16.33 5.74065 16.18 6.16065C16.04 6.58065 16.26 7.04065 16.68 7.18965C17.321 7.42965 17.75 8.06065 17.75 8.75965V8.79065C17.731 9.01965 17.8 9.24065 17.94 9.41065C18.08 9.58065 18.29 9.67965 18.51 9.70065Z" fill="currentColor"></path>
+                            </svg>
+                        </span> by <a href="https://iqonic.design/" target="_blank">IQONIC Design</a>.
+                    </div>
                 </div>
-            @endif
-        </form>
-    </div>
-@endsection
-@section('script')
-    <script src="{{ URL::asset('/assets/libs/tinymce/tinymce.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/form-editor.init.js') }}"></script>
-    <script>
-        /******/
-        (() => { // webpackBootstrap
-            var __webpack_exports__ = {};
-            /*!************************************************!*\
-              !*** ./resources/js/pages/form-editor.init.js ***!
-              \************************************************/
-            /*
-            Template Name: Minible - Admin & Dashboard Template
-            Author: Themesbrand
-            Website: https://themesbrand.com/
-            Contact: themesbrand@gmail.com
-            File: Form editor Js File
+            </footer>
+            <!-- Footer Section End -->
+    </main>
+    <!-- Wrapper End-->
+    <!-- Live Customizer start -->
+    <!-- Setting offcanvas start here -->
 
-            plugins: [
-                            "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
-                            "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                            "save table contextmenu directionality emoticons template paste textcolor"
-                        ],
-                        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
-            */
-            $(document).ready(function() {
-                if ($("#answer").length > 0) {
-                    tinymce.init({
-                        selector: "textarea#answer",
-                        height: 300,
-                        plugins: [
-                            "advlist autolink link lists charmap print preview hr anchor pagebreak spellchecker",
-                            "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                            "save table contextmenu directionality emoticons template paste textcolor"
-                        ],
-                        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | print preview media fullpage | forecolor backcolor emoticons",
-                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px; color:#FFFFFF }',
-                        style_formats: [{
-                            title: 'Bold text',
-                            inline: 'b'
-                        }, {
-                            title: 'Red text',
-                            inline: 'span',
-                            styles: {
-                                color: '#ff0000'
-                            }
-                        }, {
-                            title: 'Red header',
-                            block: 'h1',
-                            styles: {
-                                color: '#ff0000'
-                            }
-                        }, {
-                            title: 'Example 1',
-                            inline: 'span',
-                            classes: 'example1'
-                        }, {
-                            title: 'Example 2',
-                            inline: 'span',
-                            classes: 'example2'
-                        }, {
-                            title: 'Table styles'
-                        }, {
-                            title: 'Table row 1',
-                            selector: 'tr',
-                            classes: 'tablerow1'
-                        }]
-                    });
-                }
-            });
-            /******/
-        })();
-    </script>
-@endsection
+    <!-- Settings sidebar end here -->
+
+    <a class="btn btn-fixed-end btn-warning btn-icon btn-setting" id="settingbutton" data-bs-toggle="offcanvas" data-bs-target="#live-customizer" role="button" aria-controls="live-customizer">
+        <svg class="icon-24 animated-rotate" width="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M20.8064 7.62361L20.184 6.54352C19.6574 5.6296 18.4905 5.31432 17.5753 5.83872V5.83872C17.1397 6.09534 16.6198 6.16815 16.1305 6.04109C15.6411 5.91402 15.2224 5.59752 14.9666 5.16137C14.8021 4.88415 14.7137 4.56839 14.7103 4.24604V4.24604C14.7251 3.72922 14.5302 3.2284 14.1698 2.85767C13.8094 2.48694 13.3143 2.27786 12.7973 2.27808H11.5433C11.0367 2.27807 10.5511 2.47991 10.1938 2.83895C9.83644 3.19798 9.63693 3.68459 9.63937 4.19112V4.19112C9.62435 5.23693 8.77224 6.07681 7.72632 6.0767C7.40397 6.07336 7.08821 5.98494 6.81099 5.82041V5.82041C5.89582 5.29601 4.72887 5.61129 4.20229 6.52522L3.5341 7.62361C3.00817 8.53639 3.31916 9.70261 4.22975 10.2323V10.2323C4.82166 10.574 5.18629 11.2056 5.18629 11.8891C5.18629 12.5725 4.82166 13.2041 4.22975 13.5458V13.5458C3.32031 14.0719 3.00898 15.2353 3.5341 16.1454V16.1454L4.16568 17.2346C4.4124 17.6798 4.82636 18.0083 5.31595 18.1474C5.80554 18.2866 6.3304 18.2249 6.77438 17.976V17.976C7.21084 17.7213 7.73094 17.6516 8.2191 17.7822C8.70725 17.9128 9.12299 18.233 9.37392 18.6717C9.53845 18.9489 9.62686 19.2646 9.63021 19.587V19.587C9.63021 20.6435 10.4867 21.5 11.5433 21.5H12.7973C13.8502 21.5001 14.7053 20.6491 14.7103 19.5962V19.5962C14.7079 19.088 14.9086 18.6 15.2679 18.2407C15.6272 17.8814 16.1152 17.6807 16.6233 17.6831C16.9449 17.6917 17.2594 17.7798 17.5387 17.9394V17.9394C18.4515 18.4653 19.6177 18.1544 20.1474 17.2438V17.2438L20.8064 16.1454C21.0615 15.7075 21.1315 15.186 21.001 14.6964C20.8704 14.2067 20.55 13.7894 20.1108 13.5367V13.5367C19.6715 13.284 19.3511 12.8666 19.2206 12.3769C19.09 11.8873 19.16 11.3658 19.4151 10.928C19.581 10.6383 19.8211 10.3982 20.1108 10.2323V10.2323C21.0159 9.70289 21.3262 8.54349 20.8064 7.63277V7.63277V7.62361Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle cx="12.1747" cy="11.8891" r="2.63616" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+        </svg>
+    </a> <!-- Live Customizer end -->
+
+    @include('layouts.vendor-script-dash')
+
+</body>
+
+</html>

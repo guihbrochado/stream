@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Cart;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller {
@@ -21,21 +22,50 @@ class ShopController extends Controller {
         $product = Product::with(['category', 'subcategory', 'reviews.user'])->findOrFail($id);
         $relatedProducts = Product::where('categoria_id', $product->categoria_id)
                 ->where('id', '<>', $id) // Exclui o próprio produto
-                ->take(10) // Vamos assumir que você quer 4 produtos relacionados
+                ->take(10) // Vamos assumir que você quer 10 produtos relacionados
                 ->get();
 
-        return view('apps.shop.product-detail', compact('product', 'relatedProducts'));
+        // Obtém a avaliação do usuário autenticado para este produto
+        $review = auth()->check() ? Review::where('user_id', auth()->id())->where('product_id', $id)->first() : null;
+
+        return view('apps.shop.product-detail', compact('product', 'relatedProducts', 'review'));
     }
 
-    public function whishlist() {
-        return view('apps.shop.whishlist');
+    public function wishlist() {
+        $user = auth()->user();
+        $wishlistItems = Wishlist::with('product')
+                ->where('user_id', $user->id)
+                ->get();
+        return view('apps.shop.wishlist', compact('wishlistItems'));
+    }
+
+    // Adiciona um produto à lista de desejos
+    public function addToWishlist(Request $request) {
+        // Modificar a validação para a tabela correta
+        $request->validate(['product_id' => 'required|exists:produtos,id']);
+
+        $user = auth()->user();
+        Wishlist::firstOrCreate([
+            'user_id' => $user->id,
+            'product_id' => $request->product_id,
+        ]);
+
+        return back()->with('success', 'Produto adicionado à lista de desejos.');
+    }
+
+    // Remove um produto da lista de desejos
+    public function removeFromWishlist($id) {
+        $wishlistItem = Wishlist::where('user_id', auth()->id())
+                ->where('id', $id)
+                ->firstOrFail();
+
+        $wishlistItem->delete();
+        return back()->with('success', 'Produto removido da lista de desejos.');
     }
 
     public function checkout() {
         $user = auth()->user();
         $cart = Cart::with(['cartItems.product'])->where('user_id', $user->id)->first();
-
-        
 
         if (!$cart) {
             return redirect()->route('show.cart')->with('error', 'Seu carrinho está vazio.');
