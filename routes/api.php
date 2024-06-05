@@ -10,6 +10,7 @@ use App\Http\Controllers\api\LicenseController;
 use App\Http\Controllers\api\OrderErrorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\RoomApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('products', HomeController::class);
+
 
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 Route::post('/calendar/store', [CalendarController::class, 'store'])->name('calendar.store');
@@ -46,3 +50,5 @@ Route::post('/licenca/ea', [LicenseController::class, 'ea'])->name('licenca.ea')
 
 Route::post('/deals_history/history', [DealsHistoryController::class, 'history'])->name('deals_history.history');
 Route::post('/order_error/store', [OrderErrorController::class, 'store'])->name('order_error.store');
+
+Route::get('/api-rooms', [RoomApiController::class, 'apiRooms'])->name('apiRooms');

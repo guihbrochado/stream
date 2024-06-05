@@ -50,6 +50,13 @@ class HomeController extends Controller
         return view('apps.course.index', ['data' => $data, 'lastLessons' => $lastLessons, 'coursesTop10' => $coursesTop10, 'rooms' => $rooms,'dateOrder' => $dateOrder]);
     }
 
+    public function apiRooms()
+    {
+        $rooms = LiveRoom::orderBy('created_at', 'desc')->get();
+
+        return response()->json($rooms);
+    }
+
     function ajaxCoursesModules($idcourse)
     {
         $data = DB::select("select * from coursesmodules c where id_course = $idcourse;");
